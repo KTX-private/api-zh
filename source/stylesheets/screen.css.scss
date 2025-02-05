@@ -1,3 +1,4 @@
+
 @charset "utf-8";
 @import 'normalize';
 @import 'variables';
@@ -231,7 +232,6 @@ header{
     }
   }
   .lang{
-    display: none;
     width: 78px;
     height: 26px;
     line-height: 26px;
@@ -878,3 +878,4 @@ header{
 .copy-clipboard:hover {
   opacity: 0.8;
 }
+
