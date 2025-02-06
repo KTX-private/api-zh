@@ -4,7 +4,6 @@ title: Ktx API文档(v4)
 language_tabs:
 - javascript
 - python
-- csharp
 
 toc_footers:
 - <a href='https://www.ktx.com'>开始交易</a>
