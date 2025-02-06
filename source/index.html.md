@@ -1,5 +1,5 @@
 ---
-title: Madex API文档(v4)
+title: Ktx API文档(v4)
 
 language_tabs:
 - javascript
@@ -21,7 +21,7 @@ code_clipboard: true
 
 ## API
 
-**使用API开发应用程序，您可以准确地获取Madex现货市场的行情数据，快速进行自动化交易。API包含众多接口，按功能大致分为以下几组：**
+**使用API开发应用程序，您可以准确地获取Ktx现货市场的行情数据，快速进行自动化交易。API包含众多接口，按功能大致分为以下几组：**
 
 * Market Data Endpoints 用于获取行情数据的REST接口
 * User Data Endpoints 用于获取用户私有数据的REST接口
@@ -33,11 +33,11 @@ code_clipboard: true
 * Market Data Endpoints: https://ma-tapi.tonetou.com/api
 * User Data Endpoints: https://api-user.tonetou.com/api
 * Market Data Stream: wss://stream-market.tonetou.com
-* User Data Stream: wss://madex-user.tonetou.com
+* User Data Stream: wss://ktx-user.tonetou.com
 
 **备用api域名列表**
 
-[https://api.madex.tel/v1/public/queryApiDomain](https://api.madex.tel/v1/public/queryApiDomain)
+[https://api.ktx.tel/v1/public/queryApiDomain](https://api.ktx.tel/v1/public/queryApiDomain)
 
 **API的REST接口使用以下HTTP方法：**
 
@@ -72,7 +72,7 @@ API接口参数和响应数据中所涉及的时间值都是UNIX时间，单位�
 
 ## 流量限制
 
-**Madex对来自于同一IP的请求做以下访问限制:**
+**Ktx对来自于同一IP的请求做以下访问限制:**
 
 1. Access Limits 访问频率限制
 2. Usage Limits CPU用量限制
@@ -86,7 +86,7 @@ API接口参数和响应数据中所涉及的时间值都是UNIX时间，单位�
   1. 同一IP每10秒最多消耗10000点CPU 时间，超出限制的请求会收到-20006错误。
   2. 不同API消耗的CPU时间不同，这取决于API如何访问数据。
   3. 在本文中, 每个API接口访问数据的方式会以“缓存”, “数据库”的形式标明。访问缓存的API消耗的CPU时间较少，访问数据库的API消耗的CPU时间较多。根据用户发送的参数，API可能混合访问缓存和数据库，甚至多次访问数据库，这会增加API消耗的CPU时间。
-  4. 每次API请求消耗的CPU时间会包含在响应头Madex-Usage中，其格式为t1:t2:t3，其中，t1表示本次API请求消耗的CPU时间，t2表示最近10秒内当前IP消耗的CPU时间，t3表示最近10秒内当前IP剩余的可用CPU时间。
+  4. 每次API请求消耗的CPU时间会包含在响应头Ktx-Usage中，其格式为t1:t2:t3，其中，t1表示本次API请求消耗的CPU时间，t2表示最近10秒内当前IP消耗的CPU时间，t3表示最近10秒内当前IP剩余的可用CPU时间。
 
 ---
 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
 
 **身份验证**
 
-* 私有接口用于访问账户、委托等私有信息，在请求时需要附加签名，以满足Madex进行身份验证。本节将描述如何创建签名。
+* 私有接口用于访问账户、委托等私有信息，在请求时需要附加签名，以满足Ktx进行身份验证。本节将描述如何创建签名。
 
 **生成Api Key**
 
@@ -633,7 +633,7 @@ if __name__ == '__main__':
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                                 |
 | ---------- | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | market | string   | 是    | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
-| symbol   | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT 等，<br/>可按如下两种形式指定多个交易对代码<br/> 1. /pairs?symbol=BTC_USDT,ETH_USDT<br/> 2. /pairs?symbol=BTC_USDT&symbol=ETH_USDT |
+| symbol   | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT 等，<br/>可按如下两种形式指定多个交易对代码<br/> 1. symbol=BTC_USDT,ETH_USDT<br/> 2. /pairs?symbol=BTC_USDT&symbol=ETH_USDT |
 
 * Data Source
 
@@ -647,15 +647,15 @@ Cache
 
 ```javascript
 const WebSocket = require('ws');
-const madexws = 'wss://stream-market.tonetou.com';
+const ktxws = 'wss://stream-market.tonetou.com';
 
 let wsClass = function () {
 };
 
 wsClass.prototype._initWs = async function () {
     let that = this;
-    console.log(madexws)
-    let ws = new WebSocket(madexws);
+    console.log(ktxws)
+    let ws = new WebSocket(ktxws);
     that.ws = ws;
 
     ws.on('open', function open() {
@@ -2129,7 +2129,7 @@ if __name__ == '__main__':
 ```javascript
 const CryptoJS = require("crypto-js");
 const WebSocket = require('ws');
-const madexws = 'wss://madex-user.tonetou.com';
+const ktxws = 'wss://ktx-user.tonetou.com';
 const apikey = "9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13"; // your apikey
 const secret = "ca55beb9e45d4f30b3959b464402319b9e12bac7"; // your secret
 const sign = CryptoJS.HmacSHA256("/user/verify", secret).toString();
@@ -2140,9 +2140,9 @@ let wsClass = function () {
 
 wsClass.prototype._initWs = async function () {
   let that = this;
-  console.log(madexws);
+  console.log(ktxws);
 
-  let ws = new WebSocket(madexws);
+  let ws = new WebSocket(ktxws);
   that.ws = ws;
 
   ws.on('open', function open() {
@@ -2193,7 +2193,7 @@ import hashlib
 import hmac
 import json
 
-ws_url = 'wss://user-wss.madex360.com'
+ws_url = 'wss://user-wss.ktx360.com'
 API_KEY = '9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13'
 SECRET_KEY = 'ca55beb9e45d4f30b3959b464402319b9e12bac7'
 SIGN = hmac.new(SECRET_KEY.encode("utf-8"), "/user/verify".encode('utf-8'), hashlib.sha256).hexdigest()
@@ -2243,7 +2243,7 @@ if __name__ == "__main__":
 
 请使用以下 URL 连接 Websocket 服务器：
 
-wss://user-wss.madex360.com
+wss://user-wss.ktx360.com
 
 **在连接时，请附加以下HTTP请求头**
 
