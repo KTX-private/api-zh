@@ -632,7 +632,7 @@ if __name__ == '__main__':
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                                 |
 | ---------- | ---------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | market | string   | 是    | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
-| symbol   | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT 等，<br/>可按如下两种形式指定多个交易对代码<br/> 1. symbol=BTC_USDT,ETH_USDT<br/> 2. /pairs?symbol=BTC_USDT&symbol=ETH_USDT |
+| symbol   | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT 等，<br/>可按如下两种形式指定多个交易对代码<br/> 1. symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
 
