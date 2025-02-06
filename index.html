@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Madex API文档(v4)</title>
+    <title>Ktx API文档(v4)</title>
 
     <style media="screen">
       .highlight table td { padding: 5px; }
@@ -440,7 +440,7 @@
       <div class="dark-box"></div>
       <div class="content">
         <h1 id='b122f813d5'>基本信息</h1><h2 id='api'>API</h2>
-<p><strong>使用API开发应用程序，您可以准确地获取Madex现货市场的行情数据，快速进行自动化交易。API包含众多接口，按功能大致分为以下几组：</strong></p>
+<p><strong>使用API开发应用程序，您可以准确地获取Ktx现货市场的行情数据，快速进行自动化交易。API包含众多接口，按功能大致分为以下几组：</strong></p>
 
 <ul>
 <li>Market Data Endpoints 用于获取行情数据的REST接口</li>
@@ -455,12 +455,12 @@
 <li>Market Data Endpoints: https://ma-tapi.tonetou.com/api</li>
 <li>User Data Endpoints: https://api-user.tonetou.com/api</li>
 <li>Market Data Stream: wss://stream-market.tonetou.com</li>
-<li>User Data Stream: wss://madex-user.tonetou.com</li>
+<li>User Data Stream: wss://ktx-user.tonetou.com</li>
 </ul>
 
 <p><strong>备用api域名列表</strong></p>
 
-<p><a href="https://api.madex.tel/v1/public/queryApiDomain">https://api.madex.tel/v1/public/queryApiDomain</a></p>
+<p><a href="https://api.ktx.tel/v1/public/queryApiDomain">https://api.ktx.tel/v1/public/queryApiDomain</a></p>
 
 <p><strong>API的REST接口使用以下HTTP方法：</strong></p>
 
@@ -497,7 +497,7 @@
 
 <hr>
 <h2 id='a4d31b2542'>流量限制</h2>
-<p><strong>Madex对来自于同一IP的请求做以下访问限制:</strong></p>
+<p><strong>Ktx对来自于同一IP的请求做以下访问限制:</strong></p>
 
 <ol>
 <li>Access Limits 访问频率限制</li>
@@ -519,7 +519,7 @@
 <li>同一IP每10秒最多消耗10000点CPU 时间，超出限制的请求会收到-20006错误。</li>
 <li>不同API消耗的CPU时间不同，这取决于API如何访问数据。</li>
 <li>在本文中, 每个API接口访问数据的方式会以“缓存”, “数据库”的形式标明。访问缓存的API消耗的CPU时间较少，访问数据库的API消耗的CPU时间较多。根据用户发送的参数，API可能混合访问缓存和数据库，甚至多次访问数据库，这会增加API消耗的CPU时间。</li>
-<li>每次API请求消耗的CPU时间会包含在响应头Madex-Usage中，其格式为t1:t2:t3，其中，t1表示本次API请求消耗的CPU时间，t2表示最近10秒内当前IP消耗的CPU时间，t3表示最近10秒内当前IP剩余的可用CPU时间。</li>
+<li>每次API请求消耗的CPU时间会包含在响应头Ktx-Usage中，其格式为t1:t2:t3，其中，t1表示本次API请求消耗的CPU时间，t2表示最近10秒内当前IP消耗的CPU时间，t3表示最近10秒内当前IP剩余的可用CPU时间。</li>
 </ol></li>
 </ul>
 
@@ -586,7 +586,7 @@
 <p><strong>身份验证</strong></p>
 
 <ul>
-<li>私有接口用于访问账户、委托等私有信息，在请求时需要附加签名，以满足Madex进行身份验证。本节将描述如何创建签名。</li>
+<li>私有接口用于访问账户、委托等私有信息，在请求时需要附加签名，以满足Ktx进行身份验证。本节将描述如何创建签名。</li>
 </ul>
 
 <p><strong>生成Api Key</strong></p>
@@ -1199,7 +1199,7 @@
 <td>symbol</td>
 <td>string</td>
 <td>是</td>
-<td>交易对代码，如 BTC_USDT, ETH_USDT 等，<br/>可按如下两种形式指定多个交易对代码<br/> 1. /pairs?symbol=BTC_USDT,ETH_USDT<br/> 2. /pairs?symbol=BTC_USDT&amp;symbol=ETH_USDT</td>
+<td>交易对代码，如 BTC_USDT, ETH_USDT 等，<br/>可按如下两种形式指定多个交易对代码<br/> 1. symbol=BTC_USDT,ETH_USDT<br/> 2. /pairs?symbol=BTC_USDT&amp;symbol=ETH_USDT</td>
 </tr>
 </tbody></table>
 
@@ -1213,15 +1213,15 @@
 <p>例子</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">WebSocket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">ws</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">madexws</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">wss://stream-market.tonetou.com</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">ktxws</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">wss://stream-market.tonetou.com</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="kd">let</span> <span class="nx">wsClass</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 <span class="p">};</span>
 
 <span class="nx">wsClass</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_initWs</span> <span class="o">=</span> <span class="k">async</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
     <span class="kd">let</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">madexws</span><span class="p">)</span>
-    <span class="kd">let</span> <span class="nx">ws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">madexws</span><span class="p">);</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">ktxws</span><span class="p">)</span>
+    <span class="kd">let</span> <span class="nx">ws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">ktxws</span><span class="p">);</span>
     <span class="nx">that</span><span class="p">.</span><span class="nx">ws</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">;</span>
 
     <span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">open</span><span class="p">()</span> <span class="p">{</span>
@@ -2947,7 +2947,7 @@ ticker: 最新成交信息</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">WebSocket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">ws</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">madexws</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">wss://madex-user.tonetou.com</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">ktxws</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">wss://ktx-user.tonetou.com</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">ca55beb9e45d4f30b3959b464402319b9e12bac7</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">"</span><span class="s2">/user/verify</span><span class="dl">"</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
@@ -2958,9 +2958,9 @@ ticker: 最新成交信息</p>
 
 <span class="nx">wsClass</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_initWs</span> <span class="o">=</span> <span class="k">async</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="kd">let</span> <span class="nx">that</span> <span class="o">=</span> <span class="k">this</span><span class="p">;</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">madexws</span><span class="p">);</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">ktxws</span><span class="p">);</span>
 
-  <span class="kd">let</span> <span class="nx">ws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">madexws</span><span class="p">);</span>
+  <span class="kd">let</span> <span class="nx">ws</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">WebSocket</span><span class="p">(</span><span class="nx">ktxws</span><span class="p">);</span>
   <span class="nx">that</span><span class="p">.</span><span class="nx">ws</span> <span class="o">=</span> <span class="nx">ws</span><span class="p">;</span>
 
   <span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">open</span><span class="p">()</span> <span class="p">{</span>
@@ -3008,7 +3008,7 @@ ticker: 最新成交信息</p>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
-<span class="n">ws_url</span> <span class="o">=</span> <span class="s">'wss://user-wss.madex360.com'</span>
+<span class="n">ws_url</span> <span class="o">=</span> <span class="s">'wss://user-wss.ktx360.com'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'ca55beb9e45d4f30b3959b464402319b9e12bac7'</span>
 <span class="n">SIGN</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="s">"/user/verify"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
@@ -3057,7 +3057,7 @@ ticker: 最新成交信息</p>
 
 <p>请使用以下 URL 连接 Websocket 服务器：</p>
 
-<p>wss://user-wss.madex360.com</p>
+<p>wss://user-wss.ktx360.com</p>
 
 <p><strong>在连接时，请附加以下HTTP请求头</strong></p>
 
