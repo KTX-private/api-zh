@@ -2,15 +2,15 @@
 title: Madex API文档(v4)
 
 language_tabs:
-  - javascript
-  - python
-  - csharp
+- javascript
+- python
+- csharp
 
 toc_footers:
-  - <a href='https://www.madex.com'>开始交易</a>
+- <a href='https://www.ktx.com'>开始交易</a>
 
 includes:
-  - errors
+- errors
 
 search: true
 
@@ -90,7 +90,7 @@ API接口参数和响应数据中所涉及的时间值都是UNIX时间，单位�
 
 ---
 
-## Authentication
+## 认证
 
 > 完整例子
 
@@ -200,7 +200,7 @@ if __name__ == '__main__':
 
 
 
-## Get Listed Pairs
+## 获取交易对
 
 > Request
 
@@ -273,7 +273,7 @@ if __name__ == '__main__':
 
   Cache
 
-## Get Order Book
+## 获取订单薄
 
 > Request
 
@@ -365,7 +365,7 @@ if __name__ == '__main__':
 
   Cache
 
-## Get Candles
+## 获取K线
 
 > Request
 
@@ -458,7 +458,7 @@ if __name__ == '__main__':
 
 > 返回结果按时间由早及近排序
 
-## Get Trades
+## 获取成交记录
 
 > Request
 
@@ -565,7 +565,7 @@ if __name__ == '__main__':
 
 > 返回结果按交易记录id由小到大排序
 
-## Get Tickers
+## 获取 Tickers
 
 > Request
 
@@ -639,7 +639,7 @@ if __name__ == '__main__':
 
 Cache
 
-# Market Data Streams
+# Market Data 推送
 
 ## Overview
 
@@ -851,7 +851,7 @@ if __name__ == "__main__":
 }
 ```
 
-## Request Methods
+## 请求类型及参数
 
 > 请求类型及参数
 
@@ -876,7 +876,7 @@ if __name__ == "__main__":
 | SUBSCRIBE   | 1.订阅数据流<br/> 2.参数是数据流名称列表 <br/> 3.在成功订阅后，服务器会在行情发生变化时发送数据流给客户端 |
 | UNSUBSCRIBE | 1.取消订阅数据流<br/> 2.参数是数据流名称列表 <br/> 3.在成功取消订阅后，客户端不会再收到相应的数据流       |
 
-## Subscribe Order Book
+## 订阅深度信息
 
 **订阅深度信息**
 
@@ -898,10 +898,10 @@ if __name__ == "__main__":
 
   1. 该请求的参数是深度流名称，格式如下：
 
-  * \<market><symbol>.order_book.\<max depth>
+  * \<market>\<symbol>.order_book.\<max_depth>
     1. \<market> 是交易对市场，如spot，lpc
     2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
-    3. \<max depth> 是最大深度，有效值是5, 10, 20, 50, 100, 200, 500, 1000
+    3. \<max_depth> 是最大深度，有效值是5, 10, 20, 50, 100, 200, 500, 1000
 
 > 数据流
 
@@ -945,14 +945,14 @@ if __name__ == "__main__":
   }
 ```
 
-  > 在成功订阅后，客户端会首先收到一个完整深度的数据流，之后会收到增量变化数据流，请按以下方法合成完整的深度，或使用SDK.
-  >
+> 在成功订阅后，客户端会首先收到一个完整深度的数据流，之后会收到增量变化数据流，请按以下方法合成完整的深度，或使用SDK.
+>
 
   ```javascript
   ...
   ```
 
-## Subscribe Trades
+## 订阅交易列表
 
 **订阅交易列表**
 
@@ -974,7 +974,7 @@ if __name__ == "__main__":
 
   1. 该请求的参数是交易流名称，格式如下：
 
-  * \<symbol>.trades
+  * \<market>\<symbol>.trades
     1. \<market> 是交易对市场，如spot，lpc
     2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
 
@@ -1010,7 +1010,7 @@ if __name__ == "__main__":
 }
 ```
 
-## Subscribe Candles
+## 订阅K线
 
 **订阅K线**
 
@@ -1032,7 +1032,7 @@ if __name__ == "__main__":
 
   1. K线流名称格式如下：
 
-  * \<symbol>.candles.\<time_frame>
+  * \<market>\<symbol>.candles.\<time_frame>
     1. \<market> 是交易对市场，如spot，lpc
     2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
     3. \<time_frame> 是K线周期，有效值是1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
@@ -1083,9 +1083,9 @@ if __name__ == "__main__":
 }
 ```
 
-## Subscribe Tickers
+## 订阅ticker
 
-**订阅K线**
+**订阅ticker**
 
 > 发送以下请求可订阅Ticker
 
@@ -1105,7 +1105,7 @@ if __name__ == "__main__":
 
   1. Ticker流名称格式如下：
 
-  * \<symbol>.ticker
+  * \<market>\<symbol>.ticker
     1. \<market> 是交易对市场，如spot，lpc
     2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
 > 数据流
@@ -1140,7 +1140,7 @@ if __name__ == "__main__":
 
 
 
-## Get Accounts
+## 获取账户信息
 
 > Request
 
@@ -1237,7 +1237,7 @@ if __name__ == '__main__':
 
   Cache
 
-## Get an account's ledger
+## 获取账单
 
 > Request
 
@@ -1338,7 +1338,7 @@ if __name__ == '__main__':
 
   DB
 
-## Create an order
+## 创建订单
 
 > Request
 
@@ -1507,7 +1507,7 @@ if __name__ == '__main__':
 > 最多包含该委托的20笔成交
 > 如果委托有多于20笔成交，那么该对象仅包含最后20笔，其他成交请通过 fills 接口获取
 
-## Get an order
+## 获取订单
 
 > Request
 
@@ -1638,7 +1638,7 @@ if __name__ == '__main__':
 | ---------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | id       | string   | 是       | 委托id<br/>委托id可以是交易所分配的, <br/>也可以是用户自定义的 (在提交委托时使用client_order_id参数).<br/>当使用自定义id时, 需要在id前添加 “c:” 前缀.<br/>例如: 提交委托时使用了自定义id “123”, 在获取委托时, 需使用 “c:123”. |
 
-## Get Orders
+## 获取订单
 
 > Request
 
@@ -1801,7 +1801,7 @@ if __name__ == '__main__':
 > 返回的unsettled委托按创建时间由早及近排序
 > 返回的settled委托按结算时间由早及近排序
 
-## Cancel an Order
+## 取消订单
 
 > Request
 
@@ -1897,7 +1897,7 @@ if __name__ == '__main__':
 
 > 如果指定id的委托已结算，或者不存在指定id的委托，会收到-30001错误。
 
-## Cancel all Orders
+## 取消批量订单
 
 > Request
 
@@ -1995,7 +1995,7 @@ if __name__ == '__main__':
 
 > 如果请求被正确执行，返回空数组，否则返回错误信息
 
-## Get fills
+## 获取成交明细
 
 > Request
 
@@ -2120,7 +2120,7 @@ if __name__ == '__main__':
 
 > 返回结果按成交记录id由小到大排序
 
-# User Data Streams
+# User Data 推送
 
 ## Overview
 
