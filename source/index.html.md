@@ -29,10 +29,10 @@ code_clipboard: true
 
 **API使用如下Base URL：**
 
-* Market Data Endpoints: https://ma-tapi.tonetou.com/api
-* User Data Endpoints: https://api-user.tonetou.com/api
-* Market Data Stream: wss://stream-market.tonetou.com
-* User Data Stream: wss://ktx-user.tonetou.com
+* Market Data Endpoints: https://api.ktx.com/api
+* User Data Endpoints: https://api-user.ktx.com/api
+* Market Data Stream: wss://stream-market.ktx.com
+* User Data Stream: wss://ktx-user.ktx.com
 
 **备用api域名列表**
 
@@ -97,7 +97,7 @@ API接口参数和响应数据中所涉及的时间值都是UNIX时间，单位�
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -129,7 +129,7 @@ import hashlib
 import hmac
 import requests
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -205,7 +205,7 @@ if __name__ == '__main__':
 
 ```javascript
 let request = require("request");
-const endPoint = 'https://ma-tapi.tonetou.com/api';
+const endPoint = 'https://api.ktx.com/api';
 const url = `${endPoint}/v1/products?market=spot&symbol=BTC_USDT`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
@@ -221,7 +221,7 @@ request.get(url,
 ```python
 import requests
 
-END_POINT = 'https://ma-tapi.tonetou.com/api';
+END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
     path = '/v1/products?market=spot&symbol=BTC_USDT'
@@ -278,7 +278,7 @@ if __name__ == '__main__':
 
 ```javascript
 let request = require("request");
-const endPoint = 'https://ma-tapi.tonetou.com/api';
+const endPoint = 'https://api.ktx.com/api';
 const url = `${endPoint}/v1/order_book?market=spot&symbol=BTC_USDT`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
@@ -294,7 +294,7 @@ request.get(url,
 ```python
 import requests
 
-END_POINT = 'https://ma-tapi.tonetou.com/api';
+END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
     path = '/v1/order_book?market=spot&symbol=BTC_USDT'
@@ -370,7 +370,7 @@ if __name__ == '__main__':
 
 ```javascript
 let request = require("request");
-const endPoint = 'https://ma-tapi.tonetou.com/api';
+const endPoint = 'https://api.ktx.com/api';
 const url = `${endPoint}/v1/candles?market=spot&symbol=BTC_USDT&time_frame=1m`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
@@ -386,7 +386,7 @@ request.get(url,
 ```python
 import requests
 
-END_POINT = 'https://ma-tapi.tonetou.com/api';
+END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
     path = '/v1/candles?market=spot&symbol=BTC_USDT&time_frame=1m'
@@ -463,7 +463,7 @@ if __name__ == '__main__':
 
 ```javascript
 let request = require("request");
-const endPoint = 'https://ma-tapi.tonetou.com/api';
+const endPoint = 'https://api.ktx.com/api';
 const url = `${endPoint}/v1/trades?market=spot&symbol=BTC_USDT`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
@@ -479,7 +479,7 @@ request.get(url,
 ```python
 import requests
 
-END_POINT = 'https://ma-tapi.tonetou.com/api';
+END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
     path = '/v1/trades?market=spot&symbol=BTC_USDT'
@@ -570,7 +570,7 @@ if __name__ == '__main__':
 
 ```javascript
 let request = require("request");
-const endPoint = 'https://ma-tapi.tonetou.com/api';
+const endPoint = 'https://api.ktx.com/api';
 const url = `${endPoint}/v1/ticker?market=spot&symbol=BTC_USDT`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
@@ -586,7 +586,7 @@ request.get(url,
 ```python
 import requests
 
-END_POINT = 'https://ma-tapi.tonetou.com/api';
+END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
     path = '/v1/ticker?market=spot&symbol=BTC_USDT'
@@ -646,7 +646,7 @@ Cache
 
 ```javascript
 const WebSocket = require('ws');
-const ktxws = 'wss://stream-market.tonetou.com';
+const ktxws = 'wss://stream-market.ktx.com';
 
 let wsClass = function () {
 };
@@ -699,7 +699,7 @@ instance._initWs().catch(err => {
 import websocket
 import json
 
-ws_url = 'wss://stream-market.tonetou.com'
+ws_url = 'wss://stream-market.ktx.com'
 
 def stringify(obj):
     return json.dumps(obj, sort_keys=True).replace("\'", "\"").replace(" ", "")
@@ -746,7 +746,7 @@ if __name__ == "__main__":
 * 连接 Websocket 服务器
   请使用以下 URL 连接 Websocket 服务器：
   <br/>
-  wss://stream-market.tonetou.com
+  wss://stream-market.ktx.com
 
 > 在连接后，客户端可以发送以下JSON格式的请求给服务器
 
@@ -1147,7 +1147,7 @@ if __name__ == "__main__":
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1179,7 +1179,7 @@ import hashlib
 import hmac
 import requests
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1244,7 +1244,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1276,7 +1276,7 @@ import hashlib
 import hmac
 import requests
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1345,7 +1345,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1390,7 +1390,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -1514,7 +1514,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1546,7 +1546,7 @@ import hashlib
 import hmac
 import requests
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1645,7 +1645,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1677,7 +1677,7 @@ import hashlib
 import hmac
 import requests
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1808,7 +1808,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1848,7 +1848,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -1904,7 +1904,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1944,7 +1944,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -2002,7 +2002,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.tonetou.com/api'
+const endpoints = 'https://api-user.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -2035,7 +2035,7 @@ import hashlib
 import hmac
 import requests
 
-END_POINT = 'https://api-user.tonetou.com/api'
+END_POINT = 'https://api-user.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -2128,7 +2128,7 @@ if __name__ == '__main__':
 ```javascript
 const CryptoJS = require("crypto-js");
 const WebSocket = require('ws');
-const ktxws = 'wss://ktx-user.tonetou.com';
+const ktxws = 'wss://ktx-user.ktx.com';
 const apikey = "9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13"; // your apikey
 const secret = "ca55beb9e45d4f30b3959b464402319b9e12bac7"; // your secret
 const sign = CryptoJS.HmacSHA256("/user/verify", secret).toString();
