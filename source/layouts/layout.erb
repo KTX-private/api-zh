@@ -64,7 +64,7 @@ under the License.
     </a>
     <header>
       <div class="flex_box">
-        <%= image_tag "logo.png", class: 'logo', id: "bibox-logo" %>
+        <%= image_tag "logo.png", class: 'logo', id: "ex-logo" %>
         <div class="nav_box">
         </div>
       </div>
@@ -138,7 +138,7 @@ under the License.
         const btnSpotSelect = document.getElementById('btn_spot-select')
         const spot_select = document.getElementById('spot_select')
 
-        const biboxLogo = document.getElementById('bibox-logo')
+        const exLogo = document.getElementById('ex-logo')
 
         const url = GetUrlRelativePath();
 
@@ -151,8 +151,8 @@ under the License.
           lang_btn.href = url.replace('en/', 'zh/');
 
 
-          biboxLogo.onclick = function () {
-            window.location.href = 'https://www.bibox.tech/en'
+          exLogo.onclick = function () {
+            window.location.href = 'https://pre.ktx.one/en'
           }
         }else{
           //中文
@@ -161,8 +161,8 @@ under the License.
 
           lang_btn.href = url.replace('zh/', 'en/');
 
-          biboxLogo.onclick = function () {
-            window.location.href = 'https://www.bibox.tech/zh'
+          exLogo.onclick = function () {
+            window.location.href = 'https://pre.ktx.one/zh'
           }
         }
 
