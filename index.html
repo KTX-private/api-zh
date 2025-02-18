@@ -283,7 +283,7 @@
   color: #859900;
 }
     </style>
-    <link href="stylesheets/screen-e526a8a2.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/screen-09b5d7bd.css" rel="stylesheet" media="screen" />
     <link href="stylesheets/print-628c1a7f.css" rel="stylesheet" media="print" />
       <script src="javascripts/all-e033bdd3.js"></script>
 
@@ -300,7 +300,7 @@
     </a>
     <header>
       <div class="flex_box">
-        <img src="images/logo-d5185825.png" class="logo" id="bibox-logo" alt="" />
+        <img src="images/logo-d5185825.png" class="logo" id="ex-logo" alt="" />
         <div class="nav_box">
         </div>
       </div>
@@ -3311,7 +3311,7 @@ ticker: 最新成交信息</p>
         const btnSpotSelect = document.getElementById('btn_spot-select')
         const spot_select = document.getElementById('spot_select')
 
-        const biboxLogo = document.getElementById('bibox-logo')
+        const exLogo = document.getElementById('ex-logo')
 
         const url = GetUrlRelativePath();
 
@@ -3324,8 +3324,8 @@ ticker: 最新成交信息</p>
           lang_btn.href = url.replace('en/', 'zh/');
 
 
-          biboxLogo.onclick = function () {
-            window.location.href = 'https://www.bibox.tech/en'
+          exLogo.onclick = function () {
+            window.location.href = 'https://pre.ktx.one/en'
           }
         }else{
           //中文
@@ -3334,8 +3334,8 @@ ticker: 最新成交信息</p>
 
           lang_btn.href = url.replace('zh/', 'en/');
 
-          biboxLogo.onclick = function () {
-            window.location.href = 'https://www.bibox.tech/zh'
+          exLogo.onclick = function () {
+            window.location.href = 'https://pre.ktx.one/zh'
           }
         }
 
