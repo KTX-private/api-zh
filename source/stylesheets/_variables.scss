@@ -72,7 +72,7 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
 ////////////////////
 %default-font {
   font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", "WenQuanYi Micro Hei", monospace,serif;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 %header-font {
@@ -82,7 +82,7 @@ $phone-width: $tablet-width - $nav-width !default; // min width before reverting
 
 %code-font {
   font-family: Consolas, Menlo, Monaco, "Lucida Console", "Liberation Mono", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Courier New", monospace, serif;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
 }
 
