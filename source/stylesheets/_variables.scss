@@ -44,7 +44,7 @@ $search-notice-bg: #25282F !default;
 
 // TEXT COLORS
 ////////////////////
-$main-text: #9497A0 !default; // main content text color
+$main-text: rgba(225,225,225, 0.8) !default; // main content text color
 $nav-text: #FFFFFF !default;
 $nav-active-text: #F0B90B !default;
 $nav-active-parent-text: #F0B90B !default; // parent links of the current section
