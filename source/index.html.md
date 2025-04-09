@@ -698,6 +698,9 @@ instance._initWs().catch(err => {
 ```python
 import websocket
 import json
+import threading
+import time
+from datetime import datetime
 
 ws_url = 'wss://stream-market.ktx.com'
 
@@ -718,12 +721,23 @@ def on_error(ws, error):
     print(error)
 
 
-def on_close(ws):
+def on_close(ws, close_status_code, close_msg):
     print("### closed ###")
+    print("Status Code:", close_status_code)
+    print("Message:", close_msg)
 
+def ping_loop(ws):
+  while True:
+    time.sleep(30)
 
+    data = {
+      "ping": datetime.now().timestamp() * 1000
+    }
+    ws.send(json.dumps(data))
+    
 def on_open(ws):
     ws.send(get_sub_str())
+    threading.Thread(target=ping_loop, args=(ws,), daemon=True).start()
 
 
 def connect():
@@ -733,7 +747,7 @@ def connect():
                                 on_error=on_error,
                                 on_close=on_close)
     ws.on_open = on_open
-    ws.run_forever(ping_interval=30, ping_timeout=5)
+    ws.run_forever(ping_interval=0)
 
 
 if __name__ == "__main__":
@@ -2191,6 +2205,9 @@ import websocket
 import hashlib
 import hmac
 import json
+import threading
+import time
+from datetime import datetime
 
 ws_url = 'wss://user-wss.ktx360.com'
 API_KEY = '9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13'
@@ -2205,8 +2222,19 @@ def on_error(ws, error):
     print(error)
 
 
-def on_close(ws):
+def on_close(ws, close_status_code, close_msg):
     print("### closed ###")
+    print("Status Code:", close_status_code)
+    print("Message:", close_msg)
+
+def ping_loop(ws):
+  while True:
+    time.sleep(3)
+
+    data = {
+      "ping": datetime.now().timestamp() * 1000
+    }
+    ws.send(json.dumps(data))
 
 
 def on_open(ws):
@@ -2218,6 +2246,8 @@ def on_open(ws):
         }
     }))
     print("### opened ###")
+    threading.Thread(target=ping_loop, args=(ws,), daemon=True).start()
+
 
 
 def connect():
@@ -2228,7 +2258,7 @@ def connect():
                                 on_error=on_error,
                                 on_close=on_close)
     ws.on_open = on_open
-    ws.run_forever(ping_interval=30, ping_timeout=5)
+    ws.run_forever(ping_interval=0)
 
 
 if __name__ == "__main__":
