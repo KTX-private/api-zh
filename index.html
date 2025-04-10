@@ -452,9 +452,9 @@
 
 <ul>
 <li>Market Data Endpoints: https://api.ktx.com/api</li>
-<li>User Data Endpoints: https://api-user.ktx.com/api</li>
-<li>Market Data Stream: wss://stream-market.ktx.com</li>
-<li>User Data Stream: wss://ktx-user.ktx.com</li>
+<li>User Data Endpoints: https://api.ktx.com/api</li>
+<li>Market Data Stream: wss://m-stream.ktx.com</li>
+<li>User Data Stream: wss://u-stream.ktx.com</li>
 </ul>
 
 <p><strong>备用api域名列表</strong></p>
@@ -530,7 +530,7 @@
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -558,8 +558,9 @@
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -574,6 +575,7 @@
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
@@ -680,10 +682,6 @@
     </span><span class="nl">"priceScale"</span><span class="p">:</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">价格精度</span><span class="w">
     </span><span class="nl">"minOrderValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0001"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">最小下单价值</span><span class="w">
     </span><span class="nl">"maxOrderValue"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10000000000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">最大下单价值</span><span class="w">
-    </span><span class="nl">"fundingRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0001"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">资金费率</span><span class="w">
-    </span><span class="nl">"nextFundingTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733472000000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">资金费率结算时间</span><span class="w">
-    </span><span class="nl">"predictedFundingRate"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0001"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">预期资金费率</span><span class="w">
-    </span><span class="nl">"markPrice"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98042.3405"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">标记价格</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
 </span></code></pre></div>
@@ -1212,7 +1210,7 @@
 <p>例子</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">WebSocket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">ws</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">ktxws</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">wss://stream-market.ktx.com</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">ktxws</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">wss://m-stream.ktx.com</span><span class="dl">'</span><span class="p">;</span>
 
 <span class="kd">let</span> <span class="nx">wsClass</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 <span class="p">};</span>
@@ -1265,7 +1263,7 @@
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="n">ws_url</span> <span class="o">=</span> <span class="s">'wss://stream-market.ktx.com'</span>
+<span class="n">ws_url</span> <span class="o">=</span> <span class="s">'wss://m-stream.ktx.com'</span>
 
 <span class="k">def</span> <span class="nf">stringify</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">"</span><span class="se">\'</span><span class="s">"</span><span class="p">,</span> <span class="s">"</span><span class="se">\"</span><span class="s">"</span><span class="p">).</span><span class="n">replace</span><span class="p">(</span><span class="s">" "</span><span class="p">,</span> <span class="s">""</span><span class="p">)</span>
@@ -1323,7 +1321,7 @@
 <li>连接 Websocket 服务器
 请使用以下 URL 连接 Websocket 服务器：
 <br/>
-wss://stream-market.ktx.com</li>
+wss://m-stream.ktx.com</li>
 </ul>
 
 <blockquote>
@@ -1734,7 +1732,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -1762,8 +1760,9 @@ ticker: 最新成交信息</p>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -1777,6 +1776,7 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
@@ -1792,12 +1792,16 @@ ticker: 最新成交信息</p>
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">资产代码</span><span class="w">
     </span><span class="nl">"balance"</span><span class="p">:</span><span class="mi">10000</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">总额</span><span class="w">
-    </span><span class="nl">"holds"</span><span class="p">:</span><span class="mi">0</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">冻结额</span><span class="w">
+    </span><span class="nl">"holds"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">冻结额</span><span class="w">
+    </span><span class="nl">"withdrawable"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">可转出额</span><span class="w">
+    </span><span class="nl">"collateral"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">是否抵扣</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">资产代码</span><span class="w">
     </span><span class="nl">"balance"</span><span class="p">:</span><span class="mi">10000</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">总额</span><span class="w">
-    </span><span class="nl">"holds"</span><span class="p">:</span><span class="mi">0</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">冻结额</span><span class="w">
+    </span><span class="nl">"holds"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">冻结额</span><span class="w">
+    </span><span class="nl">"withdrawable"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">可转出额</span><span class="w">
+    </span><span class="nl">"collateral"</span><span class="p">:</span><span class="kc">false</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">是否抵扣</span><span class="w">
   </span><span class="p">},</span><span class="w">
   </span><span class="err">...</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -1839,7 +1843,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -1867,8 +1871,9 @@ ticker: 最新成交信息</p>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -1882,6 +1887,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
+
     <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
@@ -1978,7 +1985,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2020,7 +2027,7 @@ ticker: 最新成交信息</p>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
@@ -2163,7 +2170,7 @@ ticker: 最新成交信息</p>
 <td>positionMerge</td>
 <td>string</td>
 <td>否</td>
-<td>合约必须 none分仓 long合并多 short合并空</td>
+<td>合约必须 long合并多 short合并空</td>
 </tr>
 <tr>
 <td>marginMethod</td>
@@ -2215,7 +2222,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2243,11 +2250,12 @@ ticker: 最新成交信息</p>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
-
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/order'</span>
@@ -2352,7 +2360,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2380,11 +2388,12 @@ ticker: 最新成交信息</p>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">requests</span>
+<span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
-
+<span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
 
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/orders'</span>
@@ -2564,7 +2573,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2601,7 +2610,7 @@ ticker: 最新成交信息</p>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
@@ -2635,8 +2644,8 @@ ticker: 最新成交信息</p>
 <p><strong>撤销指定 id 的委托</strong></p>
 
 <ul>
-<li>请求方式 DELETE</li>
-<li>请求路径 /v1/order</li>
+<li>请求方式 POST</li>
+<li>请求路径 /v1/order/delete</li>
 <li>权限: Trade</li>
 <li>请求参数</li>
 </ul>
@@ -2673,7 +2682,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2683,9 +2692,9 @@ ticker: 最新成交信息</p>
 
 <span class="kd">let</span> <span class="nx">bodyStr</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="nx">bodyStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
-<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/orders`</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/orders/delete`</span><span class="p">;</span>
 
-<span class="nx">request</span><span class="p">.</span><span class="k">delete</span><span class="p">({</span>
+<span class="nx">request</span><span class="p">.</span><span class="nx">post</span><span class="p">({</span>
         <span class="na">url</span><span class="p">:</span><span class="nx">url</span><span class="p">,</span>
         <span class="na">body</span><span class="p">:</span><span class="nx">param</span><span class="p">,</span>
         <span class="na">json</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span>
@@ -2710,7 +2719,7 @@ ticker: 最新成交信息</p>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">time</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span>
@@ -2722,7 +2731,7 @@ ticker: 最新成交信息</p>
     <span class="p">}</span>
     <span class="n">body_str</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
     <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">body_str</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
-    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/orders'</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/orders/delete'</span>
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
@@ -2730,7 +2739,7 @@ ticker: 最新成交信息</p>
         <span class="s">'api-expire-time'</span><span class="p">:</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">t</span> <span class="o">*</span> <span class="mi">1000</span> <span class="o">+</span><span class="mi">5000</span><span class="p">))</span> <span class="c1"># optional
 </span>
     <span class="p">}</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">delete</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
 
@@ -2745,8 +2754,8 @@ ticker: 最新成交信息</p>
 <p><strong>撤销全部委托</strong></p>
 
 <ul>
-<li>请求方式 DELETE</li>
-<li>请求路径 /v1/orders</li>
+<li>请求方式 POST</li>
+<li>请求路径 /v1/orders/delete</li>
 <li>权限: Trade</li>
 <li>请求参数</li>
 </ul>
@@ -2789,7 +2798,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
 
-<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api-user.ktx.com/api</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/api</span><span class="dl">'</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e03e8fda27b6e4fc6b29bb244747dcf64092996</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">b825a03636ca09c884ca11d71cfc4217a98cb8bf</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 
@@ -2819,7 +2828,7 @@ ticker: 最新成交信息</p>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 
-<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api-user.ktx.com/api'</span>
+<span class="n">END_POINT</span> <span class="o">=</span> <span class="s">'https://api.ktx.com/api'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e03e8fda27b6e4fc6b29bb244747dcf64092996'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'b825a03636ca09c884ca11d71cfc4217a98cb8bf'</span>
 
@@ -2849,7 +2858,7 @@ ticker: 最新成交信息</p>
 <div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"product"</span><span class="p">:</span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
-    </span><span class="nl">"fees"</span><span class="p">:[{</span><span class="nl">"amount"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">,</span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">}],</span><span class="err">//</span><span class="w"> </span><span class="err">手续费</span><span class="w">
+    </span><span class="nl">"fees"</span><span class="p">:[{</span><span class="nl">"amount"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">,</span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="nl">"value"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">}],</span><span class="err">//</span><span class="w"> </span><span class="err">手续费</span><span class="w">
     </span><span class="nl">"quantity"</span><span class="p">:</span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交数量</span><span class="w">
     </span><span class="nl">"orderId"</span><span class="p">:</span><span class="s2">"4611772879845982371"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单id</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="s2">"1000000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交价格</span><span class="w">
@@ -2960,7 +2969,7 @@ ticker: 最新成交信息</p>
 </blockquote>
 <div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">const</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">WebSocket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">ws</span><span class="dl">'</span><span class="p">);</span>
-<span class="kd">const</span> <span class="nx">ktxws</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">wss://ktx-user.ktx.com</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">ktxws</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">wss://u-stream.ktx.com</span><span class="dl">'</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your apikey</span>
 <span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">ca55beb9e45d4f30b3959b464402319b9e12bac7</span><span class="dl">"</span><span class="p">;</span> <span class="c1">// your secret</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">"</span><span class="s2">/user/verify</span><span class="dl">"</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
@@ -3024,7 +3033,7 @@ ticker: 最新成交信息</p>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
 
-<span class="n">ws_url</span> <span class="o">=</span> <span class="s">'wss://user-wss.ktx360.com'</span>
+<span class="n">ws_url</span> <span class="o">=</span> <span class="s">'wss://u-stream.ktx.com'</span>
 <span class="n">API_KEY</span> <span class="o">=</span> <span class="s">'9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13'</span>
 <span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">'ca55beb9e45d4f30b3959b464402319b9e12bac7'</span>
 <span class="n">SIGN</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="s">"/user/verify"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">'utf-8'</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
@@ -3086,7 +3095,7 @@ ticker: 最新成交信息</p>
 
 <p>请使用以下 URL 连接 Websocket 服务器：</p>
 
-<p>wss://user-wss.ktx360.com</p>
+<p>wss://u-stream.ktx.com</p>
 
 <p><strong>在连接时，请附加以下HTTP请求头</strong></p>
 
