@@ -30,9 +30,9 @@ code_clipboard: true
 **API使用如下Base URL：**
 
 * Market Data Endpoints: https://api.ktx.com/api
-* User Data Endpoints: https://api-user.ktx.com/api
-* Market Data Stream: wss://stream-market.ktx.com
-* User Data Stream: wss://ktx-user.ktx.com
+* User Data Endpoints: https://api.ktx.com/api
+* Market Data Stream: wss://m-stream.ktx.com
+* User Data Stream: wss://u-stream.ktx.com
 
 **备用api域名列表**
 
@@ -97,7 +97,7 @@ API接口参数和响应数据中所涉及的时间值都是UNIX时间，单位�
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -128,8 +128,9 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -144,6 +145,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
+        'api-expire-time': str(int(time.time() * 1000) + 5000)
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -248,10 +250,6 @@ if __name__ == '__main__':
     "priceScale": 4, // 价格精度
     "minOrderValue": "0.0001", // 最小下单价值
     "maxOrderValue": "10000000000", // 最大下单价值
-    "fundingRate": "0.0001" // 资金费率
-    "nextFundingTime": "1733472000000", // 资金费率结算时间
-    "predictedFundingRate": "0.0001", // 预期资金费率
-    "markPrice": "98042.3405", // 标记价格
   }
 ]
 ```
@@ -646,7 +644,7 @@ Cache
 
 ```javascript
 const WebSocket = require('ws');
-const ktxws = 'wss://stream-market.ktx.com';
+const ktxws = 'wss://m-stream.ktx.com';
 
 let wsClass = function () {
 };
@@ -702,7 +700,7 @@ import threading
 import time
 from datetime import datetime
 
-ws_url = 'wss://stream-market.ktx.com'
+ws_url = 'wss://m-stream.ktx.com'
 
 def stringify(obj):
     return json.dumps(obj, sort_keys=True).replace("\'", "\"").replace(" ", "")
@@ -760,7 +758,7 @@ if __name__ == "__main__":
 * 连接 Websocket 服务器
   请使用以下 URL 连接 Websocket 服务器：
   <br/>
-  wss://stream-market.ktx.com
+  wss://m-stream.ktx.com
 
 > 在连接后，客户端可以发送以下JSON格式的请求给服务器
 
@@ -1161,7 +1159,7 @@ if __name__ == "__main__":
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1192,8 +1190,9 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1207,6 +1206,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
+        'api-expire-time': str(int(time.time() * 1000) + 5000)
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1223,12 +1223,16 @@ if __name__ == '__main__':
   {
     "asset":"USDT",  // 资产代码
     "balance":10000,  // 总额
-    "holds":0  // 冻结额
+    "holds":0,  // 冻结额
+    "withdrawable":0,// 可转出额
+    "collateral":false,// 是否抵扣
   },
   {
     "asset":"USDT",  // 资产代码
     "balance":10000,  // 总额
-    "holds":0  // 冻结额
+    "holds":0,  // 冻结额
+    "withdrawable":0,// 可转出额
+    "collateral":false,// 是否抵扣
   },
   ...
 ]
@@ -1258,7 +1262,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1289,8 +1293,9 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -1304,6 +1309,8 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
+        'api-expire-time': str(int(time.time() * 1000) + 5000)
+
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1359,7 +1366,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1404,7 +1411,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -1500,21 +1507,21 @@ if __name__ == '__main__':
 * 请求参数
 
 
-| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                    |
-|-----------------|---------|------|-----------------------------------------------------------------------------------------------------------------------|
-| symbol          | string  | 是    | 交易对代码，如 BTC_USDT, ETH_USDT 等                                                                                          |
-| type            | string  | 是    | 委托类型，有效值 limit market                                                                                                 |
-| client_order_id | string  | 否    | 委托id，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳                                                                                |
-| quantity        | decimal | 是    | 委托量 有正负                                                                                                               |
-| price           | decimal | 否    | 委托限价                                                                                                                  |
-| market          | string  | 是    | 必须 spot 现货，lpc U本位永续                                                                                                  |
-| positionMerge   | string  | 否    | 合约必须 none分仓 long合并多 short合并空                                                                                          |
-| marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                             |
-| leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                             
-| close           | bool    | 否    | 合约必须 true 平仓单，false 开仓单                                                                                               |
-| post_only       | bool    | 否    | ...                                                                                                                   |
+| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                   |
+|-----------------|---------|------|----------------------------------------------------------------------------------------------------------------------|
+| symbol          | string  | 是    | 交易对代码，如 BTC_USDT, ETH_USDT 等                                                                                         |
+| type            | string  | 是    | 委托类型，有效值 limit market                                                                                                |
+| client_order_id | string  | 否    | 委托id，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳                                                                               |
+| quantity        | decimal | 是    | 委托量 有正负                                                                                                              |
+| price           | decimal | 否    | 委托限价                                                                                                                 |
+| market          | string  | 是    | 必须 spot 现货，lpc U本位永续                                                                                                 |
+| positionMerge   | string  | 否    | 合约必须 long合并多 short合并空                                                                                          |
+| marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                            |
+| leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                            
+| close           | bool    | 否    | 合约必须 true 平仓单，false 开仓单                                                                                              |
+| post_only       | bool    | 否    | ...                                                                                                                  |
 | time_in_force   | string   | 否       | 委托时效性<br/>有效值 gtc, ioc<br/>gtc 表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>默认值 gtc |
-| positionId   | string   | 否       | 仓位id                                                                                                                  |
+| positionId   | string   | 否       | 仓位id                                                                                                                 |
 
 > 委托对象
 > 最多包含该委托的20笔成交
@@ -1528,7 +1535,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1559,11 +1566,12 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-
+t = time.time()
 
 def do_request():
     path = '/v1/order'
@@ -1659,7 +1667,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1690,11 +1698,12 @@ request.get(url,{
 import hashlib
 import hmac
 import requests
+import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
-
+t = time.time()
 
 def do_request():
     path = '/v1/orders'
@@ -1822,7 +1831,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1862,7 +1871,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -1897,8 +1906,8 @@ if __name__ == '__main__':
 
 **撤销指定 id 的委托**
 
-* 请求方式 DELETE
-* 请求路径 /v1/order
+* 请求方式 POST
+* 请求路径 /v1/order/delete
 * 权限: Trade
 * 请求参数
 
@@ -1918,7 +1927,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -1928,9 +1937,9 @@ const param = {
 
 let bodyStr = JSON.stringify(param);
 const sign = CryptoJS.HmacSHA256(bodyStr, secret).toString();
-const url = `${endpoints}/v1/orders`;
+const url = `${endpoints}/v1/orders/delete`;
 
-request.delete({
+request.post({
         url:url,
         body:param,
         json:true,
@@ -1958,7 +1967,7 @@ import requests
 import json
 import time
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 t = time.time()
@@ -1970,7 +1979,7 @@ def do_request():
     }
     body_str = json.dumps(param)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), body_str.encode("utf-8"), hashlib.sha256).hexdigest()
-    path = '/v1/orders'
+    path = '/v1/orders/delete'
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
@@ -1978,7 +1987,7 @@ def do_request():
         'api-expire-time':str(round(t * 1000 +5000)) # optional
 
     }
-    resp = requests.delete(END_POINT + path, json=param, headers=headers)
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
 
 
@@ -1994,8 +2003,8 @@ if __name__ == '__main__':
 
 **撤销全部委托**
 
-* 请求方式 DELETE
-* 请求路径 /v1/orders
+* 请求方式 POST
+* 请求路径 /v1/orders/delete
 * 权限: Trade
 * 请求参数
 
@@ -2016,7 +2025,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api-user.ktx.com/api'
+const endpoints = 'https://api.ktx.com/api'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -2049,7 +2058,7 @@ import hashlib
 import hmac
 import requests
 
-END_POINT = 'https://api-user.ktx.com/api'
+END_POINT = 'https://api.ktx.com/api'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
@@ -2080,7 +2089,7 @@ if __name__ == '__main__':
 [
   {
     "product":"BTC_USDT_SWAP", // 交易对代码
-    "fees":[{"amount":"10","asset":"USDT"}],// 手续费
+    "fees":[{"amount":"10","asset":"USDT","value":"10"}],// 手续费
     "quantity":"0.01", // 成交数量
     "orderId":"4611772879845982371", // 订单id
     "price":"1000000", // 成交价格
@@ -2142,7 +2151,7 @@ if __name__ == '__main__':
 ```javascript
 const CryptoJS = require("crypto-js");
 const WebSocket = require('ws');
-const ktxws = 'wss://ktx-user.ktx.com';
+const ktxws = 'wss://u-stream.ktx.com';
 const apikey = "9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13"; // your apikey
 const secret = "ca55beb9e45d4f30b3959b464402319b9e12bac7"; // your secret
 const sign = CryptoJS.HmacSHA256("/user/verify", secret).toString();
@@ -2209,7 +2218,7 @@ import threading
 import time
 from datetime import datetime
 
-ws_url = 'wss://user-wss.ktx360.com'
+ws_url = 'wss://u-stream.ktx.com'
 API_KEY = '9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13'
 SECRET_KEY = 'ca55beb9e45d4f30b3959b464402319b9e12bac7'
 SIGN = hmac.new(SECRET_KEY.encode("utf-8"), "/user/verify".encode('utf-8'), hashlib.sha256).hexdigest()
@@ -2272,7 +2281,7 @@ if __name__ == "__main__":
 
 请使用以下 URL 连接 Websocket 服务器：
 
-wss://user-wss.ktx360.com
+wss://u-stream.ktx.com
 
 **在连接时，请附加以下HTTP请求头**
 
