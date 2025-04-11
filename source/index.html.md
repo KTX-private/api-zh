@@ -36,7 +36,7 @@ code_clipboard: true
 
 **备用api域名列表**
 
-[https://api.ktx.tel/v1/public/queryApiDomain](https://api.ktx.tel/v1/public/queryApiDomain)
+[https://api.ktx.com/v1/pu/domains](https://api.ktx.com/v1/pu/domains)
 
 **API的REST接口使用以下HTTP方法：**
 
