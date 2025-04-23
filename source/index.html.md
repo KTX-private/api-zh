@@ -103,7 +103,8 @@ const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
 
 const queryStr = 'asset=BTC';
-const sign = CryptoJS.HmacSHA256(queryStr, secret).toString(); // POST or DELETE  replace queryStr with bodyStr
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString(); // POST or DELETE  replace queryStr with bodyStr
 const url = `${endpoints}/v1/accounts?${queryStr}`;
 
 request.get(url,{
@@ -111,7 +112,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':Date.now()+5000 // optional
+            'api-expire-time':exprieTime
           },
         },
 
@@ -138,14 +139,15 @@ SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 def do_request():
     path = '/v1/accounts'
     query_str = 'asset=BTC'
+    expire_time = str(int(time.time() * 1000) + 5000)
     # POST or DELETE replace query_str with body_str
-    sign = hmac.new(SECRET_KEY.encode("utf-8"), query_str.encode("utf-8"), hashlib.sha256).hexdigest()
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
 
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time': str(int(time.time() * 1000) + 5000)
+        'api-expire-time': expire_time
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -178,11 +180,15 @@ if __name__ == '__main__':
 
 **创建签名**
 
-在发送请求前，首先确定用于签名的消息体。对于GET类型的请求，Query String是需要签名的消息体，对于POST请求，Body String是需要签名的消息体。签名的具体方法如下：
+在发送请求前，首先确定用于签名的消息体。对于GET类型的请求，Query String是需要签名的消息体，对于POST请求，Body String是需要签名的消息体，expire_time 是过期时间
+签名的具体方法如下：
 
-* 第一步：以Secret Key作为Key对需要签名的消息体执行HmacSHA256算法
-* 第二步：将以上结果转化为Hex String
-* 第三步：将Hex String作为请求头api-sign的值
+* 第一步：获取当前时间戳 + 有效时间
+  使用 Date.now() 获取当前毫秒时间戳，并加上一个短暂的有效期（如 5000 毫秒），表示请求将在 5 秒内失效。
+* 第二步：计算签名
+  将 [时间戳 + 请求体字符串] 作为原始数据，使用 HMAC-SHA256 算法，并使用用户的 secret 作为密钥进行加密：
+* 第三步：将以上结果转化为Hex String
+* 第四步：将Hex String作为请求头api-sign的值,将expire_time作为请求头api-expire-time的值
 
 ## Api Key权限
 
@@ -1173,7 +1179,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time': exprieTime// optional
+            'api-expire-time': exprieTime
           },
         },
 
@@ -1284,7 +1290,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -1321,7 +1327,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time #optional
+        'api-expire-time':expire_time 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -1390,7 +1396,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -1428,7 +1434,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time #optional
+        'api-expire-time':expire_time 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -1484,7 +1490,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -1600,7 +1606,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  // optional
+            'api-expire-time':exprieTime  
         },
     },
 
@@ -1643,7 +1649,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -1721,10 +1727,10 @@ if __name__ == '__main__':
 |-----------------|---------|------|----------------------------------------------------------------------------------------------------------------------|
 | symbol          | string  | 是    | 交易对代码，如 BTC_USDT, ETH_USDT 等                                                                                         |
 | type            | string  | 是    | 委托类型，有效值 limit market                                                                                                |
-| client_order_id | string  | 否    | 委托id，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳                                                                               |
 | quantity        | decimal | 是    | 委托量 有正负                                                                                                              |
-| price           | decimal | 否    | 委托限价                                                                                                                 |
 | market          | string  | 是    | 必须 spot 现货，lpc U本位永续                                                                                                 |
+| client_order_id | string  | 否    | 委托id，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳                                                                               |
+| price           | decimal | 否    | 委托限价                                                                                                                 |
 | positionMerge   | string  | 否    | 合约必须 long合并多 short合并空                                                                                          |
 | marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                            |
 | leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                            
@@ -1760,7 +1766,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  // optional
+            'api-expire-time':exprieTime  
         },
     },
 
@@ -1793,7 +1799,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -1893,7 +1899,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  // optional
+            'api-expire-time':exprieTime  
         },
     },
 
@@ -1926,7 +1932,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
@@ -2007,16 +2013,16 @@ if __name__ == '__main__':
 * 请求参数(需要排序)
 
 
-| 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                                                                                             |
-| ------------ | ---------- |-----| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| status     | string   | 否   | 有效值 unsettled, settled<br/>unsettled 表示获取未结算委托，返回结果按委托创建时间倒序排序<br/>settled 表示获取已结算委托，返回结果按委托结算时间倒序排序<br/>默认值 unsettled                                                                                                                                   |
-| market | string   | 否   | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约   |
+| 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                      |
+| ------------ | ---------- |-----|-------------------------------------------------------------------------------------------------------------------------|
+| status     | string   | 否   | 有效值 unsettled, settled<br/>unsettled 表示获取未结算委托，返回结果按委托创建时间倒序排序<br/>settled 表示获取已结算委托，返回结果按委托结算时间倒序排序<br/>默认值 unsettled  |
+| market | string   | 否   | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约<br/>默认值 spot                                                                      |
 | symbol     | string   | 否   | 交易对代码，如 BTC_USDT, ETH_USDT 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
-| start_time | long     | 否   | 限定返回委托的最近创建时间                                                                                                                                                                                                                                                                                       |
-| end_time   | long     | 否   | 限定返回委托的最近创建时间                                                                                                                                                                                                                                                                                       |
-| before     | int64    | 否   | 委托更新 id<br/>限定返回委托的最大更新id                                                                                                                                                                                                                                                                         |
-| after      | int64    | 否   | 委托更新 id<br/>限定返回委托的最小更新id                                                                                                                                                                                                                                                                         |
-| limit      | long     | 否   | 指定最多返回多少个委托                                                                                                                                                                                                                                                                                           |
+| start_time | long     | 否   | 限定返回委托的最近创建时间                                                                                                           |
+| end_time   | long     | 否   | 限定返回委托的最近创建时间                                                                                                           |
+| before     | int64    | 否   | 委托更新 id<br/>限定返回委托的最大更新id                                                                                               |
+| after      | int64    | 否   | 委托更新 id<br/>限定返回委托的最小更新id                                                                                               |
+| limit      | long     | 否   | 指定最多返回多少个委托                                                                                                             |
 
 * 该接口支持的参数组合和数据源
 
@@ -2064,7 +2070,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime
         },
     },
 
@@ -2101,7 +2107,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time #optional
+        'api-expire-time':expire_time 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
     print(resp.text)
@@ -2161,7 +2167,7 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
         },
     },
 
@@ -2198,7 +2204,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
 
     }
     resp = requests.post(END_POINT + path, json=param, headers=headers)
@@ -2254,7 +2260,7 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime // optional
+            'api-expire-time':exprieTime 
 
         },
     },
@@ -2290,7 +2296,7 @@ def do_request():
         'Content-Type': 'application/json',
         'api-key': API_KEY,
         'api-sign': sign,
-        'api-expire-time':expire_time # optional
+        'api-expire-time':expire_time 
     }
     resp = requests.get(END_POINT + path, query_str, headers=headers)
     print(resp.text)
