@@ -542,7 +542,8 @@
 
 
 <span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">asset=BTC</span><span class="dl">'</span><span class="p">;</span>
-<span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// POST or DELETE  replace queryStr with bodyStr</span>
+<span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span> <span class="c1">// POST or DELETE  replace queryStr with bodyStr</span>
 <span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/accounts?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
 <span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
@@ -550,7 +551,7 @@
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>
           <span class="p">},</span>
         <span class="p">},</span>
 
@@ -574,14 +575,15 @@
 <span class="k">def</span> <span class="nf">do_request</span><span class="p">():</span>
     <span class="n">path</span> <span class="o">=</span> <span class="s">'/v1/accounts'</span>
     <span class="n">query_str</span> <span class="o">=</span> <span class="s">'asset=BTC'</span>
+    <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="c1"># POST or DELETE replace query_str with body_str
-</span>    <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">query_str</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
+</span>    <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">query_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
 
     <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span> <span class="n">expire_time</span>
     <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
@@ -624,12 +626,16 @@
 
 <p><strong>创建签名</strong></p>
 
-<p>在发送请求前，首先确定用于签名的消息体。对于GET类型的请求，Query String是需要签名的消息体，对于POST请求，Body String是需要签名的消息体。签名的具体方法如下：</p>
+<p>在发送请求前，首先确定用于签名的消息体。对于GET类型的请求，Query String是需要签名的消息体，对于POST请求，Body String是需要签名的消息体，expire_time 是过期时间
+签名的具体方法如下：</p>
 
 <ul>
-<li>第一步：以Secret Key作为Key对需要签名的消息体执行HmacSHA256算法</li>
-<li>第二步：将以上结果转化为Hex String</li>
-<li>第三步：将Hex String作为请求头api-sign的值</li>
+<li>第一步：获取当前时间戳 + 有效时间
+使用 Date.now() 获取当前毫秒时间戳，并加上一个短暂的有效期（如 5000 毫秒），表示请求将在 5 秒内失效。</li>
+<li>第二步：计算签名
+将 [时间戳 + 请求体字符串] 作为原始数据，使用 HMAC-SHA256 算法，并使用用户的 secret 作为密钥进行加密：</li>
+<li>第三步：将以上结果转化为Hex String</li>
+<li>第四步：将Hex String作为请求头api-sign的值,将expire_time作为请求头api-expire-time的值</li>
 </ul>
 <h2 id='api-key'>Api Key权限</h2>
 <p><strong>私有接口需要特定的权限才能执行。可以为Api Key授予适当的权限。如果Api Key未被授予某个接口需要的权限，那么使用该Api Key提交的请求将被拒绝。</strong></p>
@@ -1751,7 +1757,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span> <span class="nx">exprieTime</span><span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span> <span class="nx">exprieTime</span>
           <span class="p">},</span>
         <span class="p">},</span>
 
@@ -1870,7 +1876,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -1904,8 +1910,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1">#optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -1981,7 +1987,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2016,8 +2022,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1">#optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2086,7 +2092,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2240,7 +2246,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2280,8 +2286,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2374,28 +2380,28 @@ ticker: 最新成交信息</p>
 <td>委托类型，有效值 limit market</td>
 </tr>
 <tr>
-<td>client_order_id</td>
-<td>string</td>
-<td>否</td>
-<td>委托id，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳</td>
-</tr>
-<tr>
 <td>quantity</td>
 <td>decimal</td>
 <td>是</td>
 <td>委托量 有正负</td>
 </tr>
 <tr>
-<td>price</td>
-<td>decimal</td>
-<td>否</td>
-<td>委托限价</td>
-</tr>
-<tr>
 <td>market</td>
 <td>string</td>
 <td>是</td>
 <td>必须 spot 现货，lpc U本位永续</td>
+</tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>否</td>
+<td>委托id，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳</td>
+</tr>
+<tr>
+<td>price</td>
+<td>decimal</td>
+<td>否</td>
+<td>委托限价</td>
 </tr>
 <tr>
 <td>positionMerge</td>
@@ -2468,7 +2474,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2498,8 +2504,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2607,7 +2613,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>  
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2637,8 +2643,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2737,7 +2743,7 @@ ticker: 最新成交信息</p>
 <td>market</td>
 <td>string</td>
 <td>否</td>
-<td>交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约</td>
+<td>交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约<br/>默认值 spot</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -2827,7 +2833,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span>
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2861,8 +2867,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1">#optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
@@ -2937,7 +2943,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
         <span class="p">},</span>
     <span class="p">},</span>
 
@@ -2971,8 +2977,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+
     <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">post</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="n">param</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
@@ -3048,7 +3054,7 @@ ticker: 最新成交信息</p>
             <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
             <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
-            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> <span class="c1">// optional</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">exprieTime</span> 
 
         <span class="p">},</span>
     <span class="p">},</span>
@@ -3081,8 +3087,8 @@ ticker: 最新成交信息</p>
         <span class="s">'Content-Type'</span><span class="p">:</span> <span class="s">'application/json'</span><span class="p">,</span>
         <span class="s">'api-key'</span><span class="p">:</span> <span class="n">API_KEY</span><span class="p">,</span>
         <span class="s">'api-sign'</span><span class="p">:</span> <span class="n">sign</span><span class="p">,</span>
-        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> <span class="c1"># optional
-</span>    <span class="p">}</span>
+        <span class="s">'api-expire-time'</span><span class="p">:</span><span class="n">expire_time</span> 
+    <span class="p">}</span>
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="p">.</span><span class="n">get</span><span class="p">(</span><span class="n">END_POINT</span> <span class="o">+</span> <span class="n">path</span><span class="p">,</span> <span class="n">query_str</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
     <span class="k">print</span><span class="p">(</span><span class="n">resp</span><span class="p">.</span><span class="n">text</span><span class="p">)</span>
 
