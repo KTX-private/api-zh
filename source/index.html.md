@@ -837,7 +837,7 @@ if __name__ == "__main__":
 
 > 请求: 取消订阅数据流
 
-```javascript
+```json
 {
   "id": 1,
   "method": "UNSUBSCRIBE",
@@ -851,7 +851,7 @@ if __name__ == "__main__":
 
 > 如果请求被服务器正确处理，客户端会收到以下响应:
 
-```javascript
+```json
   {
     "result":"success", // 返回结果
     "op":"SUBSCRIBE",
@@ -861,7 +861,7 @@ if __name__ == "__main__":
 
 > 如果请求出错，客户端会收到以下错误响应:
 
-```javascript
+```json
 {
   "error": -1003, // 错误代码
   "message": "..." // 错误描述
@@ -874,7 +874,7 @@ if __name__ == "__main__":
 
 > 客户端可以发送以下请求给服务器
 
-```javascript
+```json
 {
   "id": 123, // 由客户端给定的请求id
   "method": "..." // 请求类型
@@ -899,7 +899,7 @@ if __name__ == "__main__":
 
 > 发送以下请求可订阅深度信息
 
-```javascript
+```json
 {
   "id": 123,
   "method": "SUBSCRIBE",
@@ -922,7 +922,7 @@ if __name__ == "__main__":
 
 > 数据流
 
-```javascript
+```json
   {
     "stream": "spot.BTC_USDT.order_book.20",
     "data": {
@@ -972,7 +972,7 @@ if __name__ == "__main__":
 
 > 发送以下请求可订阅交易列表
 
-```javascript
+```json
 {
   "id": 123,
   "method": "SUBSCRIBE"
@@ -994,7 +994,7 @@ if __name__ == "__main__":
 
 > 数据流
 
-```javascript
+```json
 {
   "stream": "spot.BTC_USDT.trades",
   "data": [
@@ -1030,7 +1030,7 @@ if __name__ == "__main__":
 
 > 发送以下请求可订阅K线
 
-```javascript
+```json
 {
   "id": 123,
   "method": "SUBSCRIBE"
@@ -1052,7 +1052,7 @@ if __name__ == "__main__":
     3. \<time_frame> 是K线周期，有效值是1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1w, 1M
 > 数据流
 
-```javascript
+```json
 {
   "stream": "spot.BTC_USDT.candles.1m",
   "data": {
@@ -1103,7 +1103,7 @@ if __name__ == "__main__":
 
 > 发送以下请求可订阅Ticker
 
-```javascript
+```json
 {
   "id": 123,
   "method": "SUBSCRIBE"
@@ -1124,7 +1124,7 @@ if __name__ == "__main__":
     2. \<symbol> 是交易对名称，如BTC_USDT，ETH_USDT等
 > 数据流
 
-```javascript
+```json
 {
   "stream": "spot.BTC_USDT.ticker",
   "data": {   
@@ -2514,7 +2514,7 @@ wss://u-stream.ktx.com
 > 数据流
 > 在成功建立连接后，客户端将收到ApiKey对应账户的余额变动信息及委托变动信息。格式如下:
 
-```javascript
+```json
 {
   "stream": "account",
   "data": { Account }
@@ -2535,7 +2535,7 @@ wss://u-stream.ktx.com
 
 **当账户余额发生变更时，会收到account事件**
 
-```javascript
+```json
 {
   "stream": "account",
   "data": {
@@ -2549,7 +2549,7 @@ wss://u-stream.ktx.com
 ## Position
 
 **当仓位信息发送变更时，会收到position事件**
-```javascript
+```json
 {
   "stream": "position",
   "data": {
@@ -2571,7 +2571,7 @@ wss://u-stream.ktx.com
 
 **当委托发生变更时，会收到order事件**
 
-```javascript
+```json
 {
   "stream": "order",
   "data":{
