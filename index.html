@@ -3460,120 +3460,256 @@ ticker: 最新成交信息</p>
 </tr>
 </thead><tbody>
 <tr>
-<td style="text-align: center">-1000</td>
-<td style="text-align: center">无效请求</td>
-</tr>
-<tr>
-<td style="text-align: center">-1001</td>
-<td style="text-align: center">无效方法</td>
-</tr>
-<tr>
-<td style="text-align: center">-1002</td>
-<td style="text-align: center">丢失参数</td>
-</tr>
-<tr>
-<td style="text-align: center">-1003</td>
-<td style="text-align: center">无效参数</td>
+<td style="text-align: center">-10000</td>
+<td style="text-align: center">网络或服务故障        network or service failure</td>
 </tr>
 <tr>
 <td style="text-align: center">-10001</td>
-<td style="text-align: center">未知错误</td>
+<td style="text-align: center">非法状态        illegal state</td>
+</tr>
+<tr>
+<td style="text-align: center">-10002</td>
+<td style="text-align: center">未实现        not implemented</td>
+</tr>
+<tr>
+<td style="text-align: center">-11001</td>
+<td style="text-align: center">请求超时        expired</td>
+</tr>
+<tr>
+<td style="text-align: center">-11002</td>
+<td style="text-align: center">无权限        no permission</td>
+</tr>
+<tr>
+<td style="text-align: center">-11003</td>
+<td style="text-align: center">访问次数超限        access limit exceeded</td>
+</tr>
+<tr>
+<td style="text-align: center">-11004</td>
+<td style="text-align: center">用量超限        usage limit exceeded</td>
+</tr>
+<tr>
+<td style="text-align: center">-12001</td>
+<td style="text-align: center">不可识别的事件        unknown event</td>
+</tr>
+<tr>
+<td style="text-align: center">-12002</td>
+<td style="text-align: center">可识别但不支持的事件        unsupported event</td>
+</tr>
+<tr>
+<td style="text-align: center">-12003</td>
+<td style="text-align: center">不可识别的请求        unknown request</td>
+</tr>
+<tr>
+<td style="text-align: center">-12004</td>
+<td style="text-align: center">可识别但不支持的请求        unsupported request</td>
+</tr>
+<tr>
+<td style="text-align: center">-12011</td>
+<td style="text-align: center">不可识别的参数        unknown parameter</td>
+</tr>
+<tr>
+<td style="text-align: center">-12012</td>
+<td style="text-align: center">可识别但不支持的参数        unsupported parameter</td>
+</tr>
+<tr>
+<td style="text-align: center">-12013</td>
+<td style="text-align: center">缺少必要的参数        missing parameter</td>
+</tr>
+<tr>
+<td style="text-align: center">-12014</td>
+<td style="text-align: center">参数值为空        empty parameter</td>
+</tr>
+<tr>
+<td style="text-align: center">-12015</td>
+<td style="text-align: center">参数值无效        invalid parameter</td>
+</tr>
+<tr>
+<td style="text-align: center">-12101</td>
+<td style="text-align: center">无效的签名        invalid signature</td>
+</tr>
+<tr>
+<td style="text-align: center">-12102</td>
+<td style="text-align: center">无效的JSON        invalid json</td>
 </tr>
 <tr>
 <td style="text-align: center">-20001</td>
-<td style="text-align: center">未知事件</td>
+<td style="text-align: center">实例不存在        instance is not exist</td>
 </tr>
 <tr>
 <td style="text-align: center">-20002</td>
-<td style="text-align: center">未知请求</td>
+<td style="text-align: center">实例重复        instance is duplicated</td>
 </tr>
 <tr>
 <td style="text-align: center">-20003</td>
-<td style="text-align: center">不支持的事件</td>
+<td style="text-align: center">实例在使用，不能移除        in use</td>
 </tr>
 <tr>
 <td style="text-align: center">-20004</td>
-<td style="text-align: center">不支持的请求</td>
+<td style="text-align: center">超限        limit exceeded</td>
 </tr>
 <tr>
 <td style="text-align: center">-20005</td>
-<td style="text-align: center">过期请求</td>
+<td style="text-align: center">余额不足        insufficient</td>
 </tr>
 <tr>
-<td style="text-align: center">-20006</td>
-<td style="text-align: center">限制超出</td>
-</tr>
-<tr>
-<td style="text-align: center">-20007</td>
-<td style="text-align: center">使用次数超出</td>
-</tr>
-<tr>
-<td style="text-align: center">-20008</td>
-<td style="text-align: center">没有权限</td>
+<td style="text-align: center">-21000</td>
+<td style="text-align: center">未知错误        unknown</td>
 </tr>
 <tr>
 <td style="text-align: center">-21001</td>
-<td style="text-align: center">丢失参数</td>
+<td style="text-align: center">FOK失败        fok</td>
 </tr>
 <tr>
 <td style="text-align: center">-21002</td>
-<td style="text-align: center">空参数</td>
+<td style="text-align: center">Post Only订单被拒绝        post only</td>
 </tr>
 <tr>
 <td style="text-align: center">-21003</td>
-<td style="text-align: center">无效的参数</td>
+<td style="text-align: center">参数值无效        invalid param</td>
 </tr>
 <tr>
 <td style="text-align: center">-21004</td>
-<td style="text-align: center">丢失请求头</td>
+<td style="text-align: center">缺少header        empty header</td>
 </tr>
 <tr>
 <td style="text-align: center">-21005</td>
-<td style="text-align: center">空的请求头</td>
+<td style="text-align: center">header为空        header is null</td>
 </tr>
 <tr>
 <td style="text-align: center">-21006</td>
-<td style="text-align: center">无效的请求头</td>
+<td style="text-align: center">header值无效        invalid header</td>
 </tr>
 <tr>
 <td style="text-align: center">-21007</td>
-<td style="text-align: center">格式化错误</td>
+<td style="text-align: center">json格式不对        invalid json format</td>
 </tr>
 <tr>
 <td style="text-align: center">-21008</td>
-<td style="text-align: center">无效的签名</td>
+<td style="text-align: center">签名无效        unvalid signature</td>
+</tr>
+<tr>
+<td style="text-align: center">-21084</td>
+<td style="text-align: center">非法杠杆倍数        invalid leverage</td>
+</tr>
+<tr>
+<td style="text-align: center">-21100</td>
+<td style="text-align: center">参数格式非法        invalid parameter</td>
+</tr>
+<tr>
+<td style="text-align: center">-21101</td>
+<td style="text-align: center">非法订单ID        invalid order id</td>
+</tr>
+<tr>
+<td style="text-align: center">-21102</td>
+<td style="text-align: center">非法客户端订单ID        invalid client order id</td>
+</tr>
+<tr>
+<td style="text-align: center">-21103</td>
+<td style="text-align: center">非法来源        invalid origin</td>
+</tr>
+<tr>
+<td style="text-align: center">-21104</td>
+<td style="text-align: center">非法代理ID        invalid broker id</td>
+</tr>
+<tr>
+<td style="text-align: center">-21105</td>
+<td style="text-align: center">非法产品ID        invalid product id</td>
+</tr>
+<tr>
+<td style="text-align: center">-21106</td>
+<td style="text-align: center">非法订单类型        invalid type</td>
+</tr>
+<tr>
+<td style="text-align: center">-21107</td>
+<td style="text-align: center">非法价格        invalid price</td>
+</tr>
+<tr>
+<td style="text-align: center">-21108</td>
+<td style="text-align: center">非法下单数量        invalid quantity</td>
+</tr>
+<tr>
+<td style="text-align: center">-21109</td>
+<td style="text-align: center">非法可见数量        invalid visible quantity</td>
+</tr>
+<tr>
+<td style="text-align: center">-21110</td>
+<td style="text-align: center">禁止自成交        invalid self trade prevention</td>
+</tr>
+<tr>
+<td style="text-align: center">-21111</td>
+<td style="text-align: center">无效的timeInForce        invalid time in force</td>
+</tr>
+<tr>
+<td style="text-align: center">-21112</td>
+<td style="text-align: center">无效的cancelAfter        invalid cancel after</td>
+</tr>
+<tr>
+<td style="text-align: center">-21113</td>
+<td style="text-align: center">非法触发条件        invalid trigger</td>
+</tr>
+<tr>
+<td style="text-align: center">-21114</td>
+<td style="text-align: center">非法触发价格        invalid trigger value</td>
+</tr>
+<tr>
+<td style="text-align: center">-21115</td>
+<td style="text-align: center">非法仓位ID        invalid position id</td>
+</tr>
+<tr>
+<td style="text-align: center">-21116</td>
+<td style="text-align: center">仓位模式参数非法        invalid position merge</td>
+</tr>
+<tr>
+<td style="text-align: center">-21118</td>
+<td style="text-align: center">非法保证金模式        invalid margin method</td>
+</tr>
+<tr>
+<td style="text-align: center">-21201</td>
+<td style="text-align: center">权限不足        permission denied</td>
+</tr>
+<tr>
+<td style="text-align: center">-21211</td>
+<td style="text-align: center">订单ID重复        duplicate order id</td>
+</tr>
+<tr>
+<td style="text-align: center">-21212</td>
+<td style="text-align: center">用户端订单ID重复        duplicate client order id</td>
+</tr>
+<tr>
+<td style="text-align: center">-21213</td>
+<td style="text-align: center">成交过多        too many trades taken</td>
+</tr>
+<tr>
+<td style="text-align: center">-21214</td>
+<td style="text-align: center">未成交订单超限        too many active orders</td>
+</tr>
+<tr>
+<td style="text-align: center">-21215</td>
+<td style="text-align: center">未触发订单超限        too many untriggered orders</td>
+</tr>
+<tr>
+<td style="text-align: center">-21301</td>
+<td style="text-align: center">余额不足        insufficient funds</td>
+</tr>
+<tr>
+<td style="text-align: center">-21401</td>
+<td style="text-align: center">非法买卖方向        invalid side</td>
+</tr>
+<tr>
+<td style="text-align: center">-21402</td>
+<td style="text-align: center">平仓方向错误        invalid close</td>
+</tr>
+<tr>
+<td style="text-align: center">-21403</td>
+<td style="text-align: center">禁止开新仓        increase position</td>
+</tr>
+<tr>
+<td style="text-align: center">-21411</td>
+<td style="text-align: center">达到风险限额        reach risk limit</td>
 </tr>
 <tr>
 <td style="text-align: center">-22001</td>
-<td style="text-align: center">无效的划转</td>
-</tr>
-<tr>
-<td style="text-align: center">-22002</td>
-<td style="text-align: center">无效的订单</td>
-</tr>
-<tr>
-<td style="text-align: center">-22003</td>
-<td style="text-align: center">产品不存在</td>
-</tr>
-<tr>
-<td style="text-align: center">-30001</td>
-<td style="text-align: center">不存在</td>
-</tr>
-<tr>
-<td style="text-align: center">-30002</td>
-<td style="text-align: center">重复</td>
-</tr>
-<tr>
-<td style="text-align: center">-30003</td>
-<td style="text-align: center">已经在使用</td>
-</tr>
-<tr>
-<td style="text-align: center">-30004</td>
-<td style="text-align: center">超出限制</td>
-</tr>
-<tr>
-<td style="text-align: center">-30005</td>
-<td style="text-align: center">金额不足</td>
+<td style="text-align: center">无效的转账        invalid transfe</td>
 </tr>
 </tbody></table>
 
