@@ -2314,7 +2314,7 @@ if __name__ == '__main__':
     "maintMargin": "0.0050000000", // 维持保证金率
     "quantity": "-0.100", // 仓位数量 空仓0.1
     "posMargin": "1093.989", // 保证金
-    "marginMethod": "cross", // 仓位模式 全仓
+    "marginMethod": "cross", // 保证金模式 全仓
     "closableQty": "-0.100", // 可平仓位数量
     "initMargin": "0.1000000000", // 初始保证金率
     "id": "1125899906842624158", // id
