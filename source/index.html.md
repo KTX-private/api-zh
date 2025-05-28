@@ -2230,7 +2230,7 @@ if __name__ == '__main__':
 |--------| ---------- |-----|---------------------------------------|
 | market | string   | 是   | 交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约 |
 | symbol | string   | 是   | 交易对代码<br/>如 BTC_USDT, ETH_USDT 等      |
-| side   | string   | 否   | buy 或者 sell                           |
+| side   | string   | 否   | 1 buy 或者 -1 sell                      |
 
 > 如果请求被正确执行，返回空数组，否则返回错误信息
 
@@ -2329,7 +2329,7 @@ if __name__ == '__main__':
 
 * 请求方式 GET
 * 请求路径 /v1/positions
-* 权限: View, Trade
+* 权限: View
 * 请求参数(需要排序)
 
 
@@ -2433,7 +2433,7 @@ if __name__ == '__main__':
 
 * 请求方式 GET
 * 请求路径 /v1/fills
-* 权限: View, Trade
+* 权限: View
 * 请求参数(需要排序)
 
 
