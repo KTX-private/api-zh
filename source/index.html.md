@@ -2335,7 +2335,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                    |
 | ------------ | ---------- | ---------- |-------------------------------------------------------|
-| position_id   | string   | 否       | 仓位id 如存在这个参数 优先级最高                                    |
+| position_id   | string   | 否       | 仓位id 如存在这个参数,优先级最高                                    |
 | market | string   | 否   | 交易对市场，如 lpc 等，lpc为U本位合约                               |
 | symbol     | string   | 否       | 配合market使用,交易对代码<br/>如 BTC_USDT_SWAP, ETH_USDT_SWAP 等 |
 
