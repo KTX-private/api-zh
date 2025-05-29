@@ -3138,22 +3138,22 @@ ticker: 最新成交信息</p>
 </tr>
 </thead><tbody>
 <tr>
-<td>market</td>
-<td>string</td>
-<td>是</td>
-<td>交易对市场，如 spot, lpc 等，spot为现货,lpc为U本位合约</td>
-</tr>
-<tr>
 <td>position_id</td>
 <td>string</td>
 <td>否</td>
-<td>仓位id</td>
+<td>仓位id 如存在这个参数,优先级最高</td>
+</tr>
+<tr>
+<td>market</td>
+<td>string</td>
+<td>否</td>
+<td>交易对市场，如 lpc 等，lpc为U本位合约</td>
 </tr>
 <tr>
 <td>symbol</td>
 <td>string</td>
 <td>否</td>
-<td>交易对代码<br/>如 BTC_USDT_SWAP, ETH_USDT_SWAP 等</td>
+<td>配合market使用,交易对代码<br/>如 BTC_USDT_SWAP, ETH_USDT_SWAP 等</td>
 </tr>
 </tbody></table>
 <h2 id='106a02279b'>获取成交明细</h2>
