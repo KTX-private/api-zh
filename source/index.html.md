@@ -2410,7 +2410,7 @@ if __name__ == '__main__':
 let CryptoJS = require("crypto-js");
 let request = require("request");
 
-const endpoints = 'https://api.ktx.com/api'
+const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
@@ -2445,7 +2445,7 @@ import hmac
 import requests
 import time
 
-END_POINT = 'https://api.ktx.com/api'
+END_POINT = 'https://api.ktx.com/papi'
 API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
 SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
 
