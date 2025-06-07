@@ -2402,6 +2402,111 @@ if __name__ == '__main__':
 
 > 如果请求被正确执行,返回空数组,否则返回错误信息
 
+## 获取仓位
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/api'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+
+const queryStr = 'market=lpc&symbol=BTC_USDT_SWAP';
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/positions?${queryStr}`;
+
+request.get(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import time
+
+END_POINT = 'https://api.ktx.com/api'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+
+def do_request():
+    path = '/v1/positions'
+    query_str = 'market=lpc&symbol=BTC_USDT_SWAP'
+    expire_time = str(int(time.time() * 1000) + 5000)
+    # POST or DELETE replace query_str with body_str
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "entryPrice": "109398.9", // 开仓价格
+    "symbol": "BTC_USDT_SWAP", // 交易代码
+    "leverage": "10.0", // 杠杆倍数
+    "maintMargin": "0.0050000000", // 维持保证金率
+    "quantity": "-0.100", // 仓位数量 空仓0.1
+    "posMargin": "1093.989", // 保证金
+    "marginMethod": "cross", // 保证金模式 全仓
+    "closableQty": "-0.100", // 可平仓位数量
+    "initMargin": "0.1000000000", // 初始保证金率
+    "id": "1125899906842624158", // id
+    "orderMargin": "0",  // 委托保证金
+    "mergeMode": "short"  // 仓位模式 short
+  }
+  ...
+]
+```
+
+**获取仓位**
+
+* 请求方式 GET
+* 请求路径 /v1/positions
+* 权限: View
+* 请求参数
+
+
+| 参数名称   | 参数类型 | 是否必传 | 说明                                                    |
+| ------------ | ---------- | ---------- |-------------------------------------------------------|
+| position_id   | string   | 否       | 仓位id 如存在这个参数,优先级最高                                    |
+| market | string   | 否   | 交易对市场，如 lpc 等，lpc为U本位合约                               |
+| symbol     | string   | 否       | 配合market使用,交易对代码<br/>如 BTC_USDT_SWAP, ETH_USDT_SWAP 等 |
+
 ## 获取成交明细
 
 > Request
