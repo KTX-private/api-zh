@@ -2189,6 +2189,9 @@ if __name__ == '__main__':
     "status": "accepted", // 订单状态
     "executedQty": "0", // 已成交数量
     "profit": "0",    // 收益
+    "origin":0, // origin          
+    "brokerId":0, // 渠道id
+    "update_id":'1125899907137993336', // 更新id
     "executedCost": "103", // 已成交价值
     "fillCount": 0, // 成交次数
     "fills": [],
@@ -2845,7 +2848,7 @@ wss://u-stream.ktx.com
       "quantity":"0",   // 数量
       "entryPrice":"0", // 开仓均价
       "mergeMode":"none", // 仓位模式
-      "marginMethod":"isolate",//仓位模式
+      "marginMethod":"isolate",// 保证金模式
       "leverage":"10.0", // 杠杠
       "initMargin":"0.1", // 起始保证金率
       "maintMargin":"0.005",// 维持保证金率
