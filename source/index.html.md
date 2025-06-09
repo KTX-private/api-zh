@@ -1311,6 +1311,8 @@ if __name__ == '__main__':
     "free":"100",  // 可用
     "withdrawable":"100",// 可转出额
     "collateral":false,// 是否抵扣
+    "discountForMargin":"1", // 可选字段 保证金抵扣率
+    "discountForFee":"1" // 可选字段 手续费抵扣率
   },
   {
     "asset":"BTC",  // 资产代码
@@ -1887,6 +1889,9 @@ if __name__ == '__main__':
   "status": "filled", // 订单状态
   "executedQty": "0.01", // 已成交数量
   "profit": "0",    // 收益
+  "origin":0, // origin          
+  "brokerId":0, // 渠道id
+  "update_id":'1125899907137993336', // 更新id
   "executedCost": "103", // 已成交价值
   "fillCount": 1, // 成交次数
   "fills": [  // 成交详情
@@ -2021,6 +2026,9 @@ if __name__ == '__main__':
     "status": "filled", // 订单状态
     "executedQty": "0.01", // 已成交数量
     "profit": "0",    // 收益
+    "origin":0, // origin          
+    "brokerId":0, // 渠道id
+    "update_id":'1125899907137993336', // 更新id
     "executedCost": "103", // 已成交价值
     "fillCount": 1, // 成交次数
     "fills": [  // 成交详情
@@ -2818,6 +2826,8 @@ wss://u-stream.ktx.com
     "free":"100",  // 可用
     "withdrawable":"100",// 可转出额
     "collateral":false,// 是否抵扣
+    "discountForMargin":"1", // 可选字段 保证金抵扣率
+    "discountForFee":"1" // 可选字段 手续费抵扣率
   }
 }
 ```
@@ -2840,7 +2850,9 @@ wss://u-stream.ktx.com
       "initMargin":"0.1", // 起始保证金率
       "maintMargin":"0.005",// 维持保证金率
       "posMargin":"0", // 持仓保证金
-      "orderMargin":"1009.8990000" // 委托保证金
+      "orderMargin":"1009.8990000", // 委托保证金
+      "closableQty": "-0.100", // 可平仓位数量
+
   }
 }
 ```
@@ -2873,6 +2885,9 @@ wss://u-stream.ktx.com
       "status": "filled", // 订单状态
       "executedQty": "0.01", // 已成交数量
       "profit": "0",    // 收益
+      "origin":0, // origin          
+      "brokerId":0, // 渠道id
+      "update_id":'1125899907137993336', // 更新id
       "executedCost": "103", // 已成交价值
       "fillCount": 1, // 成交次数
       "fills": [  // 成交详情
