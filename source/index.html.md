@@ -1754,12 +1754,16 @@ if __name__ == '__main__':
   "postOnly": false,
   "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
   "positionId": 0,  // 提交的仓位id
+  "marginMethod": "cross", // 保证金模式 全仓
   "close": false,   // 是否为可平单
   "leverage": 0,    // 杠杠倍数
   "action": "unknown", // 仓位行为
   "status": "accepted", // 订单状态
   "executedQty": "0", // 已成交数量
   "profit": "0",    // 收益
+  "origin":0, // origin          
+  "brokerId":0, // 渠道id
+  "update_id":'1125899907137993336', // 更新id
   "executedCost": "103", // 已成交价值
   "fillCount": 0, // 成交次数
   "fills": [],
@@ -1883,6 +1887,7 @@ if __name__ == '__main__':
   "postOnly": false,
   "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
   "positionId": 0,  // 提交的仓位id
+  "marginMethod": "cross", // 保证金模式 全仓
   "close": false,   // 是否为可平单
   "leverage": 0,    // 杠杠倍数
   "action": "unknown", // 仓位行为
@@ -2020,6 +2025,7 @@ if __name__ == '__main__':
     "postOnly": false,
     "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
     "positionId": 0,  // 提交的仓位id
+    "marginMethod": "cross", // 保证金模式 全仓
     "close": false,   // 是否为可平单
     "leverage": 0,    // 杠杠倍数
     "action": "unknown", // 仓位行为
@@ -2183,6 +2189,7 @@ if __name__ == '__main__':
     "postOnly": false,
     "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
     "positionId": 0,  // 提交的仓位id
+    "marginMethod": "cross", // 保证金模式 全仓
     "close": false,   // 是否为可平单
     "leverage": 0,    // 杠杠倍数
     "action": "unknown", // 仓位行为
@@ -2882,6 +2889,7 @@ wss://u-stream.ktx.com
       "postOnly": false,
       "positionMerge": "none", // 仓位模式 none分仓 long合并多 short合并空
       "positionId": 0,  // 提交的仓位id
+      "marginMethod": "cross", // 保证金模式 全仓
       "close": false,   // 是否为可平单
       "leverage": 0,    // 杠杠倍数
       "action": "unknown", // 仓位行为
