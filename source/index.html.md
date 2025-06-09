@@ -349,7 +349,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                     |
 |--------| ---------- |------|--------------------------------------------------------|
-| market | string   | 是    | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约                  |
+| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
 | symbol | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等,不指定返回全部交易对 |
 
 * Data source
@@ -437,7 +437,7 @@ if __name__ == '__main__':
 
 | 参数名称    | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                                                                                                             |
 | ------------- | ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约                                                                                                                                                                                                                                                                                          |
+| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
 | symbol      | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                                                                                                                                                                                    |
 | level       | int32    | 否       | 指定最多返回多少级深度<br/>有效值 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000<br/>默认值 100                                                                                                                                                                                                                                                       |
 | price_scale | integer  | 否       | 指定按价格合并深度,如指定交易对的价格最多含4位小数<br/>price_scale=0 时返回的价格最多含4位小数,<br/>price_scale=1 时返回的价格最多含3位小数, 委托量是价格区间0.0010中全部委托量的和<br/>price_scale=2 时返回的价格最多含2位小数, 委托量是价格区间0.0100中全部委托量的和<br/>price_scale=3 时返回的价格最多含1位小数, 委托量是价格区间0.1000中全部委托量的和<br/>price_scale=4 时返回的价格最多含0位小数, 委托量是价格区间1.0000中全部委托量的和<br/>有效值 0, 1, 2, 3, 4, 5<br/>默认值 0 |
@@ -522,13 +522,13 @@ if __name__ == '__main__':
 
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                     |
-| ------------ | ---------- | ---------- |------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约                                  |
-| symbol     | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                            |
-| time_frame | string   | 是       | K线数据的时间周期<br/>有效值 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1W或1M |
-| before     | int64    | 否       | utc时间<br/>限定返回K线记录的最近时间                                                |
-| after      | int64    | 否       | utc时间<br/>限定返回K线记录的最早时间                                                |
-| limit      | integer  | 否       | 获取K线记录的最大数量<br/>默认值100,最大值1000                                         |
+| ------------ | ---------- | --------- |------------------------------------------------------------------------|
+| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
+| symbol     | string   | 是      | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                            |
+| time_frame | string   | 是      | K线数据的时间周期<br/>有效值 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1W或1M |
+| before     | int64    | 否      | utc时间<br/>限定返回K线记录的最近时间                                                |
+| after      | int64    | 否      | utc时间<br/>限定返回K线记录的最早时间                                                |
+| limit      | integer  | 否      | 获取K线记录的最大数量<br/>默认值100,最大值1000                                         |
 
 * 该接口支持的参数组合和数据源
 
@@ -612,7 +612,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                          |
 | ------------ | ---------- | ---------- |---------------------------------------------|
-| market | string   | 是    | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约       |
+| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
 | symbol     | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等 |
 | start_time | int64    | 否       | 限定返回交易记录的最早时间                               |
 | end_time   | int64    | 否       | 限定返回交易记录的最近时间                               |
@@ -715,7 +715,7 @@ if __name__ == '__main__':
 
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                  |
 | ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约                                                               |
+| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
 | symbol   | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等,<br/>可按如下两种形式指定多个交易对代码<br/> 1. symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
@@ -1775,22 +1775,22 @@ if __name__ == '__main__':
 * 请求参数
 
 
-| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                    |
-|-----------------|---------|------|-----------------------------------------------------------------------------------------------------------------------|
-| symbol          | string  | 是    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                           |
-| side            | string  | 是    | 交易方向 buy 买,sell 卖                                                                                                     |
-| type            | string  | 是    | 委托类型,有效值 limit market                                                                                                 |
-| quantity        | decimal | 是    | 委托量 有正负                                                                                                               |
-| market          | string  | 是    | 必须 spot 现货,lpc U本位永续                                                                                                  |
-| client_order_id | string  | 否    | 委托id,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳                                                                                |
-| price           | decimal | 否    | 委托限价                                                                                                                  |
-| positionMerge   | string  | 否    | 持仓方向 合约必须 long合并多 short合并空                                                                                            |
-| marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                             |
-| leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                             
-| close           | bool    | 否    | 合约必须 true 平仓单,false 开仓单                                                                                               |
-| post_only       | bool    | 否    | ...                                                                                                                   |
+| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                   |
+|-----------------|---------|------|----------------------------------------------------------------------------------------------------------------------|
+| symbol          | string  | 是    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                          |
+| side            | string  | 是    | 交易方向 buy 买,sell 卖                                                                                                    |
+| type            | string  | 是    | 委托类型,有效值 limit market                                                                                                |
+| quantity        | decimal | 是    | 委托量                                                                                                               |
+| market          | string  | 是    | 必须 spot 现货,lpc U本位永续                                                                                                 |
+| client_order_id | string  | 否    | 委托id,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳                                                                               |
+| price           | decimal | 否    | 委托限价                                                                                                                 |
+| positionMerge   | string  | 否    | 持仓方向 合约必须 long合并多 short合并空                                                                                           |
+| marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                            |
+| leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                            
+| close           | bool    | 否    | 合约必须 true 平仓单,false 开仓单                                                                                              |
+| post_only       | bool    | 否    | ...                                                                                                                  |
 | time_in_force   | string   | 否       | 委托时效性<br/>有效值 gtc, ioc<br/>gtc 表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>默认值 gtc |
-| positionId      | string   | 否       | 仓位id                                                                                                                  |
+| positionId      | string   | 否       | 仓位id                                                                                                                 |
 
 > 委托对象
 > 最多包含该委托的20笔成交
