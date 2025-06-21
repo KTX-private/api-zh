@@ -1660,7 +1660,7 @@ ticker: 最新成交信息</p>
       </span><span class="nl">"i"</span><span class="p">:</span><span class="w"> </span><span class="mi">17122255</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易</span><span class="w"> </span><span class="err">id</span><span class="w">
       </span><span class="nl">"p"</span><span class="p">:</span><span class="w"> </span><span class="s2">"46125.7"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交价格</span><span class="w">
       </span><span class="nl">"q"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.079045"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交量</span><span class="w">
-      </span><span class="nl">"s"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Taker</span><span class="w"> </span><span class="err">的成交方向</span><span class="w">
+      </span><span class="nl">"s"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">Taker</span><span class="w"> </span><span class="err">的成交方向</span><span class="w"> </span><span class="mi">1</span><span class="err">买</span><span class="w"> </span><span class="mi">-1</span><span class="w"> </span><span class="err">卖</span><span class="w">
       </span><span class="nl">"t"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1628738748319"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交时间</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -1903,7 +1903,7 @@ ticker: 最新成交信息</p>
 <ul>
 <li>请求方式 GET</li>
 <li>请求路径 /v1/trade/accounts</li>
-<li>权限: View, Trade</li>
+<li>权限: View</li>
 <li>请求参数</li>
 </ul>
 
@@ -2016,7 +2016,7 @@ ticker: 最新成交信息</p>
 <ul>
 <li>请求方式 POST</li>
 <li>请求路径 /v1/main/accounts</li>
-<li>权限: Trade</li>
+<li>权限: View</li>
 <li>请求参数</li>
 </ul>
 
@@ -2048,7 +2048,8 @@ ticker: 最新成交信息</p>
 
 <span class="kd">const</span> <span class="nx">param</span> <span class="o">=</span> <span class="p">{</span>
     <span class="na">symbol</span><span class="p">:</span><span class="dl">'</span><span class="s1">USDT</span><span class="dl">'</span><span class="p">,</span>
-    <span class="na">amount</span><span class="p">:</span> <span class="mi">10</span>
+    <span class="na">amount</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="na">type</span><span class="p">:</span> <span class="dl">'</span><span class="s1">WALLET_TRADE</span><span class="dl">'</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="kd">let</span> <span class="nx">bodyStr</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span>
@@ -2089,7 +2090,8 @@ ticker: 最新成交信息</p>
 
     <span class="n">param</span> <span class="o">=</span> <span class="p">{</span>
         <span class="s">'symbol'</span><span class="p">:</span> <span class="s">'USDT'</span><span class="p">,</span>
-        <span class="s">'amount'</span><span class="p">:</span> <span class="mi">10</span>
+        <span class="s">'amount'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+        <span class="s">'type'</span><span class="p">:</span> <span class="s">'WALLET_TRADE'</span><span class="p">,</span>
     <span class="p">}</span>
     <span class="n">body_str</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
@@ -2140,7 +2142,13 @@ ticker: 最新成交信息</p>
 <td>amount</td>
 <td>number</td>
 <td>是</td>
-<td>划转数量,如 10,-10 等<br/>如果 &gt; 0 , 则从钱包账户划转到交易账户 <br/>如果 &lt; 0 , 则从交易账户划转到钱包账户</td>
+<td>划转数量</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>是</td>
+<td>划转数量 WALLET_TRADE 代表则从钱包账户划转到交易账户 TRADE_WALLET代表则从交易账户划转到钱包账户</td>
 </tr>
 </tbody></table>
 <h2 id='c3362c0aff'>获取账单</h2>
@@ -2377,17 +2385,16 @@ ticker: 最新成交信息</p>
   </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4611767382287843330"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单id</span><span class="w">
   </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">自定义id</span><span class="w">
   </span><span class="nl">"createTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390630904"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">创建时间</span><span class="w">
-  </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
+  </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单类型</span><span class="w">
   </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易方向</span><span class="w">
   </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">委托数量</span><span class="w">
   </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
-  </span><span class="nl">"visibleQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w"> </span><span class="err">none分仓</span><span class="w"> </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
+  </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">  </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
   </span><span class="nl">"positionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">提交的仓位id</span><span class="w">
   </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">保证金模式</span><span class="w"> </span><span class="err">全仓</span><span class="w">
   </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">是否为可平单</span><span class="w">
@@ -2399,7 +2406,7 @@ ticker: 最新成交信息</p>
   </span><span class="nl">"origin"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">origin</span><span class="w">          
   </span><span class="nl">"brokerId"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">渠道id</span><span class="w">
   </span><span class="nl">"update_id"</span><span class="p">:</span><span class="err">'</span><span class="mi">1125899907137993336</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">更新id</span><span class="w">
-  </span><span class="nl">"executedCost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">已成交价值</span><span class="w">
+  </span><span class="nl">"executedCost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">已成交价值</span><span class="w">
   </span><span class="nl">"fillCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交次数</span><span class="w">
   </span><span class="nl">"fills"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
   </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
@@ -2583,17 +2590,16 @@ ticker: 最新成交信息</p>
   </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4611767382287843330"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单id</span><span class="w">
   </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">自定义id</span><span class="w">
   </span><span class="nl">"createTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390630904"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">创建时间</span><span class="w">
-  </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
+  </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
   </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单类型</span><span class="w">
   </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易方向</span><span class="w">
   </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">委托数量</span><span class="w">
   </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
-  </span><span class="nl">"visibleQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-  </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w"> </span><span class="err">none分仓</span><span class="w"> </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
+  </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">  </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
   </span><span class="nl">"positionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">提交的仓位id</span><span class="w">
   </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">保证金模式</span><span class="w"> </span><span class="err">全仓</span><span class="w">
   </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">是否为可平单</span><span class="w">
@@ -2615,6 +2621,7 @@ ticker: 最新成交信息</p>
       </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"profit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"taker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
         </span><span class="p">{</span><span class="w">
           </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">资产数量</span><span class="w">
@@ -2639,7 +2646,7 @@ ticker: 最新成交信息</p>
 <ul>
 <li>请求方式 GET</li>
 <li>请求路径 /v1/order</li>
-<li>权限: View, Trade</li>
+<li>权限: View</li>
 <li>请求参数</li>
 </ul>
 
@@ -2727,17 +2734,16 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4611767382287843330"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单id</span><span class="w">
     </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">自定义id</span><span class="w">
     </span><span class="nl">"createTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390630904"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">创建时间</span><span class="w">
-    </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
+    </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
     </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单类型</span><span class="w">
     </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易方向</span><span class="w">
     </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">委托数量</span><span class="w">
     </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
-    </span><span class="nl">"visibleQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w"> </span><span class="err">none分仓</span><span class="w"> </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
+    </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">  </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
     </span><span class="nl">"positionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">提交的仓位id</span><span class="w">
     </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">保证金模式</span><span class="w"> </span><span class="err">全仓</span><span class="w">
     </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">是否为可平单</span><span class="w">
@@ -2759,6 +2765,7 @@ ticker: 最新成交信息</p>
         </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"profit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"taker"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
           </span><span class="p">{</span><span class="w">
             </span><span class="nl">"amount"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">资产数量</span><span class="w">
@@ -2791,7 +2798,7 @@ ticker: 最新成交信息</p>
 <ul>
 <li>请求方式 GET</li>
 <li>请求路径 /v1/history/orders</li>
-<li>权限: View, Trade</li>
+<li>权限: View</li>
 </ul>
 
 <table><thead>
@@ -2935,17 +2942,16 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4611767382287843330"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单id</span><span class="w">
     </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">自定义id</span><span class="w">
     </span><span class="nl">"createTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390630904"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">创建时间</span><span class="w">
-    </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
+    </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
     </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单类型</span><span class="w">
     </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易方向</span><span class="w">
     </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">委托数量</span><span class="w">
     </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
-    </span><span class="nl">"visibleQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-    </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w"> </span><span class="err">none分仓</span><span class="w"> </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
+    </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">  </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
     </span><span class="nl">"positionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">提交的仓位id</span><span class="w">
     </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">保证金模式</span><span class="w"> </span><span class="err">全仓</span><span class="w">
     </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">是否为可平单</span><span class="w">
@@ -2957,7 +2963,7 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"origin"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">origin</span><span class="w">          
     </span><span class="nl">"brokerId"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">渠道id</span><span class="w">
     </span><span class="nl">"update_id"</span><span class="p">:</span><span class="err">'</span><span class="mi">1125899907137993336</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">更新id</span><span class="w">
-    </span><span class="nl">"executedCost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"103"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">已成交价值</span><span class="w">
+    </span><span class="nl">"executedCost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">已成交价值</span><span class="w">
     </span><span class="nl">"fillCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交次数</span><span class="w">
     </span><span class="nl">"fills"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
     </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
@@ -2971,7 +2977,7 @@ ticker: 最新成交信息</p>
 <ul>
 <li>请求方式 GET</li>
 <li>请求路径 /v1/pending/orders</li>
-<li>权限: View, Trade</li>
+<li>权限: View</li>
 </ul>
 
 <table><thead>
@@ -3299,10 +3305,10 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易代码</span><span class="w">
     </span><span class="nl">"leverage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10.0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">杠杆倍数</span><span class="w">
     </span><span class="nl">"maintMargin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.0050000000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">维持保证金率</span><span class="w">
-    </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位数量</span><span class="w"> </span><span class="err">空仓</span><span class="mf">0.1</span><span class="w">
+    </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位数量</span><span class="w"> </span><span class="err">空仓</span><span class="mf">0.1</span><span class="w">
     </span><span class="nl">"posMargin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1093.989"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">保证金</span><span class="w">
     </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">保证金模式</span><span class="w"> </span><span class="err">全仓</span><span class="w">
-    </span><span class="nl">"closableQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">可平仓位数量</span><span class="w">
+    </span><span class="nl">"closableQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">可平仓位数量</span><span class="w">
     </span><span class="nl">"initMargin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.1000000000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">初始保证金率</span><span class="w">
     </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1125899906842624158"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">id</span><span class="w">
     </span><span class="nl">"orderMargin"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托保证金</span><span class="w">
@@ -3420,6 +3426,7 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"fees"</span><span class="p">:[{</span><span class="nl">"amount"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">,</span><span class="nl">"asset"</span><span class="p">:</span><span class="s2">"USDT"</span><span class="p">,</span><span class="nl">"value"</span><span class="p">:</span><span class="s2">"10"</span><span class="p">}],</span><span class="err">//</span><span class="w"> </span><span class="err">手续费</span><span class="w">
     </span><span class="nl">"quantity"</span><span class="p">:</span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交数量</span><span class="w">
     </span><span class="nl">"orderId"</span><span class="p">:</span><span class="s2">"4611772879845982371"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单id</span><span class="w">
+    </span><span class="nl">"fillId"</span><span class="p">:</span><span class="s2">"1125899906842624338"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交记录id</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="s2">"1000000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交价格</span><span class="w">
     </span><span class="nl">"time"</span><span class="p">:</span><span class="s2">"1733541360859"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交时间</span><span class="w">
     </span><span class="nl">"taker"</span><span class="p">:</span><span class="kc">true</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">是否为吃单</span><span class="w">
@@ -3434,7 +3441,7 @@ ticker: 最新成交信息</p>
 <ul>
 <li>请求方式 GET</li>
 <li>请求路径 /v1/fills</li>
-<li>权限: View, Trade</li>
+<li>权限: View</li>
 <li>请求参数(需要排序)</li>
 </ul>
 
@@ -3480,13 +3487,13 @@ ticker: 最新成交信息</p>
 <td>before</td>
 <td>int64</td>
 <td>否</td>
-<td>成交记录 id<br/>限定返回成交记录的最大id</td>
+<td>成交记录 fillId<br/>限定返回成交记录的最大id</td>
 </tr>
 <tr>
 <td>after</td>
 <td>int64</td>
 <td>否</td>
-<td>成交记录 id<br/>限定返回成交记录的最小id</td>
+<td>成交记录 fillId<br/>限定返回成交记录的最小id</td>
 </tr>
 <tr>
 <td>limit</td>
@@ -3708,14 +3715,14 @@ ticker: 最新成交信息</p>
       </span><span class="nl">"symbol"</span><span class="p">:</span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
       </span><span class="nl">"quantity"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">数量</span><span class="w">
       </span><span class="nl">"entryPrice"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">开仓均价</span><span class="w">
-      </span><span class="nl">"mergeMode"</span><span class="p">:</span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">
+      </span><span class="nl">"mergeMode"</span><span class="p">:</span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">
       </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="s2">"isolate"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">保证金模式</span><span class="w">
       </span><span class="nl">"leverage"</span><span class="p">:</span><span class="s2">"10.0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">杠杠</span><span class="w">
       </span><span class="nl">"initMargin"</span><span class="p">:</span><span class="s2">"0.1"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">起始保证金率</span><span class="w">
       </span><span class="nl">"maintMargin"</span><span class="p">:</span><span class="s2">"0.005"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">维持保证金率</span><span class="w">
       </span><span class="nl">"posMargin"</span><span class="p">:</span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">持仓保证金</span><span class="w">
       </span><span class="nl">"orderMargin"</span><span class="p">:</span><span class="s2">"1009.8990000"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">委托保证金</span><span class="w">
-      </span><span class="nl">"closableQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"-0.100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">可平仓位数量</span><span class="w">
+      </span><span class="nl">"closableQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">可平仓位数量</span><span class="w">
 
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -3727,17 +3734,16 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4611767382287843330"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单id</span><span class="w">
       </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">自定义id</span><span class="w">
       </span><span class="nl">"createTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390630904"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">创建时间</span><span class="w">
-      </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
+      </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
       </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单类型</span><span class="w">
       </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易方向</span><span class="w">
       </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">委托数量</span><span class="w">
       </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
-      </span><span class="nl">"visibleQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w"> </span><span class="err">none分仓</span><span class="w"> </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
+      </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w"> </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
       </span><span class="nl">"positionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">提交的仓位id</span><span class="w">
       </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">保证金模式</span><span class="w"> </span><span class="err">全仓</span><span class="w">
       </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">是否为可平单</span><span class="w">
