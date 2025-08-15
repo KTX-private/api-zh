@@ -30,7 +30,7 @@ code_clipboard: true
 **API使用如下Base URL：**
 
 * Market Data Endpoints: https://api.ktx.com/api
-* User Data Endpoints: https://api.ktx.com/papi
+* User Data Endpoints: https://api.ktx.com/papi (老版本的路径是以/api结尾的,现在已经不支持了,请务必使用/papi)
 * Market Data Stream: wss://m-stream.ktx.com
 * User Data Stream: wss://u-stream.ktx.com
 
