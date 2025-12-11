@@ -1670,6 +1670,36 @@ const param = {
     market:'spot',
 }
 
+
+/* 
+mini合约下单参数 
+开多方向
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'buy',
+  quantity:'0.0001',
+  type:'market',
+  market:'lpc',
+  mini:true,
+  positionMerge:'none',
+  marginMethod:'isolate'
+}
+平多方向
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'sell',
+  quantity:'0.0001',
+  type:'market',
+  market:'lpc',
+  mini:true,
+  positionMerge:'none',
+  marginMethod:'isolate'
+  positionId:1125899906842649789
+  close:true
+}
+
+*/
+
 let bodyStr = JSON.stringify(param);
 const exprieTime = Date.now()+5000;
 const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
@@ -1719,6 +1749,33 @@ def do_request():
       'type':'limit',
       'market':'spot',
     }
+    """
+    mini合约下单参数 
+    开多方向
+    param = {
+      'symbol':'BTC_USDT_SWAP',
+      'side':'buy',
+      'quantity':'0.0001',
+      'type':'market',
+      'market':'lpc',
+      'mini':true
+      'positionMerge':'none',
+      'marginMethod':'isolate'
+    }
+    平多方向
+    param = {
+      'symbol':'BTC_USDT_SWAP',
+      'side':'sell',
+      'quantity':'0.0001',
+      'type':'market',
+      'market':'lpc',
+      'mini':true
+      'positionMerge':'none',
+      'marginMethod':'isolate'
+      'positionId':1125899906842649789
+      'close':true
+    }
+    """
     body_str = json.dumps(param)
     expire_time = str(int(time.time() * 1000) + 5000)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
@@ -1751,6 +1808,7 @@ if __name__ == '__main__':
   "stf": "disabled",
   "price": "10300",  // 委托价格
   "timeInForce": "gtc",
+  "mini":"false", // 是不是mini合约
   "cancelAfter": 0,
   "postOnly": false,
   "positionMerge": "long", // 仓位模式  long合并多 short合并空
@@ -1793,6 +1851,7 @@ if __name__ == '__main__':
 | price           | decimal | 否    | 委托限价                                                                                                                                                               |
 | positionMerge   | string  | 否    | 持仓方向 合约必须 long合并多 short合并空   如:开多(positionMerge=long,side=buy),平多(positionMerge=long,side=sell),开空(positionMerge=short,side=buy),平空(positionMerge=short,side=sell) |
 | marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                                                                          |
+| mini            | bool  | 否    | 是否为mini合约 当为true的时候必须满足 positionMerge=none&&marginMethod=isolate&&type=limit                                                                                       |
 | leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                                                                          
 | close           | bool    | 否    | 合约必须 true 平仓单,false 开仓单                                                                                                                                            |
 | post_only       | bool    | 否    | ...                                                                                                                                                                |
@@ -1883,6 +1942,7 @@ if __name__ == '__main__':
   "stf": "disabled",
   "price": "10300",  // 委托价格
   "timeInForce": "gtc",
+  "mini":"false", // 是不是mini合约
   "cancelAfter": 0,
   "postOnly": false,
   "positionMerge": "long", // 仓位模式  long合并多 short合并空
@@ -2021,6 +2081,7 @@ if __name__ == '__main__':
     "stf": "disabled",
     "price": "10300",  // 委托价格
     "timeInForce": "gtc",
+    "mini":"false", // 是不是mini合约
     "cancelAfter": 0,
     "postOnly": false,
     "positionMerge": "long", // 仓位模式  long合并多 short合并空
@@ -2185,6 +2246,7 @@ if __name__ == '__main__':
     "stf": "disabled",
     "price": "10300",  // 委托价格
     "timeInForce": "gtc",
+    "mini":"false", // 是不是mini合约
     "cancelAfter": 0,
     "postOnly": false,
     "positionMerge": "long", // 仓位模式  long合并多 short合并空
@@ -2885,6 +2947,7 @@ wss://u-stream.ktx.com
       "stf": "disabled",
       "price": "10300",  // 委托价格
       "timeInForce": "gtc",
+      "mini":"false", // 是不是mini合约
       "cancelAfter": 0,
       "postOnly": false,
       "positionMerge": "long", // 仓位模式 long合并多 short合并空
