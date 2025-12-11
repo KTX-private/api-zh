@@ -1854,8 +1854,8 @@ if __name__ == '__main__':
 | mini            | bool  | 否    | 是否为mini合约 当为true的时候必须满足 positionMerge=none&&marginMethod=isolate&&type=limit                                                                                       |
 | leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                                                                          
 | close           | bool    | 否    | 合约必须 true 平仓单,false 开仓单                                                                                                                                            |
-| post_only       | bool    | 否    | ...                                                                                                                                                                |
-| time_in_force   | string   | 否       | 委托时效性<br/>有效值 gtc, ioc<br/>gtc 表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>默认值 gtc                                              |
+| post_only       | bool    | 否    | 只做maker                                                                                                                                                            |
+| time_in_force   | string   | 否       | 委托时效性<br/>有效值 gtc, ioc,fok<br/>gtc  表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>fok 全部成交否则取消 <br/>默认值 gtc                       |
 | positionId      | string   | 否       | 仓位id                                                                                                                                                               |
 
 > 委托对象
