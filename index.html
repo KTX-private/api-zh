@@ -2564,13 +2564,13 @@ const param = {
 <td>post_only</td>
 <td>bool</td>
 <td>否</td>
-<td>...</td>
+<td>只做maker</td>
 </tr>
 <tr>
 <td>time_in_force</td>
 <td>string</td>
 <td>否</td>
-<td>委托时效性<br/>有效值 gtc, ioc<br/>gtc 表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>默认值 gtc</td>
+<td>委托时效性<br/>有效值 gtc, ioc,fok<br/>gtc  表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>fok 全部成交否则取消 <br/>默认值 gtc</td>
 </tr>
 <tr>
 <td>positionId</td>
