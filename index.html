@@ -2314,6 +2314,36 @@ ticker: 最新成交信息</p>
     <span class="na">market</span><span class="p">:</span><span class="dl">'</span><span class="s1">spot</span><span class="dl">'</span><span class="p">,</span>
 <span class="p">}</span>
 
+
+<span class="cm">/* 
+mini合约下单参数 
+开多方向
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'buy',
+  quantity:'0.0001',
+  type:'market',
+  market:'lpc',
+  mini:true,
+  positionMerge:'none',
+  marginMethod:'isolate'
+}
+平多方向
+const param = {
+  symbol:'BTC_USDT_SWAP',
+  side:'sell',
+  quantity:'0.0001',
+  type:'market',
+  market:'lpc',
+  mini:true,
+  positionMerge:'none',
+  marginMethod:'isolate'
+  positionId:1125899906842649789
+  close:true
+}
+
+*/</span>
+
 <span class="kd">let</span> <span class="nx">bodyStr</span> <span class="o">=</span> <span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">(</span><span class="nx">param</span><span class="p">);</span>
 <span class="kd">const</span> <span class="nx">exprieTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
 <span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">exprieTime</span> <span class="o">+</span> <span class="nx">bodyStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
@@ -2360,6 +2390,33 @@ ticker: 最新成交信息</p>
       <span class="s">'type'</span><span class="p">:</span><span class="s">'limit'</span><span class="p">,</span>
       <span class="s">'market'</span><span class="p">:</span><span class="s">'spot'</span><span class="p">,</span>
     <span class="p">}</span>
+    <span class="s">"""
+    mini合约下单参数 
+    开多方向
+    param = {
+      'symbol':'BTC_USDT_SWAP',
+      'side':'buy',
+      'quantity':'0.0001',
+      'type':'market',
+      'market':'lpc',
+      'mini':true
+      'positionMerge':'none',
+      'marginMethod':'isolate'
+    }
+    平多方向
+    param = {
+      'symbol':'BTC_USDT_SWAP',
+      'side':'sell',
+      'quantity':'0.0001',
+      'type':'market',
+      'market':'lpc',
+      'mini':true
+      'positionMerge':'none',
+      'marginMethod':'isolate'
+      'positionId':1125899906842649789
+      'close':true
+    }
+    """</span>
     <span class="n">body_str</span> <span class="o">=</span> <span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">param</span><span class="p">)</span>
     <span class="n">expire_time</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time</span><span class="p">.</span><span class="n">time</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="n">sign</span> <span class="o">=</span> <span class="n">hmac</span><span class="p">.</span><span class="n">new</span><span class="p">(</span><span class="n">SECRET_KEY</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="p">(</span><span class="s">''</span> <span class="o">+</span> <span class="n">expire_time</span> <span class="o">+</span> <span class="n">body_str</span><span class="p">).</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">),</span> <span class="n">hashlib</span><span class="p">.</span><span class="n">sha256</span><span class="p">).</span><span class="n">hexdigest</span><span class="p">()</span>
@@ -2391,6 +2448,7 @@ ticker: 最新成交信息</p>
   </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
   </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">是不是mini合约</span><span class="w">
   </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">  </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
@@ -2483,6 +2541,12 @@ ticker: 最新成交信息</p>
 <td>string</td>
 <td>否</td>
 <td>合约必须 isolate 逐仓, cross 全仓</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>bool</td>
+<td>否</td>
+<td>是否为mini合约 当为true的时候必须满足 positionMerge=none&amp;&amp;marginMethod=isolate&amp;&amp;type=limit</td>
 </tr>
 <tr>
 <td>leverage</td>
@@ -2596,6 +2660,7 @@ ticker: 最新成交信息</p>
   </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
   </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
   </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+  </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">是不是mini合约</span><span class="w">
   </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
   </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
   </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">  </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
@@ -2740,6 +2805,7 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
     </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">是不是mini合约</span><span class="w">
     </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">  </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
@@ -2948,6 +3014,7 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
     </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
     </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">是不是mini合约</span><span class="w">
     </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
     </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w">  </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
@@ -3740,6 +3807,7 @@ ticker: 最新成交信息</p>
       </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
       </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">是不是mini合约</span><span class="w">
       </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">
       </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
       </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位模式</span><span class="w"> </span><span class="err">long合并多</span><span class="w"> </span><span class="err">short合并空</span><span class="w">
