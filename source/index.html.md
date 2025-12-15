@@ -1521,7 +1521,7 @@ if __name__ == '__main__':
 **获取充值地址**
 
 * 请求方式 POST
-* 请求路径 /v1/v1/depositAddr
+* 请求路径 /v1/depositAddr
 * 权限: View
 * 请求参数
 
@@ -1629,7 +1629,7 @@ if __name__ == '__main__':
 **提现**
 
 * 请求方式 POST
-* 请求路径 /v1/v1/withdraw
+* 请求路径 /v1/withdraw
 * 权限: View
 * 请求参数
 
