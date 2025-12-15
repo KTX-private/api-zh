@@ -706,7 +706,7 @@ if __name__ == '__main__':
 ]
 ```
 
-**获取报价数据**
+**获取ticker**
 
 * 请求方式 GET
 * 请求路径 /v1/ticker
@@ -1341,6 +1341,306 @@ if __name__ == '__main__':
 * Data Source
 
   Cache
+
+## 获取币种信息
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/coins`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/coins'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "general_name": "USDT", // 资产名称
+    "valid_decimals": 8, // 资产精度
+    "enable_transfer": 1, // 允许划转
+    "chains": [
+      {
+        "coin_symbol": "USDT", // 币种名称
+        "chain_type": "Tron (TRC20)", // 网络
+        "enable_withdraw": 1, // 允许提现
+        "enable_deposit": 1, // 允许充值
+        "original_decimals": 6 // 网络精度
+      },
+      {
+        "coin_symbol": "eUSDT",
+        "chain_type": "Ethereum (ERC20)",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 6
+      },
+      {
+        "coin_symbol": "bUSDT",
+        "chain_type": "BNB Smart Chain (BEP20)",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 18
+      },
+      {
+        "coin_symbol": "sUSDT",
+        "chain_type": "Solana",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 6
+      }
+    ]
+  } 
+]
+```
+
+**获取币种信息**
+
+* 请求方式 GET
+* 请求路径 /v1/coins
+* 请求参数
+
+
+| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                  |
+| ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
+
+## 获取充值地址
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    coin_symbol:'sUSDT'
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/depositAddr`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'coin_symbol': 'sUSDT'
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/depositAddr'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "addr": "74VZm4a6eGGBW3VCq6umcPL8QPhs5fFnpcT9nyQGgHkw", // 地址
+    "coin_id": "100", // 币种id
+    "coin_symbol": "sUSDT",// 币种
+    "chain_type":"Solana", // 网络
+    "general_name": "USDT" ,// 资产名称
+    "mx_uid": "de4a8cdc-6be5-3253-9f34-d2c61a89286f"
+  }
+]
+```
+
+**获取充值地址**
+
+* 请求方式 POST
+* 请求路径 /v1/v1/depositAddr
+* 权限: View
+* 请求参数
+
+
+| 参数名称        | 参数类型 | 是否必传 | 说明                                          |
+|-------------| ---------- |------|---------------------------------------------|
+| coin_symbol | string   | 是    | 可以从/v1/coins 接口获取,具体链的币种名称如USDT,sUSDT,BTC 等 |
+
+## 提现
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    coin_symbol:"BTC",
+    amount:"0.001",
+    addr:"bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm"
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/withdraw`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'coin_symbol':'BTC',
+        'amount':'0.001',
+        'addr':'bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm'
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/withdraw'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "id": 624, // 提现id
+    "to_address": "bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm", // 到账地址
+    "amount_real": "9.00000000", // 到账数量
+    "amount": "10.00000000",  // 提现数量
+    "fee": "1.00000000",  // 手续费
+    "chain_type": "Bitcoin", //网络
+    "coin_symbol": 'BTC' // 币种
+  }
+]
+```
+
+**提现**
+
+* 请求方式 POST
+* 请求路径 /v1/v1/withdraw
+* 权限: View
+* 请求参数
+
+
+| 参数名称        | 参数类型   | 是否必传 | 说明                                          |
+|-------------|--------|-----|---------------------------------------------|
+| coin_symbol | string | 是   | 可以从/v1/coins 接口获取,具体链的币种名称如USDT,sUSDT,BTC 等 |
+| addr        | string | 是   | 到账地址                                        |
+| amount      | number | 是   | 提现数量                                        |
+| memo        | string | 否   | memo备注                                      |
+
 
 ## 获取钱包账户资产
 
