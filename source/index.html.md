@@ -1630,7 +1630,7 @@ if __name__ == '__main__':
 
 * 请求方式 POST
 * 请求路径 /v1/withdraw
-* 权限: View
+* 权限: Withdraw
 * 请求参数
 
 
