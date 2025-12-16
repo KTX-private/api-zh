@@ -285,6 +285,90 @@ if __name__ == '__main__':
 {"time":"1746777864508"}
 ```
 
+## 获取币种信息
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/coins`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/coins'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "asset": "USDT", // 资产名称
+    "valid_decimals": 8, // 资产精度
+    "enable_transfer": 1, // 允许划转
+    "chains": [
+      {
+        "coin_symbol": "USDT", // 币种名称
+        "chain_type": "Tron (TRC20)", // 网络
+        "enable_withdraw": 1, // 允许提现
+        "enable_deposit": 1, // 允许充值
+        "original_decimals": 6 // 网络精度
+      },
+      {
+        "coin_symbol": "eUSDT",
+        "chain_type": "Ethereum (ERC20)",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 6
+      },
+      {
+        "coin_symbol": "bUSDT",
+        "chain_type": "BNB Smart Chain (BEP20)",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 18
+      },
+      {
+        "coin_symbol": "sUSDT",
+        "chain_type": "Solana",
+        "enable_withdraw": 1,
+        "enable_deposit": 1,
+        "original_decimals": 6
+      }
+    ]
+  } 
+]
+```
+
+**获取币种信息**
+
+* 请求方式 GET
+* 请求路径 /v1/coins
+* 请求参数
+
+
+| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                  |
+| ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
 
 
 ## 获取交易对
@@ -340,7 +424,7 @@ if __name__ == '__main__':
 ]
 ```
 
-**获取币种列表**
+**获取交易对列表**
 
 * 请求方式 GET
 * 请求路径 /v1/products
@@ -1342,90 +1426,6 @@ if __name__ == '__main__':
 
   Cache
 
-## 获取币种信息
-
-> Request
-
-```javascript
-let request = require("request");
-const endPoint = 'https://api.ktx.com/api';
-const url = `${endPoint}/v1/coins`
-request.get(url,
-        function optionalCallback(err, httpResponse, body) {
-          if (err) {
-            return console.error('upload failed:', err);
-          }
-
-          console.log(body)
-
-        });
-```
-
-```python
-import requests
-
-END_POINT = 'https://api.ktx.com/api';
-
-def do_request():
-    path = '/v1/coins'
-    resp = requests.get(END_POINT + path)
-    print(resp.text)
-  
-if __name__ == '__main__':
-    do_request()
-```
-
-> Response
-
-```json
-[
-  {
-    "general_name": "USDT", // 资产名称
-    "valid_decimals": 8, // 资产精度
-    "enable_transfer": 1, // 允许划转
-    "chains": [
-      {
-        "coin_symbol": "USDT", // 币种名称
-        "chain_type": "Tron (TRC20)", // 网络
-        "enable_withdraw": 1, // 允许提现
-        "enable_deposit": 1, // 允许充值
-        "original_decimals": 6 // 网络精度
-      },
-      {
-        "coin_symbol": "eUSDT",
-        "chain_type": "Ethereum (ERC20)",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
-        "original_decimals": 6
-      },
-      {
-        "coin_symbol": "bUSDT",
-        "chain_type": "BNB Smart Chain (BEP20)",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
-        "original_decimals": 18
-      },
-      {
-        "coin_symbol": "sUSDT",
-        "chain_type": "Solana",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
-        "original_decimals": 6
-      }
-    ]
-  } 
-]
-```
-
-**获取币种信息**
-
-* 请求方式 GET
-* 请求路径 /v1/coins
-* 请求参数
-
-
-| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                  |
-| ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
 
 ## 获取充值地址
 
@@ -1640,6 +1640,7 @@ if __name__ == '__main__':
 | addr        | string | 是   | 到账地址                                        |
 | amount      | number | 是   | 提现数量                                        |
 | memo        | string | 否   | memo备注                                      |
+| withdraw_id | string | 否   | 用户的提现自定义id 最大长度为36 防止重复请求的错误操作              |
 
 
 ## 获取钱包账户资产
