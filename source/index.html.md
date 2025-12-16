@@ -1634,13 +1634,13 @@ if __name__ == '__main__':
 * 请求参数
 
 
-| 参数名称        | 参数类型   | 是否必传 | 说明                                          |
-|-------------|--------|-----|---------------------------------------------|
+| 参数名称        | 参数类型   | 是否必传 | 说明                                     |
+|-------------|--------|-----|----------------------------------------|
 | coin_symbol | string | 是   | 可以从/v1/coins 接口获取,具体链的币种名称如USDT,sUSDT,BTC 等 |
-| addr        | string | 是   | 到账地址                                        |
-| amount      | number | 是   | 提现数量                                        |
-| memo        | string | 否   | memo备注                                      |
-| withdraw_id | string | 否   | 用户的提现自定义id 最大长度为36 防止重复请求的错误操作              |
+| addr        | string | 是   | 到账地址                                   |
+| amount      | number | 是   | 提现数量                                   |
+| memo        | string | 否   | memo备注                                 |
+| withdraw_id | string | 否   | 自定义id 最大长度为36 返回值会出现该字段用于幂等处理          |
 
 
 ## 获取钱包账户资产
@@ -1810,7 +1810,7 @@ def do_request():
     body_str = json.dumps(param)
     expire_time = str(int(time.time() * 1000) + 5000)
     sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
-    path = '/v1/tf/transfer'
+    path = '/v1/transfer'
     headers = {
         'Content-Type': 'application/json',
         'api-key': API_KEY,
@@ -1839,11 +1839,118 @@ if __name__ == '__main__':
 * 请求参数
 
 
-| 参数名称   | 参数类型   | 是否必传 | 说明                                                            |
-|--------|--------|------|---------------------------------------------------------------|
-| symbol | string | 是    | 资产代码,如 BTC, ETH 等                                             |
-| amount | number | 是    | 划转数量                                                          |
-| type   | string | 是    | 划转数量 WALLET_TRADE 代表则从钱包账户划转到交易账户 TRADE_WALLET代表则从交易账户划转到钱包账户 |
+| 参数名称        | 参数类型   | 是否必传 | 说明                                                      |
+|-------------|--------|------|---------------------------------------------------------|
+| symbol      | string | 是    | 资产代码,如 BTC, ETH 等                                       |
+| amount      | number | 是    | 划转数量                                                    |
+| type        | string | 是    |  WALLET_TRADE 代表则从钱包账户划转到交易账户 TRADE_WALLET代表则从交易账户划转到钱包账户 |
+| transfer_id | string | 否   |自定义id 最大长度为36 返回值会出现该字段用于幂等处理          |
+
+## 子账户资产划转
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    'symbol':'BTC',
+    'amount':'0.001',
+    'sub_user_id':30000416,
+    'side':'in',
+    'transfer_id':'userdefineid001',
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/subaccount/transfer`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'symbol':'BTC',
+        'amount':'0.001',
+        'sub_user_id':30000416,
+        'side':'in',
+        'transfer_id':'userdefineid001',
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/subaccount/transfer'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{}
+```
+
+**子账户资产划转**
+
+* 请求方式 POST
+* 请求路径 /v1/subaccount/transfer
+* 权限: Trade
+* 请求参数
+
+
+| 参数名称        | 参数类型   | 是否必传 | 说明                            |
+|-------------|--------|------|-------------------------------|
+| symbol      | string | 是    | 资产代码,如 BTC, ETH 等             |
+| amount      | number | 是    | 划转数量                          |
+| sub_user_id      | number | 是    | 子账户id                         |
+| side        | string | 是    | in 代表划入子账户 out 从子账户划出         |
+| transfer_id | string | 否   | 自定义id 最大长度为36 返回值会出现该字段用于幂等处理 |
 
 ## 获取账单
 
