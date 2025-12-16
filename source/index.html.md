@@ -1949,7 +1949,7 @@ if __name__ == '__main__':
 | symbol      | string | 是    | 资产代码,如 BTC, ETH 等             |
 | amount      | number | 是    | 划转数量                          |
 | sub_user_id      | number | 是    | 子账户id                         |
-| side        | string | 是    | in 代表划入子账户 out 从子账户划出         |
+| side        | string | 是    | in 代表从主账户划入子账户 out 从子账户划出到主账户 |
 | transfer_id | string | 否   | 自定义id 最大长度为36 返回值会出现该字段用于幂等处理 |
 
 ## 获取账单
