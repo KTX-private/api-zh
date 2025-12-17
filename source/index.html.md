@@ -1828,7 +1828,10 @@ if __name__ == '__main__':
 > Response
 
 ```json
-{}
+{
+  "asset": "BTC",
+  "balance": "1.123"
+}
 ```
 
 **资产划转**
@@ -1933,7 +1936,10 @@ if __name__ == '__main__':
 > Response
 
 ```json
-{}
+{
+  "asset": "BTC",
+  "balance": "1.123"
+}
 ```
 
 **子账户资产划转**
