@@ -1420,7 +1420,7 @@ if __name__ == '__main__':
 
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                 |
 | ---------- | ---------- | ---------- |----------------------------------------------------------------------------------------------------------------------------------------------------|
-| asset    | string   | 否       | 资产代码,如 BTC, ETH 等<br/>可按以下两种形式指定多个资产代码<br/>1. /v1/accounts?asset=BTC,ETH<br/> 2. /v1/accounts?asset=BTC&asset=ETH <br/> 如果不指定 asset 参数, 则返回全部资产的信息 |
+| asset    | string   | 否       | 资产代码,如 BTC, ETH 等<br/>可按以下两种形式指定多个资产代码<br/>1. accounts?asset=BTC,ETH<br/> 2. accounts?asset=BTC&asset=ETH <br/> 如果不指定 asset 参数, 则返回全部资产的信息 |
 
 * Data Source
 
