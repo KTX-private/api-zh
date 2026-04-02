@@ -2368,7 +2368,8 @@ if __name__ == '__main__':
   "status": "filled", // 订单状态
   "executedQty": "0.01", // 已成交数量
   "profit": "0",    // 收益
-  "origin":0, // origin          
+  "origin":0, // origin       
+  "markPrice": "10000", // 当origin=-1 代表订单的强平价格
   "brokerId":0, // 渠道id
   "update_id":'1125899907137993336', // 更新id
   "executedCost": "103", // 已成交价值
@@ -2508,6 +2509,7 @@ if __name__ == '__main__':
     "executedQty": "0.01", // 已成交数量
     "profit": "0",    // 收益
     "origin":0, // origin          
+    "markPrice": "10000", // 当origin=-1 代表订单的强平价格
     "brokerId":0, // 渠道id
     "update_id":'1125899907137993336', // 更新id
     "executedCost": "103", // 已成交价值
@@ -3373,7 +3375,8 @@ wss://u-stream.ktx.com
       "status": "filled", // 订单状态
       "executedQty": "0.01", // 已成交数量
       "profit": "0",    // 收益
-      "origin":0, // origin          
+      "origin":0, // origin
+      "markPrice": "10000", // 当origin=-1 代表订单的强平价格
       "brokerId":0, // 渠道id
       "update_id":'1125899907137993336', // 更新id
       "executedCost": "103", // 已成交价值
