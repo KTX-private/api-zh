@@ -2309,28 +2309,28 @@ if __name__ == '__main__':
 * 请求参数
 
 
-| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                                                                    |
-|-----------------|---------|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| symbol          | string  | 是    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                           |
-| side            | string  | 是    | 交易方向 buy 买,sell 卖                                                                                                                                                     |
-| type            | string  | 是    | 委托类型,有效值 limit  market take-profit stop, limit限价 market市价 take-profit止赢 stop止损                                                                                        |
-| quantity        | decimal | 是    | 委托量                                                                                                                                                                   |
-| market          | string  | 是    | 必须 spot 现货,lpc U本位永续                                                                                                                                                  |
-| client_order_id | string  | 否    | 委托id,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳                                                                                                                                |
-| price           | decimal | 否    | 委托限价                                                                                                                                                                  |
+| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                                                                         |
+|-----------------|---------|------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol          | string  | 是    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                                |
+| side            | string  | 是    | 交易方向 buy 买,sell 卖                                                                                                                                                          |
+| type            | string  | 是    | 委托类型,有效值 limit  market take-profit stop, limit限价 market市价 take-profit止赢 stop止损                                                                                             |
+| quantity        | decimal | 是    | 委托量                                                                                                                                                                        |
+| market          | string  | 是    | 必须 spot 现货,lpc U本位永续                                                                                                                                                       |
+| client_order_id | string  | 否    | 委托id,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳                                                                                                                                     |
+| price           | decimal | 否    | 委托限价                                                                                                                                                                       |
 | positionMerge   | string  | 否    | 持仓方向 合约必须 long合并多 short合并空 none 分仓   如:开多(positionMerge=long,side=buy),平多(positionMerge=long,side=sell),开空(positionMerge=short,side=sell),平空(positionMerge=short,side=buy) |
-| marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                                                                             |
-| mini            | bool    | 否    | 是否为mini合约 当为true的时候必须满足 positionMerge=none&&marginMethod=isolate&&type=limit                                                                                          |
-| leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                                                                             
-| close           | bool    | 否    | 合约必须 true 平仓单,false 开仓单                                                                                                                                               |
-| post_only       | bool    | 否    | 只做maker                                                                                                                                                               |
-| time_in_force   | string  | 否       | 委托时效性<br/>有效值 gtc, ioc,fok<br/>gtc  表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>fok 全部成交否则取消 <br/>默认值 gtc                          |
-| positionId      | string  | 否       | 仓位id                                                                                                                                                                  |
-| trigger_price         | decimal | 否       | 触发价格    止赢止损订单使用                                                                                                                                                      |
-| tpo_trigger         | int     | 否       | 开仓止盈,需配合tpo_trigger_value字段使用    0不启用 1启用                                                                                                                             |
-| slo_trigger         | int     | 否       | 开仓止损,需配合slo_trigger_value字段使用    0不启用 1启用                                                                                                                                |
-| tpo_trigger_value         | decimal | 否       | 开仓止盈触发价格                                                                                                                                                  |
-| slo_trigger_value         | decimal | 否       | 开仓止损触发价格                                                                                                                                                              |
+| marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                                                                                  |
+| mini            | bool    | 否    | 是否为mini合约 当为true的时候必须满足 positionMerge=none&&marginMethod=isolate&&type=limit                                                                                               |
+| leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                                                                                  
+| close           | bool    | 否    | 合约必须 true 平仓单,false 开仓单                                                                                                                                                    |
+| post_only       | bool    | 否    | 只做maker                                                                                                                                                                    |
+| time_in_force   | string  | 否       | 委托时效性<br/>有效值 gtc, ioc,fok<br/>gtc  表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>fok 全部成交否则取消 <br/>默认值 gtc                               |
+| positionId      | string  | 否       | 仓位id                                                                                                                                                                       |
+| trigger_price         | decimal | 否       | 触发价格    止赢止损订单使用                                                                                                                                                           |
+| tpo_trigger         | int     | 否       | 开仓止盈,需配合tpo_trigger_value字段使用    0 不启用 1 启用                                                                                                                                |
+| slo_trigger         | int     | 否       | 开仓止损,需配合slo_trigger_value字段使用    0 不启用 1 启用                                                                                                                                |
+| tpo_trigger_value         | decimal | 否       | 开仓止盈触发价格                                                                                                                                                                   |
+| slo_trigger_value         | decimal | 否       | 开仓止损触发价格                                                                                                                                                                   |
 
 > 委托对象
 > 最多包含该委托的20笔成交
