@@ -2328,7 +2328,7 @@ if __name__ == '__main__':
 | positionId      | string  | 否       | 仓位id                                                                                                                                                                  |
 | trigger_price         | decimal | 否       | 触发价格    止赢止损订单使用                                                                                                                                                      |
 | tpo_trigger         | int     | 否       | 开仓止盈,需配合tpo_trigger_value字段使用    0不启用 1启用                                                                                                                             |
-| slo_trigger         | int     | 否       | 开仓止损,需配合slo_trigger_value字段使用    止赢止损订单使用                                                                                                                             |
+| slo_trigger         | int     | 否       | 开仓止损,需配合slo_trigger_value字段使用    0不启用 1启用                                                                                                                                |
 | tpo_trigger_value         | decimal | 否       | 开仓止盈触发价格                                                                                                                                                  |
 | slo_trigger_value         | decimal | 否       | 开仓止损触发价格                                                                                                                                                              |
 
