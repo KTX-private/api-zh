@@ -2094,6 +2094,7 @@ const param = {
   quantity:'0.0001',
   type:'market',
   market:'lpc',
+  leverage:20,
   mini:true,
   positionMerge:'none',
   marginMethod:'isolate'
@@ -2105,6 +2106,7 @@ const param = {
   quantity:'0.0001',
   type:'market',
   market:'lpc',
+  leverage:20,
   mini:true,
   positionMerge:'none',
   marginMethod:'isolate'
@@ -2121,6 +2123,7 @@ const param = {
   type:'stop', // 止损
   trigger_price:'50000', // 止损的触发价格 需要<当前价格
   market:'lpc',
+  leverage:20,
   positionMerge:'long',
   marginMethod:'cross'
   positionId:1125899906842649789
@@ -2134,6 +2137,7 @@ const param = {
   type:'take-profit', // 止盈
   trigger_price:'100000', // 止损的触发价格 需要>当前价格
   market:'lpc',
+  leverage:20,
   positionMerge:'long',
   marginMethod:'cross'
   positionId:1125899906842649789
@@ -2149,6 +2153,7 @@ const param = {
   price:'73816.6',
   type:'limit', 
   market:'lpc',
+  leverage:20,
   positionMerge:'long',
   marginMethod:'cross'
   close:false,
@@ -2220,6 +2225,7 @@ def do_request():
       'quantity':'0.0001',
       'type':'market',
       'market':'lpc',
+      'leverage':20
       'mini':true
       'positionMerge':'none',
       'marginMethod':'isolate'
@@ -2230,6 +2236,7 @@ def do_request():
       'side':'sell',
       'quantity':'0.0001',
       'type':'market',
+      'leverage':20
       'market':'lpc',
       'mini':true
       'positionMerge':'none',
