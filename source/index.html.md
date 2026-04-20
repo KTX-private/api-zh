@@ -2148,7 +2148,7 @@ const param = {
 
 const param = {
   symbol:'BTC_USDT_SWAP',
-  side:'bug',
+  side:'buy',
   quantity:'0.0001',
   price:'73816.6',
   type:'limit', 
@@ -3036,6 +3036,7 @@ if __name__ == '__main__':
     "symbol": "BTC_USDT_SWAP", // 交易代码
     "leverage": "10.0", // 杠杆倍数
     "maintMargin": "0.0050000000", // 维持保证金率
+    "side":"short", // 持仓方向 空
     "quantity": "0.100", // 仓位数量 空仓0.1
     "posMargin": "1093.989", // 保证金
     "marginMethod": "cross", // 保证金模式 全仓
@@ -3391,7 +3392,8 @@ wss://u-stream.ktx.com
   "data": {
       "id":"1125899906842624003", // 仓位id
       "symbol":"BTC_USDT_SWAP", // 交易对代码
-      "quantity":"0",   // 数量
+      "side":"long", // 持仓方向 多仓
+      "quantity":"0.1",   // 持仓数量
       "entryPrice":"0", // 开仓均价
       "mergeMode":"long", // 仓位模式
       "marginMethod":"isolate",// 保证金模式
