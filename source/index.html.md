@@ -2831,6 +2831,107 @@ if __name__ == '__main__':
 | positionId | string | 是       | 指定的仓位id |
 | leverage   | int    | 是   | 杠杆倍数    |
 
+## 调整保证金
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+  positionId: '1125899906842649789',
+  amount: 12,
+  type: 1,
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/margin/transfer`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'positionId': '1125899906842649789',
+        'amount': 12,
+        'type': 1,
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/margin/transfer'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+   
+```
+
+**设置仓位杠杆**
+
+* 请求方式 POST
+* 请求路径 /v1/change/leverage
+* 权限: Trade
+* 请求参数
+
+
+| 参数名称       | 参数类型   | 是否必传 | 说明             |
+|------------|--------| ---------- |----------------|
+| positionId | string | 是       | 指定的仓位id        |
+| type       | int    | 是   | 1 增加保证金 2减少保证金 |
+| amount     | decimal | 是   | 数量             |
+
+
 
 ## 取消订单
 
