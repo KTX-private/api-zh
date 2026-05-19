@@ -2917,10 +2917,10 @@ if __name__ == '__main__':
    
 ```
 
-**设置仓位杠杆**
+**调整保证金**
 
 * 请求方式 POST
-* 请求路径 /v1/change/leverage
+* 请求路径 /v1/margin/transfer
 * 权限: Trade
 * 请求参数
 
