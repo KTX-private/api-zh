@@ -325,34 +325,34 @@ if __name__ == '__main__':
   {
     "asset": "USDT", // 资产名称
     "valid_decimals": 8, // 资产精度
-    "enable_transfer": 1, // 允许划转
+    "enable_transfer": 1, // 允许划转 [0: 不允许 | 1: 允许]
     "chains": [
       {
         "coin_symbol": "USDT", // 币种名称
         "chain_type": "Tron (TRC20)", // 网络
-        "enable_withdraw": 1, // 允许提现
-        "enable_deposit": 1, // 允许充值
+        "enable_withdraw": 1, // 允许提现 [0: 不允许 | 1: 允许]
+        "enable_deposit": 1, // 允许充值 [0: 不允许 | 1: 允许]
         "original_decimals": 6 // 网络精度
       },
       {
         "coin_symbol": "eUSDT",
         "chain_type": "Ethereum (ERC20)",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
+        "enable_withdraw": 1, // 允许提现 [0: 不允许 | 1: 允许]
+        "enable_deposit": 1, // 允许充值 [0: 不允许 | 1: 允许]
         "original_decimals": 6
       },
       {
         "coin_symbol": "bUSDT",
         "chain_type": "BNB Smart Chain (BEP20)",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
+        "enable_withdraw": 1, // 允许提现 [0: 不允许 | 1: 允许]
+        "enable_deposit": 1, // 允许充值 [0: 不允许 | 1: 允许]
         "original_decimals": 18
       },
       {
         "coin_symbol": "sUSDT",
         "chain_type": "Solana",
-        "enable_withdraw": 1,
-        "enable_deposit": 1,
+        "enable_withdraw": 1, // 允许提现 [0: 不允许 | 1: 允许]
+        "enable_deposit": 1, // 允许充值 [0: 不允许 | 1: 允许]
         "original_decimals": 6
       }
     ]
@@ -367,9 +367,8 @@ if __name__ == '__main__':
 * 请求参数
 
 
-| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                  |
-| ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
-
+| 参数名称 | 参数类型 | 是否必传 | 说明 |
+|---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
 
 ## 获取交易对
 
@@ -409,11 +408,11 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "id": 5 // id
-    "market": "lpc", // spot or lpc 现货或者合约
+    "id": 5 // ID
+    "market": "lpc", // 交易对市场 [spot: 现货 | lpc: U本位合约]
     "symbol": "BTC_USDT_SWAP", // 交易对
-    "takerFee": "0.001", // taker手续费
-    "makerFee": "0.001", // maker 手续费
+    "takerFee": "0.001", // Taker费率
+    "makerFee": "0.001", // Maker费率
     "minOrderSize": "0.0001", // 最小下单数量
     "maxOrderSize": "10000000",// 最大下单数量
     "quantityScale": 4, // 数量精度
@@ -433,7 +432,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                     |
 |--------| ---------- |------|--------------------------------------------------------|
-| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
+| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
 | symbol | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等,不指定返回全部交易对 |
 
 * Data source
@@ -477,9 +476,9 @@ if __name__ == '__main__':
 
 ```json
 {
-  "i": 1027024, // update id
-  "t": "1644558642100", // update time
-  "b": [ // 买盘
+  "i": 1027024, // Update ID
+  "t": "1644558642100", // Update time
+  "b": [ // 买单盘
     [
       "46125.7", // 委托价格
       "0.079045" // 委托量
@@ -494,7 +493,7 @@ if __name__ == '__main__':
     ]
     ...
   ],
-  "a": [ // 卖盘
+  "a": [ // 卖单盘
     [
       "46125.7", // 委托价格
       "0.079045" // 委托量
@@ -521,10 +520,10 @@ if __name__ == '__main__':
 
 | 参数名称    | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                                                                                                             |
 | ------------- | ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
+| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
 | symbol      | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                                                                                                                                                                                    |
 | level       | int32    | 否       | 指定最多返回多少级深度<br/>有效值 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000<br/>默认值 100                                                                                                                                                                                                                                                       |
-| price_scale | integer  | 否       | 指定按价格合并深度,如指定交易对的价格最多含4位小数<br/>price_scale=0 时返回的价格最多含4位小数,<br/>price_scale=1 时返回的价格最多含3位小数, 委托量是价格区间0.0010中全部委托量的和<br/>price_scale=2 时返回的价格最多含2位小数, 委托量是价格区间0.0100中全部委托量的和<br/>price_scale=3 时返回的价格最多含1位小数, 委托量是价格区间0.1000中全部委托量的和<br/>price_scale=4 时返回的价格最多含0位小数, 委托量是价格区间1.0000中全部委托量的和<br/>有效值 0, 1, 2, 3, 4, 5<br/>默认值 0 |
+| price_scale | integer  | 否       | 价格精度合并 [0: 4位小数 | 1: 3位小数 | 2: 2位小数 | 3: 1位小数 | 4: 0位小数]<br/>默认值 0 |
 
 > 注意: 数据按价格最优排序, 即买侧深度按价格由大到小排序, 卖侧深度按价格由小到大排序
 
@@ -569,17 +568,17 @@ if __name__ == '__main__':
 
 ```json
 {
-  "t": 60000, // 时间周期
+  "t": 60000, // K线周期(ms)
   "e": [
     [
-      "1644224940000", // 起始时间
-      "10190.53", // 开盘价格
-      "10192.5", // 最高价格
-      "9806.82", // 最低价格
-      "10127.37", // 收盘价格
+      "1644224940000", // 开盘时间
+      "10190.53", // 开盘价
+      "10192.5", // 最高价
+      "9806.82", // 最低价
+      "10127.37", // 收盘价
       "0.834", // 成交量
       "8370.40506", // 成交价值
-      "1", // 首个成交的id
+      "1", // 首笔成交ID
       278 // 区间内总成交次数
     ],
     [
@@ -607,9 +606,9 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                     |
 | ------------ | ---------- | --------- |------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
+| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
 | symbol     | string   | 是      | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                            |
-| time_frame | string   | 是      | K线数据的时间周期<br/>有效值 1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1W或1M |
+| time_frame | string   | 是      | K线周期 [1m | 3m | 5m | 15m | 30m | 1h | 2h | 4h | 6h | 12h | 1d | 1W | 1M] |
 | before     | int64    | 否      | utc时间<br/>限定返回K线记录的最近时间                                                |
 | after      | int64    | 否      | utc时间<br/>限定返回K线记录的最早时间                                                |
 | limit      | integer  | 否      | 获取K线记录的最大数量<br/>默认值100,最大值1000                                         |
@@ -663,10 +662,10 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "i": 17122255, // 交易 id
+    "i": 17122255, // 交易ID
     "p": "46125.7", // 成交价格
     "q": "0.079045", // 成交量
-    "s": 1, // Taker 的成交方向 1代表买 -1代表卖
+    "s": 1, // Taker方向 [1: 买方吃单 | -1: 卖方吃单]
     "t": "1628738748319" // 成交时间
   },
   ...
@@ -682,7 +681,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                          |
 | ------------ | ---------- | ---------- |---------------------------------------------|
-| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
+| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
 | symbol     | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等 |
 | start_time | int64    | 否       | 限定返回交易记录的最早时间                               |
 | end_time   | int64    | 否       | 限定返回交易记录的最近时间                               |
@@ -758,17 +757,17 @@ if __name__ == '__main__':
   {
     "askPrice": "98100", // 卖一价
     "product": "BTC_USDT", // 交易对
-    "amount": "922635", // 24成交价值
+    "amount": "922635", // 24h成交价值
     "last": "98000", // 最新成交价
-    "firstTradeId": 1, // 第一笔交易id
-    "change": "0", // 价格变化
-    "bidQty": "1.7", // 卖一数量
+    "firstTradeId": 1, // 首笔成交ID
+    "change": "0", // 24h价格变化
+    "bidQty": "1.7", // 买一数量
     "bidPrice": "98000", // 买一价
-    "volume": "9.41", // 24h成交数量
-    "lastQty": "0.3", // 24h最新成交
+    "volume": "9.41", // 24h成交量
+    "lastQty": "0.3", // 最近一笔成交量
     "askQty": "0.5", // 卖一数量
-    "high": "98100", // 24最高价
-    "tradeCount": 30, // 成交次数
+    "high": "98100", // 24h最高价
+    "tradeCount": 30, // 24h成交次数
     "low": "98000", // 24h最低价
     "time": "1733474204000", // 时间
     "open": "98000" // 开盘价格
@@ -785,7 +784,7 @@ if __name__ == '__main__':
 
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                  |
 | ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场,如 spot(默认), lpc 等,spot为现货,lpc为U本位合约                              |
+| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
 | symbol   | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等,<br/>可按如下两种形式指定多个交易对代码<br/> 1. symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
@@ -920,7 +919,7 @@ if __name__ == "__main__":
 
 ```json
 {
-  "id": 123, // 由客户端给定的请求id
+  "id": 123, // 由客户端给定的请求ID
   "method":"SUBSCRIBE", // 请求类型
   "params":["spot.BTC_USDT.order_book.5"]
 }
@@ -932,7 +931,7 @@ if __name__ == "__main__":
 {
   "result":"success", // 返回结果
   "op":"SUBSCRIBE", 
-  "id": 123, // 由客户端给定的请求id
+  "id": 123, // 由客户端给定的请求ID
   "events":["spot.BTC_USDT.order_book.5"]
 }
 ```
@@ -941,7 +940,7 @@ if __name__ == "__main__":
 
 ```json
 {
-  "id": 123, // 请求id
+  "id": 123, // 请求ID
   "error": -1003, // 错误代码
   "message": "..." // 错误描述
 }
@@ -1026,7 +1025,7 @@ if __name__ == "__main__":
 
 ```json
 {
-  "id": 123, // 由客户端给定的请求id
+  "id": 123, // 由客户端给定的请求ID
   "method": "..." // 请求类型
   "params": [ // 请求参数列表
     "...",
@@ -1076,9 +1075,9 @@ if __name__ == "__main__":
   {
     "stream": "spot.BTC_USDT.order_book.20",
     "data": {
-      "i": 1027024, // update id
-      "t": "1644558642100", // update time
-      "b": [ // 买盘
+      "i": 1027024, // Update ID
+      "t": "1644558642100", // Update time
+      "b": [ // 买单盘
         [
             "46125.7", // 委托价格
             "0.079045" // 委托量
@@ -1093,7 +1092,7 @@ if __name__ == "__main__":
           ],
         ...
       ],
-      "a": [ // 卖盘
+      "a": [ // 卖单盘
         [
             "46125.7", // 委托价格
             "0.079045" // 委托量
@@ -1149,10 +1148,10 @@ if __name__ == "__main__":
   "stream": "spot.BTC_USDT.trades",
   "data": [
     {
-      "i": 17122255, // 交易 id
+      "i": 17122255, // 交易ID
       "p": "46125.7", // 成交价格
       "q": "0.079045", // 成交量
-      "s": 1, // Taker 的成交方向 1买 -1 卖
+      "s": 1, // Taker方向 [1: 买方吃单 | -1: 卖方吃单]
       "t": "1628738748319" // 成交时间
     },
     ...
@@ -1192,39 +1191,39 @@ if __name__ == "__main__":
 {
   "stream": "spot.BTC_USDT.candles.1m",
   "data": {
-      "t":60000, // 时间周期
+      "t":60000, // K线周期(ms)
       "e":[
       [
-        "1644224940000", // 起始时间
-        "10190.53", // 开盘价格
-        "10192.5", // 最高价格
-        "9806.82", // 最低价格
-        "10127.37", // 收盘价格
+        "1644224940000", // 开盘时间
+        "10190.53", // 开盘价
+        "10192.5", // 最高价
+        "9806.82", // 最低价
+        "10127.37", // 收盘价
         "0.834", // 成交量
         "8370.40506", // 成交价值
-        "1", // 首个成交的id
+        "1", // 首笔成交ID
         278 // 区间内总成交次数
       ],
       [
-        "1644224940000", // 起始时间
-        "10190.53", // 开盘价格
-        "10192.5", // 最高价格
-        "9806.82", // 最低价格
-        "10127.37", // 收盘价格
+        "1644224940000", // 开盘时间
+        "10190.53", // 开盘价
+        "10192.5", // 最高价
+        "9806.82", // 最低价
+        "10127.37", // 收盘价
         "0.834", // 成交量
         "8370.40506", // 成交价值
-        "1", // 首个成交的id
+        "1", // 首笔成交ID
         278 // 区间内总成交次数
       ],
       [
-        "1644224940000", // 起始时间
-        "10190.53", // 开盘价格
-        "10192.5", // 最高价格
-        "9806.82", // 最低价格
-        "10127.37", // 收盘价格
+        "1644224940000", // 开盘时间
+        "10190.53", // 开盘价
+        "10192.5", // 最高价
+        "9806.82", // 最低价
+        "10127.37", // 收盘价
         "0.834", // 成交量
         "8370.40506", // 成交价值
-        "1", // 首个成交的id
+        "1", // 首笔成交ID
         278 // 区间内总成交次数
       ],
       ...
@@ -1266,17 +1265,17 @@ if __name__ == "__main__":
   "data": {   
     "askPrice": "98100", // 卖一价
     "product": "BTC_USDT", // 交易对
-    "amount": "922635", // 24成交价值
+    "amount": "922635", // 24h成交价值
     "last": "98000", // 最新成交价
-    "firstTradeId": 1, // 第一笔交易id
-    "change": "0", // 价格变化
-    "bidQty": "1.7", // 卖一数量
+    "firstTradeId": 1, // 首笔成交ID
+    "change": "0", // 24h价格变化
+    "bidQty": "1.7", // 买一数量
     "bidPrice": "98000", // 买一价
-    "volume": "9.41", // 24h成交数量
-    "lastQty": "0.3", // 24h最新成交
+    "volume": "9.41", // 24h成交量
+    "lastQty": "0.3", // 最近一笔成交量
     "askQty": "0.5", // 卖一数量
-    "high": "98100", // 24最高价
-    "tradeCount": 30, // 成交次数
+    "high": "98100", // 24h最高价
+    "tradeCount": 30, // 24h成交次数
     "low": "98000", // 24h最低价
     "time": "1733474204000", // 时间
     "open": "98000" // 开盘价格
@@ -1366,9 +1365,9 @@ if __name__ == '__main__':
     "locked":"0",  // 冻结额
     "free":"100",  // 可用
     "withdrawable":"100",// 可转出额
-    "collateral":false,// 是否抵扣
-    "discountForMargin":"1", // 可选字段 保证金抵扣率
-    "discountForFee":"1" // 可选字段 手续费抵扣率
+    "collateral":false,// 是否抵扣保证金 [true: 是 | false: 否]
+    "discountForMargin":"1", // 可选字段 保证金抵扣率 [0: 不可用 | 0.5: 50% | 1: 100%]
+    "discountForFee":"1" // 可选字段 手续费抵扣率 [0: 不可用 | 0.5: 50% | 1: 100%]
   },
   {
     "asset":"BTC",  // 资产代码
@@ -1376,7 +1375,7 @@ if __name__ == '__main__':
     "locked":"0",  // 冻结额
     "free":"100",  // 可用
     "withdrawable":"100",// 可转出额
-    "collateral":false,// 是否抵扣
+    "collateral":false,// 是否抵扣保证金 [true: 是 | false: 否]
   },
   ...
 ]
@@ -1397,7 +1396,6 @@ if __name__ == '__main__':
 * Data Source
 
   Cache
-
 
 ## 获取充值地址
 
@@ -1481,7 +1479,7 @@ if __name__ == '__main__':
 [
   {
     "addr": "74VZm4a6eGGBW3VCq6umcPL8QPhs5fFnpcT9nyQGgHkw", // 地址
-    "coin_id": "100", // 币种id
+    "coin_id": "100", // 币种ID
     "coin_symbol": "sUSDT",// 币种
     "chain_type":"Solana", // 网络
     "general_name": "USDT" ,// 资产名称
@@ -1587,7 +1585,7 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "id": 624, // 提现id
+    "id": 624, // 提现ID
     "to_address": "bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm", // 到账地址
     "amount_real": "9.00000000", // 到账数量
     "amount": "10.00000000",  // 提现数量
@@ -1612,7 +1610,7 @@ if __name__ == '__main__':
 | addr        | string | 是   | 到账地址                                   |
 | amount      | number | 是   | 提现数量                                   |
 | memo        | string | 否   | memo备注                                 |
-| withdraw_id | string | 否   | 自定义id 最大长度为36 返回值会出现该字段用于幂等处理          |
+| withdraw_id | string | 否   | 自定义ID 最大长度为36 返回值会出现该字段用于幂等处理          |
 
 
 ## 获取钱包账户资产
@@ -1818,8 +1816,8 @@ if __name__ == '__main__':
 |-------------|--------|------|---------------------------------------------------------|
 | symbol      | string | 是    | 资产代码,如 BTC, ETH 等                                       |
 | amount      | number | 是    | 划转数量                                                    |
-| type        | string | 是    |  WALLET_TRADE 代表则从钱包账户划转到交易账户 TRADE_WALLET代表则从交易账户划转到钱包账户 |
-| transfer_id | string | 否   |自定义id 最大长度为36 返回值会出现该字段用于幂等处理          |
+| type        | string | 是    | 划转类型 [WALLET_TRADE: 钱包→交易账户 | TRADE_WALLET: 交易账户→钱包] |
+| transfer_id | string | 否   |自定义ID 最大长度为36 返回值会出现该字段用于幂等处理          |
 
 ## 子账户资产划转
 
@@ -1926,9 +1924,9 @@ if __name__ == '__main__':
 |-------------|--------|------|-------------------------------|
 | symbol      | string | 是    | 资产代码,如 BTC, ETH 等             |
 | amount      | number | 是    | 划转数量                          |
-| sub_user_id      | number | 是    | 子账户id                         |
-| side        | string | 是    | in 代表从主账户划入子账户 out 从子账户划出到主账户 |
-| transfer_id | string | 否   | 自定义id 最大长度为36 返回值会出现该字段用于幂等处理 |
+| sub_user_id      | number | 是    | 子账户ID                         |
+| side        | string | 是    | 划转方向 [in: 主账户→子账户 | out: 子账户→主账户] |
+| transfer_id | string | 否   | 自定义ID 最大长度为36 返回值会出现该字段用于幂等处理 |
 
 ## 获取账单
 
@@ -2005,7 +2003,7 @@ if __name__ == '__main__':
   {
     "amount":"10000",   // 变化数量
     "balance":"10000",  // 余额
-    "id":"1125899906842624029", // id
+    "id":"1125899906842624029", // ID
     "time":"1733468814795", // 时间
     "asset":"USDT",   // 资产代码
     "type":"transfer" // 账单类型
@@ -2029,7 +2027,7 @@ if __name__ == '__main__':
 | before     | int64    | 否       | 账单记录id<br/>限定返回账单记录的最大id值                                                                                                                          |
 | after      | int64    | 否       | 账单记录id<br/>限定返回账单记录的最小id值                                                                                                                          |
 | limit      | int32    | 否       | 限定返回账单记录的最大条数<br/>默认值 100                                                                                                                          |
-| type       | string   | 否       | 账单类型 transfer划转,trade交易,fee手续费,rebate系统收取,funding资金费用                                                                                              |
+| type       | string   | 否       | 账单类型 [transfer: 划转 | trade: 交易 | fee: 手续费 | rebate: 返佣 | funding: 资金费用] |
 
 * Data Source
 
@@ -2239,31 +2237,31 @@ if __name__ == '__main__':
 
 ```json
 {
-  "orderId": "4611767382287843330", // 订单id
-  "clientOrderId": "",  // 自定义id
+  "orderId": "4611767382287843330", // 订单ID
+  "clientOrderId": "",  // 自定义订单ID
   "createTime": "1733390630904", // 创建时间
   "product": "BTC_USDT_SWAP", // 交易对代码
-  "type": "limit", // 订单类型
-  "side": "buy", // 交易方向
+  "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
+  "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
   "quantity": "0.01", // 委托数量
-  "stf": "disabled",
+  "stf": "disabled", // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
   "price": "10300",  // 委托价格
-  "timeInForce": "gtc",
-  "mini":"false", // 是不是mini合约
-  "cancelAfter": 0,
-  "postOnly": false,
-  "positionMerge": "long", // 仓位模式  long合并多 short合并空
-  "positionId": 0,  // 提交的仓位id
-  "marginMethod": "cross", // 保证金模式 全仓
-  "close": false,   // 是否为可平单
-  "leverage": 0,    // 杠杠倍数
-  "action": "unknown", // 仓位行为
-  "status": "accepted", // 订单状态
+  "timeInForce": "gtc", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+  "mini":"false", // 是否mini合约 [true: 是 | false: 否]
+  "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+  "postOnly": false, // 只做maker [true: 是 | false: 否]
+  "positionMerge": "long", // 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]
+  "positionId": 0,  // 提交的仓位ID
+  "marginMethod": "cross", // 保证金模式 [isolate: 逐仓 | cross: 全仓]
+  "close": false,   // 是否平仓单 [true: 平仓 | false: 开仓]
+  "leverage": 0,    // 杠杆倍数
+  "action": "unknown", // 仓位行为 [unknown: 未知 | increase_long: 开多 | reduce_long: 平多 | increase_short: 开空 | reduce_short: 平空]
+  "status": "accepted", // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
   "executedQty": "0", // 已成交数量
   "profit": "0",    // 收益
-  "origin":0, // origin          
-  "brokerId":0, // 渠道id
-  "update_id":'1125899907137993336', // 更新id
+  "origin":0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]          
+  "brokerId":0, // 渠道ID
+  "update_id":'1125899907137993336', // 更新ID
   "executedCost": "0", // 已成交价值
   "fillCount": 0, // 成交次数
   "fills": [],
@@ -2284,20 +2282,20 @@ if __name__ == '__main__':
 | 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                                                                           |
 |-----------------|---------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | symbol          | string  | 是    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                                  |
-| side            | string  | 是    | 交易方向 buy 买,sell 卖                                                                                                                                                            |
-| type            | string  | 是    | 委托类型,有效值 limit  market take-profit stop take-profit-limit stop-limit, limit限价 market市价 take-profit市价止赢 stop市价止损 take-profit-limit限价止赢(需要指定触发后的委托价格即price参数) stop-limit限价止损(需要指定触发后的委托价格即price参数) |
+| side            | string  | 是    | 交易方向 [buy: 买入 | sell: 卖出]                                                                                                                                                            |
+| type            | string  | 是    | 委托类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损] |
 | quantity        | decimal | 是    | 委托量                                                                                                                                                                          |
-| market          | string  | 是    | 必须 spot 现货,lpc U本位永续                                                                                                                                                         |
-| client_order_id | string  | 否    | 委托id,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳                                                                                                                                       |
+| market          | string  | 是    | 市场类型 [spot: 现货 | lpc: U本位永续]                                                                                                                                                         |
+| client_order_id | string  | 否    | 委托ID,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳                                                                                                                                       |
 | price           | decimal | 否    | 委托限价                                                                                                                                                                         |
-| positionMerge   | string  | 否    | 持仓方向 合约必须 long合并多 short合并空 none 分仓   如:开多(positionMerge=long,side=buy),平多(positionMerge=long,side=sell),开空(positionMerge=short,side=sell),平空(positionMerge=short,side=buy)   |
-| marginMethod    | string  | 否    | 合约必须 isolate 逐仓, cross 全仓                                                                                                                                                    |
-| mini            | bool    | 否    | 是否为mini合约 当为true的时候必须满足 positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                 |
-| leverage        | int     | 否    | 合约必须 杠杠倍数                                                                                                                                                                    
-| close           | bool    | 否    | 合约必须 true 平仓单,false 开仓单                                                                                                                                                      |
-| post_only       | bool    | 否    | 只做maker                                                                                                                                                                      |
-| time_in_force   | string  | 否       | 委托时效性<br/>有效值 gtc, ioc,fok<br/>gtc  表示未完全成交的委托将一直有效, 直到用户撤销该委托<br/>ioc 表示撮合将立即撤销在下单时刻不能完全成交的委托,<br/> 任何成交都将被保留<br/>fok 全部成交否则取消 <br/>默认值 gtc                                 |
-| positionId      | string  | 否       | 仓位id                                                                                                                                                                         |
+| positionMerge   | string  | 否    | 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]                                                                                                                                    |
+| marginMethod    | string  | 否    | 保证金模式 [isolate: 逐仓 | cross: 全仓]                                                                                                                                                    |
+| mini            | bool    | 否    | 是否mini合约 [true: 是 | false: 否] 当为true时必须满足 positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                 |
+| leverage        | int     | 否    | 杠杆倍数                                                                                                                                                                    |
+| close           | bool    | 否    | 是否平仓单 [true: 平仓 | false: 开仓]                                                                                                                                                      |
+| post_only       | bool    | 否    | 只做maker [true: 是 | false: 否]                                                                                                                                                                      |
+| time_in_force   | string  | 否       | 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消] 默认值: gtc                                                                                      |
+| positionId      | string  | 否       | 仓位ID                                                                                                                                                                         |
 | trigger_price         | decimal | 否       | 触发价格    止赢止损订单使用                                                                                                                                                             |
 | tpo_trigger         | int     | 否       | 开仓止盈,需配合tpo_trigger_value字段使用    0 不启用 1 启用                                                                                                                                  |
 | slo_trigger         | int     | 否       | 开仓止损,需配合slo_trigger_value字段使用    0 不启用 1 启用                                                                                                                                  |
@@ -2378,32 +2376,32 @@ if __name__ == '__main__':
 
 ```json
 {
-  "orderId": "4611767382287843330", // 订单id
-  "clientOrderId": "",  // 自定义id
+  "orderId": "4611767382287843330", // 订单ID
+  "clientOrderId": "",  // 自定义订单ID
   "createTime": "1733390630904", // 创建时间
   "product": "BTC_USDT_SWAP", // 交易对代码
-  "type": "limit", // 订单类型
-  "side": "buy", // 交易方向
+  "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
+  "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
   "quantity": "0.01", // 委托数量
-  "stf": "disabled",
+  "stf": "disabled", // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
   "price": "10300",  // 委托价格
-  "timeInForce": "gtc",
-  "mini":"false", // 是不是mini合约
-  "cancelAfter": 0,
-  "postOnly": false,
-  "positionMerge": "long", // 仓位模式  long合并多 short合并空
-  "positionId": 0,  // 提交的仓位id
-  "marginMethod": "cross", // 保证金模式 全仓
-  "close": false,   // 是否为可平单
-  "leverage": 0,    // 杠杠倍数
-  "action": "unknown", // 仓位行为
-  "status": "filled", // 订单状态
+  "timeInForce": "gtc", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+  "mini":"false", // 是否mini合约 [true: 是 | false: 否]
+  "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+  "postOnly": false, // 只做maker [true: 是 | false: 否]
+  "positionMerge": "long", // 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]
+  "positionId": 0,  // 提交的仓位ID
+  "marginMethod": "cross", // 保证金模式 [isolate: 逐仓 | cross: 全仓]
+  "close": false,   // 是否平仓单 [true: 平仓 | false: 开仓]
+  "leverage": 0,    // 杠杆倍数
+  "action": "unknown", // 仓位行为 [unknown: 未知 | increase_long: 开多 | reduce_long: 平多 | increase_short: 开空 | reduce_short: 平空]
+  "status": "filled", // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
   "executedQty": "0.01", // 已成交数量
   "profit": "0",    // 收益
-  "origin":0, // origin       
-  "markPrice": "10000", // 当origin=-1 代表订单的强平价格
-  "brokerId":0, // 渠道id
-  "update_id":'1125899907137993336', // 更新id
+  "origin":0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]       
+  "markPrice": "10000", // 当origin=-1 代表发生强平时的标记价格
+  "brokerId":0, // 渠道ID
+  "update_id":'1125899907137993336', // 更新ID
   "executedCost": "103", // 已成交价值
   "fillCount": 1, // 成交次数
   "fills": [  // 成交详情
@@ -2412,9 +2410,9 @@ if __name__ == '__main__':
       "time": "1733390650379",
       "price": "10300",
       "quantity": "0.01",
-      "profit": "0",
-      "taker": false,
-      "side": "buy",
+      "profit": "0", // 收益
+      "taker": false, // 是否为Taker [true: 是 | false: 否]
+      "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
       "fees": [
         {
           "amount": "0.103", // 资产数量
@@ -2445,7 +2443,7 @@ if __name__ == '__main__':
 
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                |
 | ---------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| id       | string   | 是       | 委托id<br/>委托id可以是交易所分配的, <br/>也可以是用户自定义的 (在提交委托时使用client_order_id参数).<br/>当使用自定义id时, 需要在id前添加 “c:” 前缀.<br/>例如: 提交委托时使用了自定义id “123”, 在获取委托时, 需使用 “c:123”. |
+| id       | string   | 是       | 委托ID<br/>委托ID可以是交易所分配的, <br/>也可以是用户自定义的 (在提交委托时使用client_order_id参数).<br/>当使用自定义ID时, 需要在id前添加 “c:” 前缀.<br/>例如: 提交委托时使用了自定义ID “123”, 在获取委托时, 需使用 “c:123”. |
 
 ## 获取历史订单列表
 
@@ -2518,32 +2516,32 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "orderId": "4611767382287843330", // 订单id
-    "clientOrderId": "",  // 自定义id
+    "orderId": "4611767382287843330", // 订单ID
+    "clientOrderId": "",  // 自定义订单ID
     "createTime": "1733390630904", // 创建时间
     "product": "BTC_USDT_SWAP", // 交易对代码
-    "type": "limit", // 订单类型
-    "side": "buy", // 交易方向
+    "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
+    "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
     "quantity": "0.01", // 委托数量
-    "stf": "disabled",
+    "stf": "disabled", // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
     "price": "10300",  // 委托价格
-    "timeInForce": "gtc",
-    "mini":"false", // 是不是mini合约
-    "cancelAfter": 0,
-    "postOnly": false,
-    "positionMerge": "long", // 仓位模式  long合并多 short合并空
-    "positionId": 0,  // 提交的仓位id
-    "marginMethod": "cross", // 保证金模式 全仓
-    "close": false,   // 是否为可平单
-    "leverage": 0,    // 杠杠倍数
-    "action": "unknown", // 仓位行为
-    "status": "filled", // 订单状态
+    "timeInForce": "gtc", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+    "mini":"false", // 是否mini合约 [true: 是 | false: 否]
+    "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+    "postOnly": false, // 只做maker [true: 是 | false: 否]
+    "positionMerge": "long", // 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]
+    "positionId": 0,  // 提交的仓位ID
+    "marginMethod": "cross", // 保证金模式 [isolate: 逐仓 | cross: 全仓]
+    "close": false,   // 是否平仓单 [true: 平仓 | false: 开仓]
+    "leverage": 0,    // 杠杆倍数
+    "action": "unknown", // 仓位行为 [unknown: 未知 | increase_long: 开多 | reduce_long: 平多 | increase_short: 开空 | reduce_short: 平空]
+    "status": "filled", // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
     "executedQty": "0.01", // 已成交数量
     "profit": "0",    // 收益
-    "origin":0, // origin          
-    "markPrice": "10000", // 当origin=-1 代表订单的强平价格
-    "brokerId":0, // 渠道id
-    "update_id":'1125899907137993336', // 更新id
+    "origin":0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]          
+    "markPrice": "10000", // 当origin=-1 代表发生强平时的标记价格
+    "brokerId":0, // 渠道ID
+    "update_id":'1125899907137993336', // 更新ID
     "executedCost": "103", // 已成交价值
     "fillCount": 1, // 成交次数
     "fills": [  // 成交详情
@@ -2552,9 +2550,9 @@ if __name__ == '__main__':
         "time": "1733390650379",
         "price": "10300",
         "quantity": "0.01",
-        "profit": "0",
-        "taker": false,
-        "side": "buy",
+        "profit": "0", // 收益
+        "taker": false, // 是否为Taker [true: 是 | false: 否]
+        "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
         "fees": [
           {
             "amount": "0.103", // 资产数量
@@ -2590,12 +2588,12 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                     |
 | ------------ | ---------- |------|----------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约<br/>                                                                                   |
+| market | string   | 是    | 交易对市场 [spot: 现货 | lpc: U本位合约]<br/>                                                                                   |
 | symbol     | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
 | start_time | long     | 否    | 限定返回委托的最近创建时间                                                                                                                          |
 | end_time   | long     | 否    | 限定返回委托的最近创建时间                                                                                                                          |
-| before     | int64    | 否    | 委托更新 id<br/>限定返回委托的最大更新id                                                                                                              |
-| after      | int64    | 否    | 委托更新 id<br/>限定返回委托的最小更新id                                                                                                              |
+| before     | int64    | 否    | 委托更新ID<br/>限定返回委托的最大更新ID                                                                                                              |
+| after      | int64    | 否    | 委托更新ID<br/>限定返回委托的最小更新ID                                                                                                              |
 | limit      | long     | 否    | 指定最多返回多少个委托                                                                                                                            |
 
 * 该接口支持的参数组合和数据源
@@ -2684,31 +2682,31 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "orderId": "4611767382287843330", // 订单id
-    "clientOrderId": "",  // 自定义id
+    "orderId": "4611767382287843330", // 订单ID
+    "clientOrderId": "",  // 自定义订单ID
     "createTime": "1733390630904", // 创建时间
     "product": "BTC_USDT_SWAP", // 交易对代码
-    "type": "limit", // 订单类型
-    "side": "buy", // 交易方向
+    "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
+    "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
     "quantity": "0.01", // 委托数量
-    "stf": "disabled",
+    "stf": "disabled", // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
     "price": "10300",  // 委托价格
-    "timeInForce": "gtc",
-    "mini":"false", // 是不是mini合约
-    "cancelAfter": 0,
-    "postOnly": false,
-    "positionMerge": "long", // 仓位模式  long合并多 short合并空
-    "positionId": 0,  // 提交的仓位id
-    "marginMethod": "cross", // 保证金模式 全仓
-    "close": false,   // 是否为可平单
-    "leverage": 0,    // 杠杠倍数
-    "action": "unknown", // 仓位行为
-    "status": "accepted", // 订单状态
+    "timeInForce": "gtc", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+    "mini":"false", // 是否mini合约 [true: 是 | false: 否]
+    "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+    "postOnly": false, // 只做maker [true: 是 | false: 否]
+    "positionMerge": "long", // 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]
+    "positionId": 0,  // 提交的仓位ID
+    "marginMethod": "cross", // 保证金模式 [isolate: 逐仓 | cross: 全仓]
+    "close": false,   // 是否平仓单 [true: 平仓 | false: 开仓]
+    "leverage": 0,    // 杠杆倍数
+    "action": "unknown", // 仓位行为 [unknown: 未知 | increase_long: 开多 | reduce_long: 平多 | increase_short: 开空 | reduce_short: 平空]
+    "status": "accepted", // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
     "executedQty": "0", // 已成交数量
     "profit": "0",    // 收益
-    "origin":0, // origin          
-    "brokerId":0, // 渠道id
-    "update_id":'1125899907137993336', // 更新id
+    "origin":0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]          
+    "brokerId":0, // 渠道ID
+    "update_id":'1125899907137993336', // 更新ID
     "executedCost": "0", // 已成交价值
     "fillCount": 0, // 成交次数
     "fills": [],
@@ -2728,7 +2726,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                     |
 | ------------ | ---------- |------|----------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约<br/>                                                                                   |
+| market | string   | 是    | 交易对市场 [spot: 现货 | lpc: U本位合约]<br/>                                                                                   |
 | symbol     | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
 
 
@@ -2828,7 +2826,7 @@ if __name__ == '__main__':
 
 | 参数名称       | 参数类型   | 是否必传 | 说明      |
 |------------|--------| ---------- |---------|
-| positionId | string | 是       | 指定的仓位id |
+| positionId | string | 是       | 指定的仓位ID |
 | leverage   | int    | 是   | 杠杆倍数    |
 
 ## 调整保证金
@@ -2927,8 +2925,8 @@ if __name__ == '__main__':
 
 | 参数名称       | 参数类型   | 是否必传 | 说明             |
 |------------|--------| ---------- |----------------|
-| positionId | string | 是       | 指定的仓位id        |
-| type       | int    | 是   | 1 增加保证金 2减少保证金 |
+| positionId | string | 是       | 指定的仓位ID |        |
+| type       | int    | 是   | 调整类型 [1: 增加保证金 | 2: 减少保证金] |
 | amount     | decimal | 是   | 数量             |
 
 
@@ -3025,8 +3023,8 @@ if __name__ == '__main__':
 
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                               |
 | ---------- | ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------|
-| id       | string   | 是       | 委托id<br>委托id可以是交易所分配的,<br/>也可以是用户自定义的（在提交委托时使用client_order_id参数）。<br>当使用自定义id时,需要在id前添加 “c:” 前缀。<br/>例如：提交委托时使用了自定义id “123”, 在撤销委托时,需使用 “c:123”。 |
-| market | string   | 是   | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约                                                                                                            |
+| id       | string   | 是       | 委托ID<br>委托ID可以是交易所分配的,<br/>也可以是用户自定义的（在提交委托时使用client_order_id参数）。<br>当使用自定义ID时,需要在id前添加 “c:” 前缀。<br/>例如：提交委托时使用了自定义ID “123”, 在撤销委托时,需使用 “c:123”。 |
+| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]                                                                                                            |
 
 
 ## 取消批量订单
@@ -3122,9 +3120,9 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                              |
 |--------| ---------- |-----|-------------------------------------------------|
-| market | string   | 是   | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约           |
+| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]           |
 | symbol | string   | 是   | 交易对代码<br/>如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等 |
-| side   | string   | 否   | buy 或者 sell                                     |
+| side   | string   | 否   | 交易方向 [buy: 买入 | sell: 卖出]                                     |
 
 > 如果请求被正确执行,返回空数组,否则返回错误信息
 
@@ -3206,15 +3204,15 @@ if __name__ == '__main__':
     "symbol": "BTC_USDT_SWAP", // 交易代码
     "leverage": "10.0", // 杠杆倍数
     "maintMargin": "0.0050000000", // 维持保证金率
-    "side":"short", // 持仓方向 空
+    "side":"short", // 持仓方向 [long: 多仓 | short: 空仓]
     "quantity": "0.100", // 仓位数量 空仓0.1
     "posMargin": "1093.989", // 保证金
-    "marginMethod": "cross", // 保证金模式 全仓
+    "marginMethod": "cross", // 保证金模式 [isolate: 逐仓 | cross: 全仓]
     "closableQty": "0.100", // 可平仓位数量
     "initMargin": "0.1000000000", // 初始保证金率
-    "id": "1125899906842624158", // id
+    "id": "1125899906842624158", // ID
     "orderMargin": "0",  // 委托保证金
-    "mergeMode": "short"  // 仓位模式 short
+    "mergeMode": "short"  // 仓位合并模式 [long: 合并多仓 | short: 合并空仓]
   }
   ...
 ]
@@ -3230,8 +3228,8 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                    |
 | ------------ | ---------- | ---------- |-------------------------------------------------------|
-| position_id   | string   | 否       | 仓位id 如存在这个参数,优先级最高                                    |
-| market | string   | 否   | 交易对市场，如 lpc 等，lpc为U本位合约                               |
+| position_id   | string   | 否       | 仓位ID 如存在这个参数,优先级最高                                    |
+| market | string   | 否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                               |
 | symbol     | string   | 否       | 配合market使用,交易对代码<br/>如 BTC_USDT_SWAP, ETH_USDT_SWAP 等 |
 
 ## 获取成交明细
@@ -3311,13 +3309,14 @@ if __name__ == '__main__':
     "product":"BTC_USDT_SWAP", // 交易对代码
     "fees":[{"amount":"10","asset":"USDT","value":"10"}],// 手续费
     "quantity":"0.01", // 成交数量
-    "orderId":"4611772879845982371", // 订单id
-    "fillId":"1125899906842624338", // 成交记录id
+    "orderId":"4611772879845982371", // 订单ID
+    "fillId":"1125899906842624338", // 成交记录ID
     "price":"1000000", // 成交价格
     "time":"1733541360859", // 成交时间
-    "taker":true, // 是否为吃单
+    "taker":true, // 是否为Taker [true: 是 | false: 否]
+    "side":"buy", // 交易方向 [buy: 买入 | sell: 卖出]
     "profit":"-9060", // 收益
-    "tradeId":26 
+    "tradeId":26 // 交易序号 
   },
   ...
 ]
@@ -3333,8 +3332,8 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                            |
 | ------------ | ---------- | ---------- |-----------------------------------------------------------------------------------------------|
-| market | string   | 是   | 交易对市场,如 spot, lpc 等,spot为现货,lpc为U本位合约                                                         |
-| order_id   | string   | 否       | 交易所分配的委托id<br/>限定仅返回指定委托的成交记录<br/>如果不指定该参数,请指定 symbol                                         |
+| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]                                                         |
+| order_id   | string   | 否       | 交易所分配的委托ID<br/>限定仅返回指定委托的成交记录<br/>如果不指定该参数,请指定 symbol                                         |
 | symbol     | string   | 否       | 交易对代码<br/>如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>限定仅返回指定交易对的成交记录<br/>如果不指定该参数,请指定 order_id |
 | start_time | int64    | 否       | 限定返回成交记录的最早时间                                                                                 |
 | end_time   | int64    | 否       | 限定返回成交记录的最近时间                                                                                 |
@@ -3545,9 +3544,9 @@ wss://u-stream.ktx.com
     "locked":"0",  // 冻结额
     "free":"100",  // 可用
     "withdrawable":"100",// 可转出额
-    "collateral":false,// 是否抵扣
-    "discountForMargin":"1", // 可选字段 保证金抵扣率
-    "discountForFee":"1" // 可选字段 手续费抵扣率
+    "collateral":false,// 是否抵扣保证金 [true: 是 | false: 否]
+    "discountForMargin":"1", // 保证金抵扣率 [0: 不可用 | 0.5: 50% | 1: 100%]
+    "discountForFee":"1" // 手续费抵扣率 [0: 不可用 | 0.5: 50% | 1: 100%]
   }
 }
 ```
@@ -3560,14 +3559,14 @@ wss://u-stream.ktx.com
 {
   "stream": "position",
   "data": {
-      "id":"1125899906842624003", // 仓位id
+      "id":"1125899906842624003", // 仓位ID
       "symbol":"BTC_USDT_SWAP", // 交易对代码
-      "side":"long", // 持仓方向 多仓
+      "side":"long", // 持仓方向 [long: 多仓 | short: 空仓]
       "quantity":"0.1",   // 持仓数量
       "entryPrice":"0", // 开仓均价
-      "mergeMode":"long", // 仓位模式
-      "marginMethod":"isolate",// 保证金模式
-      "leverage":"10.0", // 杠杠
+      "mergeMode":"long", // 仓位合并模式 [long: 合并多仓 | short: 合并空仓]
+      "marginMethod":"isolate",// 保证金模式 [isolate: 逐仓 | cross: 全仓]
+      "leverage":"10.0", // 杠杆
       "initMargin":"0.1", // 起始保证金率
       "maintMargin":"0.005",// 维持保证金率
       "posMargin":"0", // 持仓保证金
@@ -3585,32 +3584,32 @@ wss://u-stream.ktx.com
 {
   "stream": "order",
   "data":{
-    "orderId": "4611767382287843330", // 订单id
-      "clientOrderId": "",  // 自定义id
+    "orderId": "4611767382287843330", // 订单ID
+      "clientOrderId": "",  // 自定义订单ID
       "createTime": "1733390630904", // 创建时间
       "product": "BTC_USDT_SWAP", // 交易对代码
-      "type": "limit", // 订单类型
-      "side": "buy", // 交易方向
+      "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
+      "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
       "quantity": "0.01", // 委托数量
-      "stf": "disabled",
+      "stf": "disabled", // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
       "price": "10300",  // 委托价格
-      "timeInForce": "gtc",
-      "mini":"false", // 是不是mini合约
-      "cancelAfter": 0,
-      "postOnly": false,
-      "positionMerge": "long", // 仓位模式 long合并多 short合并空
-      "positionId": 0,  // 提交的仓位id
-      "marginMethod": "cross", // 保证金模式 全仓
-      "close": false,   // 是否为可平单
-      "leverage": 0,    // 杠杠倍数
-      "action": "unknown", // 仓位行为
-      "status": "filled", // 订单状态
+      "timeInForce": "gtc", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+      "mini":"false", // 是否mini合约 [true: 是 | false: 否]
+      "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+      "postOnly": false, // 只做maker [true: 是 | false: 否]
+      "positionMerge": "long", // 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]
+      "positionId": 0,  // 提交的仓位ID
+      "marginMethod": "cross", // 保证金模式 [isolate: 逐仓 | cross: 全仓]
+      "close": false,   // 是否平仓单 [true: 平仓 | false: 开仓]
+      "leverage": 0,    // 杠杆倍数
+      "action": "unknown", // 仓位行为 [unknown: 未知 | increase_long: 开多 | reduce_long: 平多 | increase_short: 开空 | reduce_short: 平空]
+      "status": "filled", // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
       "executedQty": "0.01", // 已成交数量
       "profit": "0",    // 收益
-      "origin":0, // origin
-      "markPrice": "10000", // 当origin=-1 代表订单的强平价格
-      "brokerId":0, // 渠道id
-      "update_id":'1125899907137993336', // 更新id
+      "origin":0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]
+      "markPrice": "10000", // 当origin=-1 代表发生强平时的标记价格
+      "brokerId":0, // 渠道ID
+      "update_id":'1125899907137993336', // 更新ID
       "executedCost": "103", // 已成交价值
       "fillCount": 1, // 成交次数
       "fills": [  // 成交详情
@@ -3619,8 +3618,8 @@ wss://u-stream.ktx.com
         "time": "1733390650379",
         "price": "10300",
         "quantity": "0.01",
-        "profit": "0",
-        "taker": false,
+        "profit": "0", // 收益
+        "taker": false, // 是否为Taker [true: 是 | false: 否]
         "fees": [
           {
             "amount": "0.103", // 资产数量
