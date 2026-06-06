@@ -3640,3 +3640,369 @@ wss://u-stream.ktx.com
   }
 }
 ```
+# 预测市场
+
+## 获取 Event
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/events`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/forecast/events'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "endDate": "1781204400000", // 结束时间
+    "description": "This event is for the upcoming FIFA World Cup game, scheduled for Thursday, June 11, 2026 between Mexico and South Africa.", // 描述
+    "id": "351715", // id
+    "title": "Mexico vs. South Africa", // 标题
+    "slug": "fifwc-mex-rsa-2026-06-11", // slug
+    "startDate": "1775515727000", // 开始时间
+    "status": "active" // 市场状态 status [active:激活 ｜completed:完成]
+  }
+  ...
+]
+```
+
+**获取events**
+
+* 请求方式 GET
+* 请求路径 /v1/forecast/events
+
+## 获取 Events详情
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/event/detail`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/forecast/event/detail'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+  
+    "endDate": "1781204400000", // 结束时间
+    "description": "This event is for the upcoming FIFA World Cup game, scheduled for Thursday, June 11, 2026 between Mexico and South Africa.", // 描述
+    "id": "351715", // id
+    "title": "Mexico vs. South Africa", // 标题
+    "slug": "fifwc-mex-rsa-2026-06-11", // slug
+    "startDate": "1775515727000", // 开始时间
+    "status": "active" // 市场状态 [active:激活 ｜completed:完成]
+    "markets": [ // 可能包含多个market
+      {
+        "eventId": "351715", // event id
+        "symbol": "1897034_FORECAST", // 交易对
+        "question": "Will Mexico win on 2026-06-11?", // market 问题描述
+        "takerFee": "0", // taker 手续费率
+        "endDate": "1781204400000", // 结束时间
+        "outcomes": [ // 问题回答选项
+          "Yes", // 对应下单的long参数
+          "No"   // 对应下单的short参数
+        ],
+        "winningOutcome": 0, // [0:未结算 |1:yes(long)赢 |-1:no(short)赢 |2:平局]
+        "makerFee": "0.00040000", // maker 手续费率
+        "quantityScale": 0, // 数量精度
+        "priceScale": 2, // 价格精度
+        "id": "1897034", // market id
+        "slug": "fifwc-mex-rsa-2026-06-11-mex", // slug
+        "startDate": "1775515619000", // 开始时间
+        "status": "active" //  市场状态 [active:激活 ｜resolved:结算完成]
+      }
+      ...
+    ],
+  }
+  ...
+]
+```
+
+**获取events详情**
+
+* 请求方式 GET
+* 请求路径 /v1/forecast/event/detail
+* 请求参数
+
+
+| 参数名称 | 参数类型 | 是否必传 | 说明          |
+|------| ---------- |------|-------------|
+| id    | string   | 是    | 指定的event id |
+
+## 获取 market
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/forecast/markets`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/forecast/markets'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "id": "1897034", // market id
+    "eventId": "351715", // 关联的event id
+    "slug": "fifwc-mex-rsa-2026-06-11-mex", // 市场唯一标识符
+    "symbol": "1897034_FORECAST", // 交易对符号
+    "question": "Will Mexico win on 2026-06-11?", // 预测问题 [格式: Will {事件主体} {结果} on {日期}?]
+    "outcomes": [ // 预测结果选项
+      "Yes", // 是/赢 [对应下单的long参数]
+      "No"   // 否/输 [对应下单的short参数]
+    ],
+    "winningOutcome": 0, // 结算结果 [0: 未结算 | 1: Yes赢 | -1: No赢 | 2: 平局]
+    "status": "active", //  市场状态 [active:激活 ｜resolved:结算完成]
+    "startDate": "1775515619000", // 开始交易时间 [毫秒时间戳]
+    "endDate": "1781204400000", // 结束/结算时间 [毫秒时间戳]
+    "takerFee": "0", // taker手续费率 [吃单方手续费比例]
+    "makerFee": "0.00040000", // maker手续费率 [挂单方手续费比例]
+    "quantityScale": 0, // 数量精度 [小数位数，0表示整数]
+    "priceScale": 2 // 价格精度 [小数位数，2表示保留2位小数]
+  }
+]
+```
+
+**获取market**
+
+* 请求方式 GET
+* 请求路径 /v1/forecast/markets
+* 请求参数
+
+
+| 参数名称 | 参数类型 | 是否必传 | 说明                                                         |
+| -------- | -------- | -------- | ------------------------------------------------------------ |
+| eventId  | string   | 否       | 指定的event id                                               |
+| symbol   | string   | 否       | 预测市场交易对代码，格式为 `{marketId}_FORECAST`，如 `1897034_FORECAST`、`2362124_FORECAST` |
+
+## 获取 ticker
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/ticker/get_all?market=forecast`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/ticker/get_all?market=forecast'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+      "productId": 759, // 交易对ID
+      "product": "CFG_USDT", // 交易对符号 [格式: {事件代码}_{计价货币}]
+      "time": "1780644690000", // 时间戳 [毫秒]
+      "last": "0.2235", // 最新成交价 [预测市场价格，范围0-1，表示事件发生概率]
+      "lastQty": "15.1", // 最近一笔成交量 [合约张数]
+      "bidPrice": "0.2234", // 买一价 [最高买入价格，表示买方认为事件发生概率]
+      "bidQty": "4.7", // 买一数量 [买单委托张数]
+      "askPrice": "0.2237", // 卖一价 [最低卖出价格，表示卖方认为事件发生概率]
+      "askQty": "4.7", // 卖一数量 [卖单委托张数]
+      "open": "0.2435", // 24h开盘价 [24小时前价格]
+      "high": "0.2440", // 24h最高价 [最高概率]
+      "low": "0.2227", // 24h最低价 [最低概率]
+      "change": "-0.0818", // 24h价格变化 [正数:上涨 | 负数:下跌，表示概率变化绝对值]
+      "volume": "112068.8", // 24h成交量 [合约张数]
+      "amount": "26181.59142", // 24h成交额 [计价货币金额，如USDT]
+      "tradeCount": 9496, // 24h成交次数 [撮合次数]
+      "firstTradeId": 194285 // 首笔成交ID
+}
+```
+
+**获取ticker**
+
+* 请求方式 GET
+* 请求路径 /v1/ticker/get_all
+* 请求参数
+
+
+| 参数名称 | 参数类型 | 是否必传 | 说明                                                         |
+| -------- | -------- | -------- | ------------------------------------------------------------ |
+| market   | string   | 是       | 交易对市场 [forecast:预测市场]                               |
+
+## 获取订单簿
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('upload failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "i": 1027024, // Update ID [订单簿版本号，每次变更递增]
+  "t": "1644558642100", // Update time [更新时间戳，毫秒]
+  "b": [ // 买单盘 [买方委托队列，按价格从高到低排序，表示愿意买入的概率价格]
+    [
+      "0.65", // 委托价格 [买方愿意支付的价格，代表认为事件发生概率65%]
+      "100.5" // 委托量 [买入合约张数]
+    ],
+    [
+      "0.64", // 委托价格 [买方愿意支付的价格，代表认为事件发生概率64%]
+      "200.3" // 委托量 [买入合约张数]
+    ],
+    [
+      "0.63", // 委托价格 [买方愿意支付的价格，代表认为事件发生概率63%]
+      "150.2" // 委托量 [买入合约张数]
+    ]
+  ],
+  "a": [ // 卖单盘 [卖方委托队列，按价格从低到高排序，表示愿意卖出的概率价格]
+    [
+      "0.66", // 委托价格 [卖方愿意接受的价格，代表认为事件发生概率66%]
+      "80.4" // 委托量 [卖出合约张数]
+    ],
+    [
+      "0.67", // 委托价格 [卖方愿意接受的价格，代表认为事件发生概率67%]
+      "120.6" // 委托量 [卖出合约张数]
+    ],
+    [
+      "0.68", // 委托价格 [卖方愿意接受的价格，代表认为事件发生概率68%]
+      "90.1" // 委托量 [卖出合约张数]
+    ]
+  ]
+}
+```
+
+**获取订单簿**
+
+* 请求方式 GET
+* 请求路径 /v1/order_book
+* 请求参数
+
+| 参数名称    | 参数类型 | 是否必传 | 说明                                                         |
+| :---------- | :------- | :------- | :----------------------------------------------------------- |
+| market      | string   | 否       | 交易对市场 [forecast: 预测市场]                              |
+| symbol      | string   | 是       | 预测市场交易对代码，格式为 `{marketId}_FORECAST`，如 `1897034_FORECAST`、`2362124_FORECAST` |
+| level       | int32    | 否       | 最大返回深度档位。批量查询时可使用 `symbol=1897034_FORECAST,1897035_FORECAST`。有效值：1、2、5、10、20、50、100、200、500、1000，默认值 100 |
+| price_scale | integer  | 否       | 价格精度合并。0=4位小数，1=3位小数，2=2位小数，3=1位小数，4=0位小数。默认值 0 |
+| side        | string   | 否       | 盘口方向（buy: 买入盘(long方向)；sell: 卖出盘(short方向)），默认值 buy |
+
+> 注：获取的订单簿默认是以 Yes(long) 方向的价格展示
+
