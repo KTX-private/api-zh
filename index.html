@@ -897,7 +897,7 @@
 <td>market</td>
 <td>string</td>
 <td>否</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -998,7 +998,7 @@
 <td>market</td>
 <td>string</td>
 <td>否</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -1016,7 +1016,7 @@
 <td>price_scale</td>
 <td>integer</td>
 <td>否</td>
-<td>价格精度合并 [0: 4位小数</td>
+<td>价格精度合并 [0: 4位小数；1: 3位小数；2: 2位小数；3: 1位小数；4: 0位小数]</td>
 </tr>
 </tbody></table>
 
@@ -1109,7 +1109,7 @@
 <td>market</td>
 <td>string</td>
 <td>否</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -1121,7 +1121,7 @@
 <td>time_frame</td>
 <td>string</td>
 <td>是</td>
-<td>K线周期 [1m</td>
+<td>K线周期 [1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1W, 1M]</td>
 </tr>
 <tr>
 <td>before</td>
@@ -1221,7 +1221,7 @@
 <td>market</td>
 <td>string</td>
 <td>否</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -1251,7 +1251,7 @@
 <td>after</td>
 <td>int64</td>
 <td>否</td>
-<td>交易记录 id<br/>限定返回交易记录的最大id</td>
+<td>交易记录 id<br/>限定返回交易记录的最小id</td>
 </tr>
 <tr>
 <td>limit</td>
@@ -1272,7 +1272,7 @@
 <li>market + symbol + start_time + limit  --&gt; database</li>
 <li>market + symbol + end_time  --&gt; database</li>
 <li>market + symbol + end_time + limit  --&gt; database</li>
-<li>market + market + symbol + start_time + end_time  --&gt; database</li>
+<li>market + symbol + start_time + end_time  --&gt; database</li>
 <li>market + symbol + start_time + end_time + limit  --&gt; database</li>
 <li>market + symbol + before  --&gt; database</li>
 <li>market + symbol + before + limit  --&gt; database</li>
@@ -1368,7 +1368,7 @@
 <td>market</td>
 <td>string</td>
 <td>否</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -2329,7 +2329,7 @@ ticker: 最新成交信息</p>
   </span><span class="p">{</span><span class="w">
     </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//资产代码</span><span class="w">
     </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">总额</span><span class="w">
-    </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="err">//</span><span class="w"> </span><span class="err">冻结额</span><span class="w">
+    </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">冻结额</span><span class="w">
     </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="err">//</span><span class="w"> </span><span class="err">可用</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">]</span><span class="w">
@@ -2474,7 +2474,7 @@ ticker: 最新成交信息</p>
 <td>type</td>
 <td>string</td>
 <td>是</td>
-<td>划转类型 [WALLET_TRADE: 钱包→交易账户</td>
+<td>划转类型 [WALLET_TRADE: 钱包→交易账户；TRADE_WALLET: 交易账户→钱包]</td>
 </tr>
 <tr>
 <td>transfer_id</td>
@@ -2609,7 +2609,7 @@ ticker: 最新成交信息</p>
 <td>side</td>
 <td>string</td>
 <td>是</td>
-<td>划转方向 [in: 主账户→子账户</td>
+<td>划转方向 [in: 主账户→子账户；out: 子账户→主账户]</td>
 </tr>
 <tr>
 <td>transfer_id</td>
@@ -2752,7 +2752,7 @@ ticker: 最新成交信息</p>
 <td>type</td>
 <td>string</td>
 <td>否</td>
-<td>账单类型 [transfer: 划转</td>
+<td>账单类型 [transfer: 划转；trade: 交易；fee: 手续费；rebate: 返佣；funding: 资金费用]</td>
 </tr>
 </tbody></table>
 
@@ -3014,19 +3014,19 @@ const param = {
 <td>symbol</td>
 <td>string</td>
 <td>是</td>
-<td>交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等</td>
+<td>交易对代码，如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等</td>
 </tr>
 <tr>
 <td>side</td>
 <td>string</td>
 <td>是</td>
-<td>交易方向 [buy: 买入</td>
+<td>交易方向 [buy: 买入；sell: 卖出]</td>
 </tr>
 <tr>
 <td>type</td>
 <td>string</td>
 <td>是</td>
-<td>委托类型 [limit: 限价</td>
+<td>委托类型 [limit: 限价；market: 市价；take-profit: 市价止盈；stop: 市价止损；take-profit-limit: 限价止盈；stop-limit: 限价止损]</td>
 </tr>
 <tr>
 <td>quantity</td>
@@ -3038,13 +3038,13 @@ const param = {
 <td>market</td>
 <td>string</td>
 <td>是</td>
-<td>市场类型 [spot: 现货</td>
+<td>市场类型 [spot: 现货；lpc: U本位永续]</td>
 </tr>
 <tr>
 <td>client_order_id</td>
 <td>string</td>
 <td>否</td>
-<td>委托ID,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳</td>
+<td>委托ID，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳</td>
 </tr>
 <tr>
 <td>price</td>
@@ -3056,19 +3056,19 @@ const param = {
 <td>positionMerge</td>
 <td>string</td>
 <td>否</td>
-<td>仓位合并模式 [long: 合并多仓</td>
+<td>仓位合并模式 [long: 合并多仓；short: 合并空仓；none: 分仓]</td>
 </tr>
 <tr>
 <td>marginMethod</td>
 <td>string</td>
 <td>否</td>
-<td>保证金模式 [isolate: 逐仓</td>
+<td>保证金模式 [isolate: 逐仓；cross: 全仓]</td>
 </tr>
 <tr>
 <td>mini</td>
 <td>bool</td>
 <td>否</td>
-<td>是否mini合约 [true: 是</td>
+<td>是否mini合约 [true: 是；false: 否]，当为true时必须满足 positionMerge=none &amp;&amp; marginMethod=isolate &amp;&amp; type=limit</td>
 </tr>
 <tr>
 <td>leverage</td>
@@ -3080,19 +3080,19 @@ const param = {
 <td>close</td>
 <td>bool</td>
 <td>否</td>
-<td>是否平仓单 [true: 平仓</td>
+<td>是否平仓单 [true: 平仓；false: 开仓]</td>
 </tr>
 <tr>
 <td>post_only</td>
 <td>bool</td>
 <td>否</td>
-<td>只做maker [true: 是</td>
+<td>只做maker [true: 是；false: 否]</td>
 </tr>
 <tr>
 <td>time_in_force</td>
 <td>string</td>
 <td>否</td>
-<td>委托时效性 [gtc: 成交前有效</td>
+<td>委托时效性 [gtc: 成交前有效；ioc: 即时剩余取消；fok: 全数成交否则取消]，默认值: gtc</td>
 </tr>
 <tr>
 <td>positionId</td>
@@ -3104,19 +3104,19 @@ const param = {
 <td>trigger_price</td>
 <td>decimal</td>
 <td>否</td>
-<td>触发价格    止赢止损订单使用</td>
+<td>触发价格，止盈止损订单使用</td>
 </tr>
 <tr>
 <td>tpo_trigger</td>
 <td>int</td>
 <td>否</td>
-<td>开仓止盈,需配合tpo_trigger_value字段使用    0 不启用 1 启用</td>
+<td>开仓止盈，需配合 tpo_trigger_value 字段使用，0: 不启用，1: 启用</td>
 </tr>
 <tr>
 <td>slo_trigger</td>
 <td>int</td>
 <td>否</td>
-<td>开仓止损,需配合slo_trigger_value字段使用    0 不启用 1 启用</td>
+<td>开仓止损，需配合 slo_trigger_value 字段使用，0: 不启用，1: 启用</td>
 </tr>
 <tr>
 <td>tpo_trigger_value</td>
@@ -3431,8 +3431,8 @@ const param = {
 <tr>
 <td>market</td>
 <td>string</td>
-<td>是</td>
-<td>交易对市场 [spot: 现货</td>
+<td>否</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -3444,7 +3444,7 @@ const param = {
 <td>start_time</td>
 <td>long</td>
 <td>否</td>
-<td>限定返回委托的最近创建时间</td>
+<td>限定返回委托的最早创建时间</td>
 </tr>
 <tr>
 <td>end_time</td>
@@ -3612,7 +3612,7 @@ const param = {
 <td>market</td>
 <td>string</td>
 <td>是</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -3840,7 +3840,7 @@ const param = {
 <td>type</td>
 <td>int</td>
 <td>是</td>
-<td>调整类型 [1: 增加保证金</td>
+<td>调整类型 [1: 增加保证金；2: 减少保证金]</td>
 </tr>
 <tr>
 <td>amount</td>
@@ -3952,7 +3952,7 @@ const param = {
 <td>market</td>
 <td>string</td>
 <td>是</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 </tbody></table>
 <h2 id='eaa1a6d463'>取消批量订单</h2>
@@ -4053,7 +4053,7 @@ const param = {
 <td>market</td>
 <td>string</td>
 <td>是</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -4065,7 +4065,7 @@ const param = {
 <td>side</td>
 <td>string</td>
 <td>否</td>
-<td>交易方向 [buy: 买入</td>
+<td>交易方向 [buy: 买入；sell: 卖出]</td>
 </tr>
 </tbody></table>
 
@@ -4185,7 +4185,7 @@ const param = {
 <td>market</td>
 <td>string</td>
 <td>否</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>symbol</td>
@@ -4299,7 +4299,7 @@ const param = {
 <td>market</td>
 <td>string</td>
 <td>是</td>
-<td>交易对市场 [spot: 现货</td>
+<td>交易对市场 [spot: 现货；lpc: U本位合约]</td>
 </tr>
 <tr>
 <td>order_id</td>
