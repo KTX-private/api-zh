@@ -432,7 +432,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                     |
 |--------| ---------- |------|--------------------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等,不指定返回全部交易对 |
 
 * Data source
@@ -520,10 +520,10 @@ if __name__ == '__main__':
 
 | 参数名称    | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                                                                                                             |
 | ------------- | ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol      | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                                                                                                                                                                                    |
 | level       | int32    | 否       | 指定最多返回多少级深度<br/>有效值 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000<br/>默认值 100                                                                                                                                                                                                                                                       |
-| price_scale | integer  | 否       | 价格精度合并 [0: 4位小数 | 1: 3位小数 | 2: 2位小数 | 3: 1位小数 | 4: 0位小数]<br/>默认值 0 |
+| price_scale | integer  | 否       | 价格精度合并 [0: 4位小数；1: 3位小数；2: 2位小数；3: 1位小数；4: 0位小数] |
 
 > 注意: 数据按价格最优排序, 即买侧深度按价格由大到小排序, 卖侧深度按价格由小到大排序
 
@@ -606,9 +606,9 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                     |
 | ------------ | ---------- | --------- |------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 是      | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                            |
-| time_frame | string   | 是      | K线周期 [1m | 3m | 5m | 15m | 30m | 1h | 2h | 4h | 6h | 12h | 1d | 1W | 1M] |
+| time_frame | string   | 是      | K线周期 [1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1W, 1M] |
 | before     | int64    | 否      | utc时间<br/>限定返回K线记录的最近时间                                                |
 | after      | int64    | 否      | utc时间<br/>限定返回K线记录的最早时间                                                |
 | limit      | integer  | 否      | 获取K线记录的最大数量<br/>默认值100,最大值1000                                         |
@@ -681,12 +681,12 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                          |
 | ------------ | ---------- | ---------- |---------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等 |
 | start_time | int64    | 否       | 限定返回交易记录的最早时间                               |
 | end_time   | int64    | 否       | 限定返回交易记录的最近时间                               |
 | before     | int64    | 否       | 交易记录 id<br/>限定返回交易记录的最大id                   |
-| after      | int64    | 否       | 交易记录 id<br/>限定返回交易记录的最大id                   |
+| after      | int64    | 否       | 交易记录 id<br/>限定返回交易记录的最小id      |
 | limit      | integer  | 否       | 获取记录的最大数量<br/>默认值100,最大值1000                |
 
 * 该接口支持的参数组合和数据源
@@ -697,7 +697,7 @@ if __name__ == '__main__':
   4. market + symbol + start_time + limit  --> database
   5. market + symbol + end_time  --> database
   6. market + symbol + end_time + limit  --> database
-  7. market + market + symbol + start_time + end_time  --> database
+  7. market + symbol + start_time + end_time  --> database
   8. market + symbol + start_time + end_time + limit  --> database
   9. market + symbol + before  --> database
   10. market + symbol + before + limit  --> database
@@ -784,7 +784,7 @@ if __name__ == '__main__':
 
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                  |
 | ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol   | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等,<br/>可按如下两种形式指定多个交易对代码<br/> 1. symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
@@ -1696,7 +1696,7 @@ if __name__ == '__main__':
   {
     "asset": "USDT", //资产代码
     "balance": "100", // 总额
-    "locked": "0"// 冻结额
+    "locked": "0",// 冻结额
     "free": "100"// 可用
   }
 ]
@@ -1816,7 +1816,7 @@ if __name__ == '__main__':
 |-------------|--------|------|---------------------------------------------------------|
 | symbol      | string | 是    | 资产代码,如 BTC, ETH 等                                       |
 | amount      | number | 是    | 划转数量                                                    |
-| type        | string | 是    | 划转类型 [WALLET_TRADE: 钱包→交易账户 | TRADE_WALLET: 交易账户→钱包] |
+| type        | string | 是    | 划转类型 [WALLET_TRADE: 钱包→交易账户；TRADE_WALLET: 交易账户→钱包] |
 | transfer_id | string | 否   |自定义ID 最大长度为36 返回值会出现该字段用于幂等处理          |
 
 ## 子账户资产划转
@@ -1925,7 +1925,7 @@ if __name__ == '__main__':
 | symbol      | string | 是    | 资产代码,如 BTC, ETH 等             |
 | amount      | number | 是    | 划转数量                          |
 | sub_user_id      | number | 是    | 子账户ID                         |
-| side        | string | 是    | 划转方向 [in: 主账户→子账户 | out: 子账户→主账户] |
+| side        | string | 是    | 划转方向 [in: 主账户→子账户；out: 子账户→主账户]     |
 | transfer_id | string | 否   | 自定义ID 最大长度为36 返回值会出现该字段用于幂等处理 |
 
 ## 获取账单
@@ -2027,7 +2027,7 @@ if __name__ == '__main__':
 | before     | int64    | 否       | 账单记录id<br/>限定返回账单记录的最大id值                                                                                                                          |
 | after      | int64    | 否       | 账单记录id<br/>限定返回账单记录的最小id值                                                                                                                          |
 | limit      | int32    | 否       | 限定返回账单记录的最大条数<br/>默认值 100                                                                                                                          |
-| type       | string   | 否       | 账单类型 [transfer: 划转 | trade: 交易 | fee: 手续费 | rebate: 返佣 | funding: 资金费用] |
+| type       | string   | 否       | 账单类型 [transfer: 划转；trade: 交易；fee: 手续费；rebate: 返佣；funding: 资金费用] |
 
 * Data Source
 
@@ -2279,28 +2279,28 @@ if __name__ == '__main__':
 * 请求参数
 
 
-| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                                                                           |
+| 参数名称          | 参数类型 | 是否必传 | 说明                                                         |
 |-----------------|---------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| symbol          | string  | 是    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                                  |
-| side            | string  | 是    | 交易方向 [buy: 买入 | sell: 卖出]                                                                                                                                                            |
-| type            | string  | 是    | 委托类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损] |
-| quantity        | decimal | 是    | 委托量                                                                                                                                                                          |
-| market          | string  | 是    | 市场类型 [spot: 现货 | lpc: U本位永续]                                                                                                                                                         |
-| client_order_id | string  | 否    | 委托ID,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳                                                                                                                                       |
-| price           | decimal | 否    | 委托限价                                                                                                                                                                         |
-| positionMerge   | string  | 否    | 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]                                                                                                                                    |
-| marginMethod    | string  | 否    | 保证金模式 [isolate: 逐仓 | cross: 全仓]                                                                                                                                                    |
-| mini            | bool    | 否    | 是否mini合约 [true: 是 | false: 否] 当为true时必须满足 positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                 |
-| leverage        | int     | 否    | 杠杆倍数                                                                                                                                                                    |
-| close           | bool    | 否    | 是否平仓单 [true: 平仓 | false: 开仓]                                                                                                                                                      |
-| post_only       | bool    | 否    | 只做maker [true: 是 | false: 否]                                                                                                                                                                      |
-| time_in_force   | string  | 否       | 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消] 默认值: gtc                                                                                      |
-| positionId      | string  | 否       | 仓位ID                                                                                                                                                                         |
-| trigger_price         | decimal | 否       | 触发价格    止赢止损订单使用                                                                                                                                                             |
-| tpo_trigger         | int     | 否       | 开仓止盈,需配合tpo_trigger_value字段使用    0 不启用 1 启用                                                                                                                                  |
-| slo_trigger         | int     | 否       | 开仓止损,需配合slo_trigger_value字段使用    0 不启用 1 启用                                                                                                                                  |
-| tpo_trigger_value         | decimal | 否       | 开仓止盈触发价格                                                                                                                                                                     |
-| slo_trigger_value         | decimal | 否       | 开仓止损触发价格                                                                                                                                                                     |
+| symbol            | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等          |
+| side              | string   | 是       | 交易方向 [buy: 买入；sell: 卖出]                             |
+| type              | string   | 是       | 委托类型 [limit: 限价；market: 市价；take-profit: 市价止盈；stop: 市价止损；take-profit-limit: 限价止盈；stop-limit: 限价止损] |
+| quantity          | decimal  | 是       | 委托量                                                       |
+| market            | string   | 是       | 市场类型 [spot: 现货；lpc: U本位永续]                        |
+| client_order_id   | string   | 否       | 委托ID，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳 |
+| price             | decimal  | 否       | 委托限价                                                     |
+| positionMerge     | string   | 否       | 仓位合并模式 [long: 合并多仓；short: 合并空仓；none: 分仓]   |
+| marginMethod      | string   | 否       | 保证金模式 [isolate: 逐仓；cross: 全仓]                      |
+| mini              | bool     | 否       | 是否mini合约 [true: 是；false: 否]，当为true时必须满足 positionMerge=none && marginMethod=isolate && type=limit |
+| leverage          | int      | 否       | 杠杆倍数                                                     |
+| close             | bool     | 否       | 是否平仓单 [true: 平仓；false: 开仓]                         |
+| post_only         | bool     | 否       | 只做maker [true: 是；false: 否]                              |
+| time_in_force     | string   | 否       | 委托时效性 [gtc: 成交前有效；ioc: 即时剩余取消；fok: 全数成交否则取消]，默认值: gtc |
+| positionId        | string   | 否       | 仓位ID                                                       |
+| trigger_price     | decimal  | 否       | 触发价格，止盈止损订单使用                                   |
+| tpo_trigger       | int      | 否       | 开仓止盈，需配合 tpo_trigger_value 字段使用，0: 不启用，1: 启用 |
+| slo_trigger       | int      | 否       | 开仓止损，需配合 slo_trigger_value 字段使用，0: 不启用，1: 启用 |
+| tpo_trigger_value | decimal  | 否       | 开仓止盈触发价格                                             |
+| slo_trigger_value | decimal  | 否       | 开仓止损触发价格                                             |
 
 > 委托对象
 > 最多包含该委托的20笔成交
@@ -2588,10 +2588,10 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                     |
 | ------------ | ---------- |------|----------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场 [spot: 现货 | lpc: U本位合约]<br/>                                                                                   |
+| market | string   | 否 | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
-| start_time | long     | 否    | 限定返回委托的最近创建时间                                                                                                                          |
-| end_time   | long     | 否    | 限定返回委托的最近创建时间                                                                                                                          |
+| start_time | long     | 否    | 限定返回委托的最早创建时间                                                                                                                       |
+| end_time   | long     | 否    | 限定返回委托的最近创建时间                                                                                              |
 | before     | int64    | 否    | 委托更新ID<br/>限定返回委托的最大更新ID                                                                                                              |
 | after      | int64    | 否    | 委托更新ID<br/>限定返回委托的最小更新ID                                                                                                              |
 | limit      | long     | 否    | 指定最多返回多少个委托                                                                                                                            |
@@ -2726,7 +2726,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                     |
 | ------------ | ---------- |------|----------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场 [spot: 现货 | lpc: U本位合约]<br/>                                                                                   |
+| market | string   | 是    | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
 
 
@@ -2925,8 +2925,8 @@ if __name__ == '__main__':
 
 | 参数名称       | 参数类型   | 是否必传 | 说明             |
 |------------|--------| ---------- |----------------|
-| positionId | string | 是       | 指定的仓位ID |        |
-| type       | int    | 是   | 调整类型 [1: 增加保证金 | 2: 减少保证金] |
+| positionId | string | 是       | 指定的仓位ID |
+| type       | int    | 是   | 调整类型 [1: 增加保证金；2: 减少保证金] |
 | amount     | decimal | 是   | 数量             |
 
 
@@ -3024,7 +3024,7 @@ if __name__ == '__main__':
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                               |
 | ---------- | ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------|
 | id       | string   | 是       | 委托ID<br>委托ID可以是交易所分配的,<br/>也可以是用户自定义的（在提交委托时使用client_order_id参数）。<br>当使用自定义ID时,需要在id前添加 “c:” 前缀。<br/>例如：提交委托时使用了自定义ID “123”, 在撤销委托时,需使用 “c:123”。 |
-| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]                                                                                                            |
+| market | string   | 是   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 
 
 ## 取消批量订单
@@ -3120,9 +3120,9 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                              |
 |--------| ---------- |-----|-------------------------------------------------|
-| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]           |
+| market | string   | 是   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol | string   | 是   | 交易对代码<br/>如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等 |
-| side   | string   | 否   | 交易方向 [buy: 买入 | sell: 卖出]                                     |
+| side   | string   | 否   | 交易方向 [buy: 买入；sell: 卖出] |
 
 > 如果请求被正确执行,返回空数组,否则返回错误信息
 
@@ -3229,7 +3229,7 @@ if __name__ == '__main__':
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                    |
 | ------------ | ---------- | ---------- |-------------------------------------------------------|
 | position_id   | string   | 否       | 仓位ID 如存在这个参数,优先级最高                                    |
-| market | string   | 否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                               |
+| market | string   | 否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 否       | 配合market使用,交易对代码<br/>如 BTC_USDT_SWAP, ETH_USDT_SWAP 等 |
 
 ## 获取成交明细
@@ -3332,7 +3332,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                            |
 | ------------ | ---------- | ---------- |-----------------------------------------------------------------------------------------------|
-| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]                                                         |
+| market | string   | 是   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | order_id   | string   | 否       | 交易所分配的委托ID<br/>限定仅返回指定委托的成交记录<br/>如果不指定该参数,请指定 symbol                                         |
 | symbol     | string   | 否       | 交易对代码<br/>如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>限定仅返回指定交易对的成交记录<br/>如果不指定该参数,请指定 order_id |
 | start_time | int64    | 否       | 限定返回成交记录的最早时间                                                                                 |
