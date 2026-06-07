@@ -3913,6 +3913,7 @@ if __name__ == '__main__':
 
 **获取ticker**
 
+* 获取的是yes价格
 * 请求方式 GET
 * 请求路径 /v1/ticker/get_all
 * 请求参数
@@ -3994,6 +3995,7 @@ if __name__ == '__main__':
 
 **获取订单簿**
 
+* 获取的是yes价格
 * 请求方式 GET
 * 请求路径 /v1/order_book
 * 请求参数
@@ -4984,3 +4986,6 @@ if __name__ == '__main__':
 | after      | int64    | 否       | 成交记录 fillId<br/>限定返回成交记录的最小id                                               |
 | limit      | int32    | 否       | 限定返回结果的最大条数<br/>默认值 100                                                     |
 
+## 关于推送
+* 在公开数据推送,订阅的格式只需要替换对应的market和symbol即可,返回的价格数据都是yes方向的价格,如order book的订阅：{"method":"SUBSCRIBE","params":["forecast.2434164_FORECAST.order_book.5"]}
+* 在用户私有数据推送中,推送的的order 和 position和上面预测市场接口请求仓位和订单接口返回格式一致
