@@ -408,7 +408,7 @@ if __name__ == '__main__':
 ```json
 [
   {
-    "id": 5 // ID
+    "id": 5, // ID 
     "market": "lpc", // 交易对市场 [spot: 现货 | lpc: U本位合约]
     "symbol": "BTC_USDT_SWAP", // 交易对
     "takerFee": "0.001", // Taker费率
@@ -432,14 +432,14 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                     |
 |--------| ---------- |------|--------------------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等,不指定返回全部交易对 |
 
 * Data source
 
   Cache
 
-## 获取订单薄
+## 获取订单簿
 
 > Request
 
@@ -520,10 +520,10 @@ if __name__ == '__main__':
 
 | 参数名称    | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                                                                                                             |
 | ------------- | ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol      | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                                                                                                                                                                                    |
 | level       | int32    | 否       | 指定最多返回多少级深度<br/>有效值 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000<br/>默认值 100                                                                                                                                                                                                                                                       |
-| price_scale | integer  | 否       | 价格精度合并 [0: 4位小数 | 1: 3位小数 | 2: 2位小数 | 3: 1位小数 | 4: 0位小数]<br/>默认值 0 |
+| price_scale | integer  | 否       | 价格精度合并 [0: 4位小数；1: 3位小数；2: 2位小数；3: 1位小数；4: 0位小数] |
 
 > 注意: 数据按价格最优排序, 即买侧深度按价格由大到小排序, 卖侧深度按价格由小到大排序
 
@@ -606,9 +606,9 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                     |
 | ------------ | ---------- | --------- |------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 是      | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                            |
-| time_frame | string   | 是      | K线周期 [1m | 3m | 5m | 15m | 30m | 1h | 2h | 4h | 6h | 12h | 1d | 1W | 1M] |
+| time_frame | string   | 是      | K线周期 [1m, 3m, 5m, 15m, 30m, 1h, 2h, 4h, 6h, 12h, 1d, 1W, 1M] |
 | before     | int64    | 否      | utc时间<br/>限定返回K线记录的最近时间                                                |
 | after      | int64    | 否      | utc时间<br/>限定返回K线记录的最早时间                                                |
 | limit      | integer  | 否      | 获取K线记录的最大数量<br/>默认值100,最大值1000                                         |
@@ -681,12 +681,12 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                          |
 | ------------ | ---------- | ---------- |---------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等 |
 | start_time | int64    | 否       | 限定返回交易记录的最早时间                               |
 | end_time   | int64    | 否       | 限定返回交易记录的最近时间                               |
 | before     | int64    | 否       | 交易记录 id<br/>限定返回交易记录的最大id                   |
-| after      | int64    | 否       | 交易记录 id<br/>限定返回交易记录的最大id                   |
+| after      | int64    | 否       | 交易记录 id<br/>限定返回交易记录的最小id      |
 | limit      | integer  | 否       | 获取记录的最大数量<br/>默认值100,最大值1000                |
 
 * 该接口支持的参数组合和数据源
@@ -697,7 +697,7 @@ if __name__ == '__main__':
   4. market + symbol + start_time + limit  --> database
   5. market + symbol + end_time  --> database
   6. market + symbol + end_time + limit  --> database
-  7. market + market + symbol + start_time + end_time  --> database
+  7. market + symbol + start_time + end_time  --> database
   8. market + symbol + start_time + end_time + limit  --> database
   9. market + symbol + before  --> database
   10. market + symbol + before + limit  --> database
@@ -784,7 +784,7 @@ if __name__ == '__main__':
 
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                  |
 | ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------|
-| market | string   |  否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                              |
+| market | string   |  否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol   | string   | 是       | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等,<br/>可按如下两种形式指定多个交易对代码<br/> 1. symbol=BTC_USDT,ETH_USDT |
 
 * Data Source
@@ -1696,7 +1696,7 @@ if __name__ == '__main__':
   {
     "asset": "USDT", //资产代码
     "balance": "100", // 总额
-    "locked": "0"// 冻结额
+    "locked": "0",// 冻结额
     "free": "100"// 可用
   }
 ]
@@ -1816,7 +1816,7 @@ if __name__ == '__main__':
 |-------------|--------|------|---------------------------------------------------------|
 | symbol      | string | 是    | 资产代码,如 BTC, ETH 等                                       |
 | amount      | number | 是    | 划转数量                                                    |
-| type        | string | 是    | 划转类型 [WALLET_TRADE: 钱包→交易账户 | TRADE_WALLET: 交易账户→钱包] |
+| type        | string | 是    | 划转类型 [WALLET_TRADE: 钱包→交易账户；TRADE_WALLET: 交易账户→钱包] |
 | transfer_id | string | 否   |自定义ID 最大长度为36 返回值会出现该字段用于幂等处理          |
 
 ## 子账户资产划转
@@ -1925,7 +1925,7 @@ if __name__ == '__main__':
 | symbol      | string | 是    | 资产代码,如 BTC, ETH 等             |
 | amount      | number | 是    | 划转数量                          |
 | sub_user_id      | number | 是    | 子账户ID                         |
-| side        | string | 是    | 划转方向 [in: 主账户→子账户 | out: 子账户→主账户] |
+| side        | string | 是    | 划转方向 [in: 主账户→子账户；out: 子账户→主账户]     |
 | transfer_id | string | 否   | 自定义ID 最大长度为36 返回值会出现该字段用于幂等处理 |
 
 ## 获取账单
@@ -2027,7 +2027,7 @@ if __name__ == '__main__':
 | before     | int64    | 否       | 账单记录id<br/>限定返回账单记录的最大id值                                                                                                                          |
 | after      | int64    | 否       | 账单记录id<br/>限定返回账单记录的最小id值                                                                                                                          |
 | limit      | int32    | 否       | 限定返回账单记录的最大条数<br/>默认值 100                                                                                                                          |
-| type       | string   | 否       | 账单类型 [transfer: 划转 | trade: 交易 | fee: 手续费 | rebate: 返佣 | funding: 资金费用] |
+| type       | string   | 否       | 账单类型 [transfer: 划转；trade: 交易；fee: 手续费；rebate: 返佣；funding: 资金费用] |
 
 * Data Source
 
@@ -2279,28 +2279,28 @@ if __name__ == '__main__':
 * 请求参数
 
 
-| 参数名称            | 参数类型    | 是否必传 | 说明                                                                                                                                                                           |
+| 参数名称          | 参数类型 | 是否必传 | 说明                                                         |
 |-----------------|---------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| symbol          | string  | 是    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等                                                                                                                                  |
-| side            | string  | 是    | 交易方向 [buy: 买入 | sell: 卖出]                                                                                                                                                            |
-| type            | string  | 是    | 委托类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损] |
-| quantity        | decimal | 是    | 委托量                                                                                                                                                                          |
-| market          | string  | 是    | 市场类型 [spot: 现货 | lpc: U本位永续]                                                                                                                                                         |
-| client_order_id | string  | 否    | 委托ID,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳                                                                                                                                       |
-| price           | decimal | 否    | 委托限价                                                                                                                                                                         |
-| positionMerge   | string  | 否    | 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]                                                                                                                                    |
-| marginMethod    | string  | 否    | 保证金模式 [isolate: 逐仓 | cross: 全仓]                                                                                                                                                    |
-| mini            | bool    | 否    | 是否mini合约 [true: 是 | false: 否] 当为true时必须满足 positionMerge=none&&marginMethod=isolate&&type=limit                                                                                                 |
-| leverage        | int     | 否    | 杠杆倍数                                                                                                                                                                    |
-| close           | bool    | 否    | 是否平仓单 [true: 平仓 | false: 开仓]                                                                                                                                                      |
-| post_only       | bool    | 否    | 只做maker [true: 是 | false: 否]                                                                                                                                                                      |
-| time_in_force   | string  | 否       | 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消] 默认值: gtc                                                                                      |
-| positionId      | string  | 否       | 仓位ID                                                                                                                                                                         |
-| trigger_price         | decimal | 否       | 触发价格    止赢止损订单使用                                                                                                                                                             |
-| tpo_trigger         | int     | 否       | 开仓止盈,需配合tpo_trigger_value字段使用    0 不启用 1 启用                                                                                                                                  |
-| slo_trigger         | int     | 否       | 开仓止损,需配合slo_trigger_value字段使用    0 不启用 1 启用                                                                                                                                  |
-| tpo_trigger_value         | decimal | 否       | 开仓止盈触发价格                                                                                                                                                                     |
-| slo_trigger_value         | decimal | 否       | 开仓止损触发价格                                                                                                                                                                     |
+| symbol            | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等          |
+| side              | string   | 是       | 交易方向 [buy: 买入；sell: 卖出]                             |
+| type              | string   | 是       | 委托类型 [limit: 限价；market: 市价；take-profit: 市价止盈；stop: 市价止损；take-profit-limit: 限价止盈；stop-limit: 限价止损] |
+| quantity          | decimal  | 是       | 委托量                                                       |
+| market            | string   | 是       | 市场类型 [spot: 现货；lpc: U本位永续]                        |
+| client_order_id   | string   | 否       | 委托ID，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳 |
+| price             | decimal  | 否       | 委托限价                                                     |
+| positionMerge     | string   | 否       | 仓位合并模式 [long: 合并多仓；short: 合并空仓；none: 分仓]   |
+| marginMethod      | string   | 否       | 保证金模式 [isolate: 逐仓；cross: 全仓]                      |
+| mini              | bool     | 否       | 是否mini合约 [true: 是；false: 否]，当为true时必须满足 positionMerge=none && marginMethod=isolate && type=limit |
+| leverage          | int      | 否       | 杠杆倍数                                                     |
+| close             | bool     | 否       | 是否平仓单 [true: 平仓；false: 开仓]                         |
+| post_only         | bool     | 否       | 只做maker [true: 是；false: 否]                              |
+| time_in_force     | string   | 否       | 委托时效性 [gtc: 成交前有效；ioc: 即时剩余取消；fok: 全数成交否则取消]，默认值: gtc |
+| positionId        | string   | 否       | 仓位ID                                                       |
+| trigger_price     | decimal  | 否       | 触发价格，止盈止损订单使用                                   |
+| tpo_trigger       | int      | 否       | 开仓止盈，需配合 tpo_trigger_value 字段使用，0: 不启用，1: 启用 |
+| slo_trigger       | int      | 否       | 开仓止损，需配合 slo_trigger_value 字段使用，0: 不启用，1: 启用 |
+| tpo_trigger_value | decimal  | 否       | 开仓止盈触发价格                                             |
+| slo_trigger_value | decimal  | 否       | 开仓止损触发价格                                             |
 
 > 委托对象
 > 最多包含该委托的20笔成交
@@ -2577,21 +2577,22 @@ if __name__ == '__main__':
 
 **获取ApiKey对应账户中符合下列条件的委托**
 
-2. 三个月内的已结算委托, 含已拒绝, 已撤销和已成交委托
-3. 全部已成交委托
-4. 全部已撤销的部分成交委托
+1.三个月内的已结算委托, 含已拒绝, 已撤销和已成交委托
+2.全部已成交委托
+3.全部已撤销的部分成交委托
 
 * 请求方式 GET
 * 请求路径 /v1/history/orders
 * 权限: View
+* 请求参数
 
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                     |
 | ------------ | ---------- |------|----------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场 [spot: 现货 | lpc: U本位合约]<br/>                                                                                   |
+| market | string   | 否 | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
-| start_time | long     | 否    | 限定返回委托的最近创建时间                                                                                                                          |
-| end_time   | long     | 否    | 限定返回委托的最近创建时间                                                                                                                          |
+| start_time | long     | 否    | 限定返回委托的最早创建时间                                                                                                                       |
+| end_time   | long     | 否    | 限定返回委托的最近创建时间                                                                                              |
 | before     | int64    | 否    | 委托更新ID<br/>限定返回委托的最大更新ID                                                                                                              |
 | after      | int64    | 否    | 委托更新ID<br/>限定返回委托的最小更新ID                                                                                                              |
 | limit      | long     | 否    | 指定最多返回多少个委托                                                                                                                            |
@@ -2726,7 +2727,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                     |
 | ------------ | ---------- |------|----------------------------------------------------------------------------------------------------------------------------------------|
-| market | string   | 是    | 交易对市场 [spot: 现货 | lpc: U本位合约]<br/>                                                                                   |
+| market | string   | 是    | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 否    | 交易对代码,如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
 
 
@@ -2925,8 +2926,8 @@ if __name__ == '__main__':
 
 | 参数名称       | 参数类型   | 是否必传 | 说明             |
 |------------|--------| ---------- |----------------|
-| positionId | string | 是       | 指定的仓位ID |        |
-| type       | int    | 是   | 调整类型 [1: 增加保证金 | 2: 减少保证金] |
+| positionId | string | 是       | 指定的仓位ID |
+| type       | int    | 是   | 调整类型 [1: 增加保证金；2: 减少保证金] |
 | amount     | decimal | 是   | 数量             |
 
 
@@ -3024,7 +3025,7 @@ if __name__ == '__main__':
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                               |
 | ---------- | ---------- | ---------- |--------------------------------------------------------------------------------------------------------------------------------------------------|
 | id       | string   | 是       | 委托ID<br>委托ID可以是交易所分配的,<br/>也可以是用户自定义的（在提交委托时使用client_order_id参数）。<br>当使用自定义ID时,需要在id前添加 “c:” 前缀。<br/>例如：提交委托时使用了自定义ID “123”, 在撤销委托时,需使用 “c:123”。 |
-| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]                                                                                                            |
+| market | string   | 是   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 
 
 ## 取消批量订单
@@ -3120,9 +3121,9 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                              |
 |--------| ---------- |-----|-------------------------------------------------|
-| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]           |
+| market | string   | 是   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol | string   | 是   | 交易对代码<br/>如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等 |
-| side   | string   | 否   | 交易方向 [buy: 买入 | sell: 卖出]                                     |
+| side   | string   | 否   | 交易方向 [buy: 买入；sell: 卖出] |
 
 > 如果请求被正确执行,返回空数组,否则返回错误信息
 
@@ -3229,7 +3230,7 @@ if __name__ == '__main__':
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                    |
 | ------------ | ---------- | ---------- |-------------------------------------------------------|
 | position_id   | string   | 否       | 仓位ID 如存在这个参数,优先级最高                                    |
-| market | string   | 否   | 交易对市场 [spot: 现货 | lpc: U本位合约]                               |
+| market | string   | 否   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | symbol     | string   | 否       | 配合market使用,交易对代码<br/>如 BTC_USDT_SWAP, ETH_USDT_SWAP 等 |
 
 ## 获取成交明细
@@ -3332,7 +3333,7 @@ if __name__ == '__main__':
 
 | 参数名称   | 参数类型 | 是否必传 | 说明                                                                                            |
 | ------------ | ---------- | ---------- |-----------------------------------------------------------------------------------------------|
-| market | string   | 是   | 交易对市场 [spot: 现货 | lpc: U本位合约]                                                         |
+| market | string   | 是   | 交易对市场 [spot: 现货；lpc: U本位合约] |
 | order_id   | string   | 否       | 交易所分配的委托ID<br/>限定仅返回指定委托的成交记录<br/>如果不指定该参数,请指定 symbol                                         |
 | symbol     | string   | 否       | 交易对代码<br/>如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等<br/>限定仅返回指定交易对的成交记录<br/>如果不指定该参数,请指定 order_id |
 | start_time | int64    | 否       | 限定返回成交记录的最早时间                                                                                 |
@@ -3640,6 +3641,7 @@ wss://u-stream.ktx.com
   }
 }
 ```
+
 # 预测市场
 
 ## 获取 Event
@@ -3859,7 +3861,7 @@ if __name__ == '__main__':
 ```javascript
 let request = require("request");
 const endPoint = 'https://api.ktx.com/api';
-const url = `${endPoint}/v1/ticker/get_all?market=forecast`
+const url = `${endPoint}/v1/ticker/get_all?market=forecast&forecastSide=yes`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
@@ -3877,7 +3879,7 @@ import requests
 END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
-    path = '/v1/ticker/get_all?market=forecast'
+    path = '/v1/ticker/get_all?market=forecast&forecastSide=yes'
     resp = requests.get(END_POINT + path)
     print(resp.text)
   
@@ -3890,7 +3892,7 @@ if __name__ == '__main__':
 ```json
 {
       "productId": 759, // 交易对ID
-      "product": "CFG_USDT", // 交易对符号 [格式: {事件代码}_{计价货币}]
+      "product": "2434164_FORECAST", // 交易对符号
       "time": "1780644690000", // 时间戳 [毫秒]
       "last": "0.2235", // 最新成交价 [预测市场价格，范围0-1，表示事件发生概率]
       "lastQty": "15.1", // 最近一笔成交量 [合约张数]
@@ -3911,6 +3913,7 @@ if __name__ == '__main__':
 
 **获取ticker**
 
+* 获取的是yes价格
 * 请求方式 GET
 * 请求路径 /v1/ticker/get_all
 * 请求参数
@@ -3919,6 +3922,9 @@ if __name__ == '__main__':
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                         |
 | -------- | -------- | -------- | ------------------------------------------------------------ |
 | market   | string   | 是       | 交易对市场 [forecast:预测市场]                               |
+| forecastSide | string   | 否       | 盘口方向（yes: yes方向价格；no: no方向价格 ），默认值 yes                                                                   |
+
+> 注：没有forecastSide参数时获取的ticker默认是以 Yes(long) 方向的价格展示
 
 ## 获取订单簿
 
@@ -3927,7 +3933,7 @@ if __name__ == '__main__':
 ```javascript
 let request = require("request");
 const endPoint = 'https://api.ktx.com/api';
-const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell`
+const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&forecastSide=no`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
@@ -3945,7 +3951,7 @@ import requests
 END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
-    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell'
+    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&forecastSide=no'
     resp = requests.get(END_POINT + path)
     print(resp.text)
 
@@ -3992,19 +3998,20 @@ if __name__ == '__main__':
 
 **获取订单簿**
 
+* 获取的是yes价格
 * 请求方式 GET
 * 请求路径 /v1/order_book
 * 请求参数
 
-| 参数名称    | 参数类型 | 是否必传 | 说明                                                         |
-| :---------- | :------- | :------- | :----------------------------------------------------------- |
-| market      | string   | 否       | 交易对市场 [forecast: 预测市场]                              |
-| symbol      | string   | 是       | 预测市场交易对代码，格式为 `{marketId}_FORECAST`，如 `1897034_FORECAST`、`2362124_FORECAST` |
-| level       | int32    | 否       | 最大返回深度档位。批量查询时可使用 `symbol=1897034_FORECAST,1897035_FORECAST`。有效值：1、2、5、10、20、50、100、200、500、1000，默认值 100 |
-| price_scale | integer  | 否       | 价格精度合并。0=4位小数，1=3位小数，2=2位小数，3=1位小数，4=0位小数。默认值 0 |
-| side        | string   | 否       | 盘口方向（buy: 买入盘(long方向)；sell: 卖出盘(short方向)），默认值 buy |
+| 参数名称         | 参数类型 | 是否必传 | 说明                                                                                                       |
+|:-------------| :------- | :------- |:---------------------------------------------------------------------------------------------------------|
+| market       | string   | 否       | 交易对市场 [forecast: 预测市场]                                                                                   |
+| symbol       | string   | 是       | 预测市场交易对代码，格式为 `{marketId}_FORECAST`，如 `1897034_FORECAST`、`2362124_FORECAST`                              |
+| level        | int32    | 否       | 最大返回深度档位。批量查询时可使用 `symbol=1897034_FORECAST,1897035_FORECAST`。有效值：1、2、5、10、20、50、100、200、500、1000，默认值 100 |
+| price_scale  | integer  | 否       | 价格精度合并。0=4位小数，1=3位小数，2=2位小数，3=1位小数，4=0位小数。默认值 0                                                          |
+| forecastSide | string   | 否       | 盘口方向（yes: yes方向价格；no: no方向价格 ），默认值 yes                                                                   |
 
-> 注：获取的订单簿默认是以 Yes(long) 方向的价格展示
+> 注：没有forecastSide参数时获取的订单簿默认是以 Yes(long) 方向的价格展示
 
 
 ## 创建预测市场订单
@@ -4019,14 +4026,27 @@ const endpoints = 'https://api.ktx.com/papi'
 const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
 const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
 
+// 以80%的概率买入yes获胜
 const param = {
     market:'forecast',
     symbol:'2362124_FORECAST',
-    forecasrSide:'buy_long',
+    forecastSide:'buy_long', // 买yes获胜
     quantity:'1',
-    price:'0.8',
+    price:'0.8', // 80%概率yes获胜
     type:'limit',
 }
+
+/*
+// 以80%的概率买入no获胜
+const param = {
+    market:'forecast',
+    symbol:'2362124_FORECAST',
+    forecastSide:'buy_short', // 买no获胜
+    quantity:'1',
+    price:'0.8', // 80%概率no获胜
+    type:'limit',
+}
+ */
 
 
 let bodyStr = JSON.stringify(param);
@@ -4073,7 +4093,7 @@ def do_request():
     param = {
       'market':'forecast',
       'symbol':'2362124_FORECAST',
-      'forecasrSide':'buy_long',
+      'forecastSide':'buy_long',
       'quantity':'1',
       'price':'0.8',
       'type':'limit',
@@ -4100,61 +4120,875 @@ if __name__ == '__main__':
 
 ```json
 {
-  "orderId": "4611767382287843330", // 订单ID
-  "clientOrderId": "",  // 自定义订单ID
-  "createTime": "1733390630904", // 创建时间
-  "product": "BTC_USDT_SWAP", // 交易对代码
-  "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
-  "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
-  "quantity": "0.01", // 委托数量
-  "stf": "disabled", // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
-  "price": "10300",  // 委托价格
-  "timeInForce": "gtc", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
-  "mini":"false", // 是否mini合约 [true: 是 | false: 否]
+  "update_id": "1125900141912261326", // 更新ID
+  "fees": [
+    {
+      "amount": "0.0354", // 资产数量
+      "asset": "USDT", // 资产代码
+      "value": "0" // 估值
+    }
+  ],
+  "executedQty": "3", // 已成交数量
+  "orderId": "4620329279333336924", // 订单ID
+  "origin": 1, // 订单来源
+  "type": "limit", // 订单类型 [limit: 限价 | market: 市价]
+  "executedCost": "1.77", // 已成交成本（USDT）
+  "forecastSide": "buy_long", // 预测方向 [buy_long: 买入yes；buy_short: 买入no；sell_long: 卖出yes；sell_short: 卖出now]
+  "price": "0.59", // 委托价格（概率，范围 0-1）
+  "timeInForce": "fok", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+  "introduction": "Bitcoin Up or Down - June 6, 3AM ET", // 事件描述
+  "fills": [
+    {
+      "fees": [
+        {
+          "amount": "0.0354", // 资产数量
+          "asset": "USDT", // 资产代码
+          "value": "0" // 估值
+        }
+      ],
+      "quantity": "3", // 成交数量（合约张数）
+      "price": "0.59", // 成交价格（概率，范围 0-1）
+      "time": "1780732741150", // 成交时间
+      "taker": true, // 是否为Taker [true: 是 | false: 否]
+      "profit": "0", // 收益
+      "tradeId": 203 // 交易序号
+    }
+  ],
+  "brokerId": 0, // 渠道ID
+  "product": "2434164_FORECAST", // 交易对代码，格式为 {marketId}_FORECAST
+  "quantity": "3", // 委托数量（合约张数）
+  "stf": "disabled", // 订单成交转换方式 [disabled: 禁用自成交保护 | dc: 减少并取消 | co: 取消老订单 | cn: 取消新订单 | cb: 双向取消]
+  "clientOrderId": "", // 自定义订单ID
   "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+  "updateTime": "1780732741150", // 更新时间
   "postOnly": false, // 只做maker [true: 是 | false: 否]
-  "positionMerge": "long", // 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]
-  "positionId": 0,  // 提交的仓位ID
-  "marginMethod": "cross", // 保证金模式 [isolate: 逐仓 | cross: 全仓]
-  "close": false,   // 是否平仓单 [true: 平仓 | false: 开仓]
-  "leverage": 0,    // 杠杆倍数
-  "action": "unknown", // 仓位行为 [unknown: 未知 | increase_long: 开多 | reduce_long: 平多 | increase_short: 开空 | reduce_short: 平空]
-  "status": "accepted", // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
-  "executedQty": "0", // 已成交数量
-  "profit": "0",    // 收益
-  "origin":0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]          
-  "brokerId":0, // 渠道ID
-  "update_id":'1125899907137993336', // 更新ID
-  "executedCost": "0", // 已成交价值
-  "fillCount": 0, // 成交次数
-  "fills": [],
-  "fees": [],
-  "updateTime": "1733390650379" // 更新时间
+  "market": "forecast", // 市场类型 [forecast: 预测市场]
+  "createTime": "1780732741150", // 创建时间
+  "visibleQty": "-1", // 可见委托数量
+  "fillCount": 1, // 成交次数
+  "status": "filled" // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
 }
 ```
 
-**提交委托**
+**创建预测市场订单**
 
 * 请求方式 POST
 * 请求路径 /v1/order
 * 权限: Trade
 * 请求参数
-  'market':'forecast',
-  'symbol':'2362124_FORECAST',
-  'forecasrSide':'buy_long',
-  'quantity':'1',
-  'price':'0.8',
-  'type':'limit',
 
-| 参数名称            | 参数类型    | 是否必传 | 说明                                      |
-|-----------------|---------|------|-----------------------------------------|
-| market          | string  | 是    | 市场类型 [forecast: 预测市场 ]                  |
-| symbol          | string  | 是    | 交易对代码,如 2362124_FORECAST 等              |
-| type            | string  | 是    | 委托类型 [limit: 限价                         | market: 市价 ] |
-| quantity        | decimal | 是    | 委托量                                     |
-| forecastSide    | string  | 是    | buy_long buy_short sell_long sell_short |
-| client_order_id | string  | 否    | 委托ID,有效值为int64整数的字符串,建议使用提交委托时的Unix时间戳  |
-| price           | decimal | 否    | 委托限价                                    |
-| time_in_force   | string  | 否    | 委托时效性 [gtc: 成交前有效                       | ioc: 即时剩余取消 | fok: 全数成交否则取消] 默认值: gtc                                                                                      |
-| positionId      | string  | 否    | 仓位ID                                    |
+| 参数名称        | 参数类型 | 是否必传 | 说明                                                                     |
+| --------------- | -------- | -------- |------------------------------------------------------------------------|
+| market          | string   | 是       | 市场类型 [forecast: 预测市场]                                                  |
+| symbol          | string   | 是       | 交易对代码，如 2362124_FORECAST 等                                             |
+| type            | string   | 是       | 委托类型 [limit: 限价；market: 市价]                                            |
+| quantity        | decimal  | 是       | 委托量                                                                    |
+| forecastSide    | string   | 是       | 预测方向 [buy_long: 买入yes；buy_short: 买入no；sell_long: 卖出yes；sell_short: 卖出now] |
+| client_order_id | string   | 否       | 委托ID，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳                                 |
+| price           | decimal  | 否       | 委托限价 范围为(0,1)开区间 0.8代表认为80%概率获胜                                        |
+| time_in_force   | string   | 否       | 委托时效性 [gtc: 成交前有效；ioc: 即时剩余取消；fok: 全数成交否则取消]，默认值: gtc                  |
 
+
+## 获取订单详情
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+
+const queryStr = 'id=4611772879845982339';
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/order?${queryStr}`;
+
+request.get(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime  
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+    path = '/v1/order'
+    query_str = 'id=14118828812271651'
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "update_id": "1125900141912261326", // 更新ID
+  "fees": [
+    {
+      "amount": "0.0354", // 资产数量
+      "asset": "USDT", // 资产代码
+      "value": "0" // 估值
+    }
+  ],
+  "executedQty": "3", // 已成交数量
+  "orderId": "4620329279333336924", // 订单ID
+  "origin": 1, // 订单来源
+  "type": "limit", // 订单类型 [limit: 限价 | market: 市价]
+  "executedCost": "1.77", // 已成交成本（USDT）
+  "forecastSide": "buy_long", // 预测方向 [buy_long: 买入yes；buy_short: 买入no；sell_long: 卖出yes；sell_short: 卖出now]
+  "price": "0.59", // 委托价格（概率，范围 0-1）
+  "timeInForce": "fok", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+  "introduction": "Bitcoin Up or Down - June 6, 3AM ET", // 事件描述
+  "fills": [
+    {
+      "fees": [
+        {
+          "amount": "0.0354", // 资产数量
+          "asset": "USDT", // 资产代码
+          "value": "0" // 估值
+        }
+      ],
+      "quantity": "3", // 成交数量（合约张数）
+      "price": "0.59", // 成交价格（概率，范围 0-1）
+      "time": "1780732741150", // 成交时间
+      "taker": true, // 是否为Taker [true: 是 | false: 否]
+      "profit": "0", // 收益
+      "tradeId": 203 // 交易序号
+    }
+  ],
+  "brokerId": 0, // 渠道ID
+  "product": "2434164_FORECAST", // 交易对代码，格式为 {marketId}_FORECAST
+  "quantity": "3", // 委托数量（合约张数）
+  "stf": "disabled", // 订单成交转换方式 [disabled: 禁用自成交保护 | dc: 减少并取消 | co: 取消老订单 | cn: 取消新订单 | cb: 双向取消]
+  "clientOrderId": "", // 自定义订单ID
+  "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+  "updateTime": "1780732741150", // 更新时间
+  "postOnly": false, // 只做maker [true: 是 | false: 否]
+  "market": "forecast", // 市场类型 [forecast: 预测市场]
+  "createTime": "1780732741150", // 创建时间
+  "visibleQty": "-1", // 可见委托数量
+  "fillCount": 1, // 成交次数
+  "status": "filled" // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
+}
+```
+
+**获取指定 id 的委托**
+
+* 请求方式 GET
+* 请求路径 /v1/order
+* 权限: View
+* 请求参数
+
+
+| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                                                                                                |
+| ---------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| id       | string   | 是       | 委托ID<br/>委托ID可以是交易所分配的, <br/>也可以是用户自定义的 (在提交委托时使用client_order_id参数).<br/>当使用自定义ID时, 需要在id前添加 “c:” 前缀.<br/>例如: 提交委托时使用了自定义ID “123”, 在获取委托时, 需使用 “c:123”. |
+
+## 获取历史订单列表
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+
+const queryStr = 'limit=2&market=forecast&symbol=2434164_FORECAST';
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/history/orders?${queryStr}`;
+
+request.get(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime  
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+    path = '/v1/history/orders'
+    query_str = 'limit=2&market=forecast&symbol=2434164_FORECAST'
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "update_id": "1125900141912261326", // 更新ID
+    "fees": [
+      {
+        "amount": "0.0354", // 资产数量
+        "asset": "USDT", // 资产代码
+        "value": "0" // 估值
+      }
+    ],
+    "executedQty": "3", // 已成交数量
+    "orderId": "4620329279333336924", // 订单ID
+    "origin": 1, // 订单来源
+    "type": "limit", // 订单类型 [limit: 限价 | market: 市价]
+    "executedCost": "1.77", // 已成交成本（USDT）
+    "forecastSide": "buy_long", // 预测方向 [buy_long: 买入yes；buy_short: 买入no；sell_long: 卖出yes；sell_short: 卖出now]
+    "price": "0.59", // 委托价格（概率，范围 0-1）
+    "timeInForce": "fok", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+    "introduction": "Bitcoin Up or Down - June 6, 3AM ET", // 事件描述
+    "fills": [
+      {
+        "fees": [
+          {
+            "amount": "0.0354", // 资产数量
+            "asset": "USDT", // 资产代码
+            "value": "0" // 估值
+          }
+        ],
+        "quantity": "3", // 成交数量（合约张数）
+        "price": "0.59", // 成交价格（概率，范围 0-1）
+        "time": "1780732741150", // 成交时间
+        "taker": true, // 是否为Taker [true: 是 | false: 否]
+        "profit": "0", // 收益
+        "tradeId": 203 // 交易序号
+      }
+    ],
+    "brokerId": 0, // 渠道ID
+    "product": "2434164_FORECAST", // 交易对代码，格式为 {marketId}_FORECAST
+    "quantity": "3", // 委托数量（合约张数）
+    "stf": "disabled", // 订单成交转换方式 [disabled: 禁用自成交保护 | dc: 减少并取消 | co: 取消老订单 | cn: 取消新订单 | cb: 双向取消]
+    "clientOrderId": "", // 自定义订单ID
+    "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+    "updateTime": "1780732741150", // 更新时间
+    "postOnly": false, // 只做maker [true: 是 | false: 否]
+    "market": "forecast", // 市场类型 [forecast: 预测市场]
+    "createTime": "1780732741150", // 创建时间
+    "visibleQty": "-1", // 可见委托数量
+    "fillCount": 1, // 成交次数
+    "status": "filled" // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
+  }
+  ...
+]
+```
+
+**获取历史订单列表**
+1三个月内的已结算委托, 含已拒绝, 已撤销和已成交委托
+2全部已成交委托
+3全部已撤销的部分成交委托
+
+* 请求方式 GET
+* 请求路径 /v1/history/orders
+* 权限: View
+
+
+| 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                                  |
+| ------------ | ---------- |------|-------------------------------------------------------------------------------------------------------------------------------------|
+| market | string   | 是    | 交易对市场 [forecast: 预测市场]                                                                                                    |
+| symbol     | string   | 否    | 交易对代码，如 2362124_FORECAST 等 <br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
+| start_time | long     | 否    | 限定返回委托的最早创建时间                                                                                                                       |
+| end_time   | long     | 否    | 限定返回委托的最近创建时间                                                                                                                       |
+| before     | int64    | 否    | 委托更新ID<br/>限定返回委托的最大更新ID                                                                                                            |
+| after      | int64    | 否    | 委托更新ID<br/>限定返回委托的最小更新ID                                                                                                            |
+| limit      | long     | 否    | 指定最多返回多少个委托                                                                                                                         |
+
+## 获取未成交订单列表
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+
+const queryStr = 'market=forecast&symbol=2434164_FORECAST';
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/pending/orders?${queryStr}`;
+
+request.get(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime  
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+    path = '/v1/pending/orders'
+    query_str = 'market=forecast&symbol=2434164_FORECAST'
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "update_id": "1125900141912261326", // 更新ID
+    "fees": [],
+    "executedQty": "0", // 已成交数量
+    "orderId": "4620329279333336924", // 订单ID
+    "origin": 1, // 订单来源
+    "type": "limit", // 订单类型 [limit: 限价 | market: 市价]
+    "executedCost": "0", // 已成交成本（USDT）
+    "forecastSide": "buy_long", // 预测方向 [buy_long: 买入yes；buy_short: 买入no；sell_long: 卖出yes；sell_short: 卖出now]
+    "price": "0.59", // 委托价格（概率，范围 0-1）
+    "timeInForce": "fok", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
+    "introduction": "Bitcoin Up or Down - June 6, 3AM ET", // 事件描述
+    "fills": [],
+    "brokerId": 0, // 渠道ID
+    "product": "2434164_FORECAST", // 交易对代码，格式为 {marketId}_FORECAST
+    "quantity": "3", // 委托数量（合约张数）
+    "stf": "disabled", // 订单成交转换方式 [disabled: 禁用自成交保护 | dc: 减少并取消 | co: 取消老订单 | cn: 取消新订单 | cb: 双向取消]
+    "clientOrderId": "", // 自定义订单ID
+    "cancelAfter": 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
+    "updateTime": "1780732741150", // 更新时间
+    "postOnly": false, // 只做maker [true: 是 | false: 否]
+    "market": "forecast", // 市场类型 [forecast: 预测市场]
+    "createTime": "1780732741150", // 创建时间
+    "visibleQty": "-1", // 可见委托数量
+    "fillCount": 1, // 成交次数
+    "status": "accepted" // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
+  },
+  ...
+]
+```
+
+**获取未成交的委托**
+
+* 请求方式 GET
+* 请求路径 /v1/pending/orders
+* 权限: View
+
+
+| 参数名称   | 参数类型 | 是否必传 | 说明                                                                                                                    |
+| ------------ | ---------- |------|-----------------------------------------------------------------------------------------------------------------------|
+| market | string   | 是    | 交易对市场 [forecast: 预测市场]                                                                                     |
+| symbol     | string   | 否    | 交易对代码,如 2434164_FORECAST 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
+
+## 取消订单
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    id:'14244173146202090'
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/order/delete`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'id': '14245272657638034'
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/order/delete'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[n] // 取消数量
+```
+
+**撤销指定 id 的委托**
+
+* 请求方式 POST
+* 请求路径 /v1/order/delete
+* 权限: Trade
+* 请求参数
+
+
+| 参数名称 | 参数类型 | 是否必传 | 说明                                                                                                                                                        |
+| ---------- | ---------- | ---------- |-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| id       | string   | 是       | 委托ID,支持多个id拼接<br>委托ID可以是交易所分配的,<br/>也可以是用户自定义的（在提交委托时使用client_order_id参数）。<br>当使用自定义ID时,需要在id前添加 “c:” 前缀。<br/>例如：提交委托时使用了自定义ID “123”, 在撤销委托时,需使用 “c:123”。 |
+
+
+## 获取仓位
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+
+const queryStr = 'market=forecast&symbol=2434164_FORECAST';
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/positions?${queryStr}`;
+
+request.get(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+
+def do_request():
+    path = '/v1/positions'
+    query_str = 'market=forecast&symbol=2434164_FORECAST'
+    expire_time = str(int(time.time() * 1000) + 5000)
+    # POST or DELETE replace query_str with body_str
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "entryPrice": "0.6", // 开仓价格
+    "symbol": "2434164_FORECAST", // 交易代码
+    "leverage": "1", // 杠杆倍数（预测市场固定为 1）
+    "maintMargin": "0.0050000000", // 维持保证金率
+    "side":"short", // 预测市场方向 [long: yes选项 | short: no选项]
+    "quantity": "0.100", // 仓位数量 空仓0.1
+    "posMargin": "0.6", // 保证金
+    "marginMethod": "isolate", // 保证金模式（预测市场固定为 isolate）
+    "closableQty": "0.100", // 可平仓位数量
+    "initMargin": "0.1000000000", // 初始保证金率
+    "id": "1125899906842624158", // ID
+    "orderMargin": "0",  // 委托保证金
+    "mergeMode": "short",  // 仓位合并模式 [long: 合并多仓 | short: 合并空仓]
+    "introduction": "Bitcoin Up or Down - June 6, 3AM ET", // 事件描述
+  }
+  ...
+]
+```
+
+**获取仓位**
+
+* 请求方式 GET
+* 请求路径 /v1/positions
+* 权限: View
+* 请求参数
+
+
+| 参数名称   | 参数类型 | 是否必传 | 说明                    |
+| ------------ | ---------- |------|-----------------------|
+| position_id   | string   | 否    | 仓位ID 如存在这个参数,优先级最高    |
+| market | string   | 是    | 交易对市场 [forecast: 预测市场] |
+| symbol     | string   | 否    | 配合market使用,交易对代如2434164_FORECAST等     |
+
+## MergeSplit
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+const param = {
+    id:'14244173146202090'
+}
+
+let bodyStr = JSON.stringify(param);
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const url = `${endpoints}/v1/splitMerge`;
+
+request.post({
+        url:url,
+        body:param,
+        json:true,
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import json
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+def do_request():
+
+    param = {
+        'id': '14245272657638034'
+    }
+    body_str = json.dumps(param)
+    expire_time = str(int(time.time() * 1000) + 5000)
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + body_str).encode("utf-8"), hashlib.sha256).hexdigest()
+    path = '/v1/splitMerge'
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.post(END_POINT + path, json=param, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+""
+```
+
+**MergeSplit**
+
+* 请求方式 POST
+* 请求路径 /v1/splitMerge
+* 权限: Trade
+* 请求参数
+
+
+| 参数名称 | 参数类型 | 是否必传 | 说明                |
+|------| ---------- | ---------- |-------------------|
+| market | string   | 是   | 交易对市场 [forecast: 预测市场]                                            |
+| symbol     | string   | 否       | 交易对代码<br/>如 2434164_FORECAST  |
+| type | string   | 是       | split 或者 merge    |
+| quantity        | decimal  | 是       | split 或者 merge的数量 |
+
+## 获取成交明细
+
+> Request
+
+```javascript
+let CryptoJS = require("crypto-js");
+let request = require("request");
+
+const endpoints = 'https://api.ktx.com/papi'
+const apikey = "9e03e8fda27b6e4fc6b29bb244747dcf64092996"; // your apikey
+const secret = "b825a03636ca09c884ca11d71cfc4217a98cb8bf"; // your secret
+
+
+const queryStr = 'limit=2&market=forecast&symbol=2434164_FORECAST';
+const exprieTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const url = `${endpoints}/v1/fills?${queryStr}`;
+
+request.get(url,{
+        headers: {
+            'Content-Type': 'application/json',
+            'api-key': apikey,
+            'api-sign': sign,
+            'api-expire-time':exprieTime 
+
+        },
+    },
+
+    function optionalCallback(err, httpResponse, body) {
+        if (err) {
+            return console.error('upload failed:', err);
+        }
+        console.log(body) // 7.the result
+
+    });
+```
+
+```python
+import hashlib
+import hmac
+import requests
+import time
+
+END_POINT = 'https://api.ktx.com/papi'
+API_KEY = '9e03e8fda27b6e4fc6b29bb244747dcf64092996'
+SECRET_KEY = 'b825a03636ca09c884ca11d71cfc4217a98cb8bf'
+
+
+def do_request():
+    path = '/v1/fills'
+    query_str = 'limit=2&market=forecast&symbol=2434164_FORECAST'
+    expire_time = str(int(time.time() * 1000) + 5000)
+    # POST or DELETE replace query_str with body_str
+    sign = hmac.new(SECRET_KEY.encode("utf-8"), ('' + expire_time + query_str).encode("utf-8"), hashlib.sha256).hexdigest()
+
+    headers = {
+        'Content-Type': 'application/json',
+        'api-key': API_KEY,
+        'api-sign': sign,
+        'api-expire-time':expire_time 
+    }
+    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    print(resp.text)
+
+
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+[
+  {
+    "product": "2434164_FORECAST", // 交易对代码（预测市场格式为 {marketId}_FORECAST）
+    "fees": [
+      {
+        "amount": "10", // 手续费数量
+        "asset": "USDT", // 手续费资产代码
+        "value": "10" // 手续费估值（USDT）
+      }
+    ],
+    "quantity": "0.01", // 成交数量（现货/合约：基础币数量；预测市场：合约张数）
+    "orderId": "4611772879845982371", // 订单ID
+    "fillId": "1125899906842624338", // 成交记录ID
+    "price": "1000000", // 成交价格（现货/合约：价格；预测市场：概率，范围 0-1）
+    "time": "1733541360859", // 成交时间（毫秒时间戳）
+    "taker": true, // 是否为Taker [true: 吃单方 | false: 挂单方]
+    "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
+    "tradeId": 26 // 交易序号
+  }
+]
+```
+
+**获取成交记录**
+
+* 请求方式 GET
+* 请求路径 /v1/fills
+* 权限: View
+* 请求参数(需要排序)
+
+
+| 参数名称   | 参数类型 | 是否必传 | 说明                                                                          |
+| ------------ | ---------- | ---------- |-----------------------------------------------------------------------------|
+| market | string   | 是   | 交易对市场 [forecast: 预测市场]                                            |
+| order_id   | string   | 否       | 交易所分配的委托ID<br/>限定仅返回指定委托的成交记录<br/>如果不指定该参数,请指定 symbol                       |
+| symbol     | string   | 否       | 交易对代码<br/>如 2434164_FORECAST 等<br/>限定仅返回指定交易对的成交记录<br/>如果不指定该参数,请指定 order_id |
+| start_time | int64    | 否       | 限定返回成交记录的最早时间                                                               |
+| end_time   | int64    | 否       | 限定返回成交记录的最近时间                                                               |
+| before     | int64    | 否       | 成交记录 fillId<br/>限定返回成交记录的最大id                                               |
+| after      | int64    | 否       | 成交记录 fillId<br/>限定返回成交记录的最小id                                               |
+| limit      | int32    | 否       | 限定返回结果的最大条数<br/>默认值 100                                                     |
+
+## 关于推送
+* 在公开数据推送,订阅的格式只需要替换对应的market和symbol即可,返回的价格数据都是yes方向的价格,如order book的订阅：{"method":"SUBSCRIBE","params":["forecast.2434164_FORECAST.order_book.5"]}
+* 在用户私有数据推送中,推送的的order 和 position和上面预测市场接口请求仓位和订单接口返回格式一致
