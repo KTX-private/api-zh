@@ -3861,7 +3861,7 @@ if __name__ == '__main__':
 ```javascript
 let request = require("request");
 const endPoint = 'https://api.ktx.com/api';
-const url = `${endPoint}/v1/ticker/get_all?market=forecast`
+const url = `${endPoint}/v1/ticker/get_all?market=forecast&forecastSide=yes`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
@@ -3879,7 +3879,7 @@ import requests
 END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
-    path = '/v1/ticker/get_all?market=forecast'
+    path = '/v1/ticker/get_all?market=forecast&forecastSide=yes'
     resp = requests.get(END_POINT + path)
     print(resp.text)
   
@@ -3922,6 +3922,9 @@ if __name__ == '__main__':
 | 参数名称 | 参数类型 | 是否必传 | 说明                                                         |
 | -------- | -------- | -------- | ------------------------------------------------------------ |
 | market   | string   | 是       | 交易对市场 [forecast:预测市场]                               |
+| forecastSide | string   | 否       | 盘口方向（yes: yes方向价格；no: no方向价格 ），默认值 yes                                                                   |
+
+> 注：没有forecastSide参数时获取的ticker默认是以 Yes(long) 方向的价格展示
 
 ## 获取订单簿
 
@@ -3930,7 +3933,7 @@ if __name__ == '__main__':
 ```javascript
 let request = require("request");
 const endPoint = 'https://api.ktx.com/api';
-const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=sell`
+const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&forecastSide=no`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
@@ -3948,7 +3951,7 @@ import requests
 END_POINT = 'https://api.ktx.com/api';
 
 def do_request():
-    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&side=no'
+    path = '/v1/order_book?market=forecast&symbol=2362124_FORECAST&forecastSide=no'
     resp = requests.get(END_POINT + path)
     print(resp.text)
 
@@ -4008,7 +4011,7 @@ if __name__ == '__main__':
 | price_scale  | integer  | 否       | 价格精度合并。0=4位小数，1=3位小数，2=2位小数，3=1位小数，4=0位小数。默认值 0                                                          |
 | forecastSide | string   | 否       | 盘口方向（yes: yes方向价格；no: no方向价格 ），默认值 yes                                                                   |
 
-> 注：获取的订单簿默认是以 Yes(long) 方向的价格展示
+> 注：没有forecastSide参数时获取的订单簿默认是以 Yes(long) 方向的价格展示
 
 
 ## 创建预测市场订单
