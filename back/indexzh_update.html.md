@@ -417,7 +417,7 @@ if __name__ == '__main__':
 	"priceIncrement": "0.01", // 价格最小增量（步长）
 	"active": 1, // 是否启用[0：禁用丨1：启用]
 	"maxOrderValue": "10000000000", // 最大下单价值
-	"market": "spot", // 交易对市场[spot：现货丨lpc：U本位合约| forecast: 预测市场]
+	"market": "spot", // 交易对市场[spot：现货丨lpc：U本位合约]
 	"followFundingRate": 0, // 是否跟随资金费率[0：否丨1：是]
 	"makerFee": "0.001", // Maker费率
 	"quantityScale": 6, // 数量精度
@@ -1366,26 +1366,44 @@ if __name__ == '__main__':
 
 ```json
 [
-  {
-    "asset":"USDT",  // 资产代码
-    "balance":"100",  // 总额
-    "locked":"0",  // 冻结额
-    "free":"100",  // 可用
-    "withdrawable":"100",// 可转出额
-    "collateral":false,// 是否抵扣保证金 [true: 是 | false: 否]
-    "discountForMargin":"1", // 可选字段 保证金抵扣率 [0: 不可用 | 0.5: 50% | 1: 100%]
-    "discountForFee":"1" // 可选字段 手续费抵扣率 [0: 不可用 | 0.5: 50% | 1: 100%]
-  },
-  {
-    "asset":"BTC",  // 资产代码
-    "balance":"100",  // 总额
-    "locked":"0",  // 冻结额
-    "free":"100",  // 可用
-    "withdrawable":"100",// 可转出额
-    "collateral":false,// 是否抵扣保证金 [true: 是 | false: 否]
-  },
-  ...
-]
+    {
+        "asset": "USDC", // 资产代码
+        "total": "0", // 总额
+        "balance": 0, // 余额
+        "withdrawable": 0, // 可提现/可转出额
+        "holds": 0, // 冻结额
+        "collateral": true, // 是否可作保证金 [true: 是 | false: 否]
+        "equsdt": "0", // 折合USDT价值
+        "discountForMargin": 1, // 保证金抵扣率 [0: 不可用 | 0.5: 50% | 1: 100%]
+        "discountForFee": 1 // 手续费抵扣率 [0: 不可用 | 0.5: 50% | 1: 100%]
+    }
+],
+"eq": {
+    "equsdt": "0.00", // 折合USDT
+    "eqbtc": "0.0000", // 折合BTC
+    "eqcny": "0.00" // 折合CNY
+},
+"assetmap": {
+    "USDC": {
+        "enable_deposit": 1, // 是否允许充值 [0: 否 | 1: 是]
+        "enable_withdraw": 1, // 是否允许提现 [0: 否 | 1: 是]
+        "enable_transfer": 1, // 是否允许划转 [0: 否 | 1: 是]
+        "asset": "USDC", // 资产代码
+        "name": "USDC", // 资产名称
+        "icon_url": "/appimg/USDC.png", // 图标地址
+        "forbid_info": "" // 禁止原因
+    }
+},
+"posmap": {
+    "USDC": {
+        "posMargin": 0, // 持仓保证金
+        "unprofit": "0.0000" // 未实现盈亏
+    }
+},
+"profit": {
+    "trade": 0, // 交易盈亏
+    "total": 0 // 总盈亏
+}
 ```
 
 **获取 API Key 对应账户中各种资产的余额, 冻结等信息**
