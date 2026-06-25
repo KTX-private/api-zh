@@ -446,6 +446,77 @@ if __name__ == '__main__':
 
   Cache
 
+## 获取合约交易对杠杆和档位信息
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/pu/getPositionTierRules  `
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/pu/getPositionTierRules'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+> Response
+
+```json
+{
+  "EOS_USDT_SWAP": [
+    {
+      "no": 1,    // 档位
+      "positionValue": "1000000", // 仓位价值<= 1000000
+      "maintainMarginRate": "0.005", // 维持保证金率
+      "initMarginRate": "0.01", // 初始保证金率
+      "maxLeverage": "100" // 最大杠杆倍数
+    },
+    {
+      "no": 2,
+      "positionValue": "2000000",
+      "maintainMarginRate": "0.0075",
+      "initMarginRate": "0.015",
+      "maxLeverage": "67"
+    },
+    ...
+  ],
+  "BTC_USDT_SWAP": [
+    ...
+  ],
+  "ETH_USDT_SWAP": [
+    ...
+  ],
+  ...
+}
+```
+
+**获取合约交易对杠杆和档位信息**
+
+* 请求方式 GET
+* 请求路径 /v1/pu/getPositionTierRules
+
+
+
 ## 获取订单簿
 
 > Request
