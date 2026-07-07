@@ -33,6 +33,28 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/forecast/events";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
+```
+
 > Response
 
 ```json
@@ -86,6 +108,28 @@ def do_request():
   
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/forecast/event/detail";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
 
 > Response
@@ -172,6 +216,28 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/forecast/markets";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
+```
+
 > Response
 
 ```json
@@ -241,6 +307,28 @@ def do_request():
   
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/ticker/get_all?market=forecast&forecastSide=yes";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
 
 > Response
@@ -313,6 +401,28 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/order_book?market=forecast&symbol=2362124_FORECAST&forecastSide=no";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
 
 > Response
@@ -472,6 +582,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/order";
+        String bodyStr = "{\"market\":\"forecast\",\"symbol\":\"2362124_FORECAST\",\"forecastSide\":\"buy_long\",\"quantity\":\"1\",\"price\":\"0.8\",\"type\":\"limit\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -611,6 +764,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/order";
+        String queryStr = "id=14118828812271651";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -741,6 +937,49 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/history/orders";
+        String queryStr = "limit=2&market=forecast&symbol=2434164_FORECAST";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 > Response
@@ -886,6 +1125,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/pending/orders";
+        String queryStr = "market=forecast&symbol=2434164_FORECAST";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -1009,6 +1291,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/order/delete";
+        String bodyStr = "{\"id\":\"14245272657638034\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -1095,6 +1420,49 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/positions";
+        String queryStr = "market=forecast&symbol=2434164_FORECAST";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 > Response
@@ -1211,6 +1579,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/splitMerge";
+        String bodyStr = "{\"id\":\"14245272657638034\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -1299,6 +1710,49 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/fills";
+        String queryStr = "limit=2&market=forecast&symbol=2434164_FORECAST";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 > Response

@@ -8,8 +8,8 @@
 const CryptoJS = require("crypto-js");
 const WebSocket = require('ws');
 const ktxws = 'wss://u-stream.ktx.com';
-const apikey = "9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13"; // your apikey
-const secret = "ca55beb9e45d4f30b3959b464402319b9e12bac7"; // your secret
+const apikey = "YOUR_API_KEY"; // your apikey
+const secret = "YOUR_SECRET_KEY"; // your secret
 const sign = CryptoJS.HmacSHA256("/user/verify", secret).toString();
 
 let wsClass = function () {
@@ -75,8 +75,8 @@ import time
 from datetime import datetime
 
 ws_url = 'wss://u-stream.ktx.com'
-API_KEY = '9e2bd17ff73e8531c0f3c26f93e48bfa402a3b13'
-SECRET_KEY = 'ca55beb9e45d4f30b3959b464402319b9e12bac7'
+API_KEY = 'YOUR_API_KEY'
+SECRET_KEY = 'YOUR_SECRET_KEY'
 SIGN = hmac.new(SECRET_KEY.encode("utf-8"), "/user/verify".encode('utf-8'), hashlib.sha256).hexdigest()
 
 def on_message(ws, message):
@@ -129,6 +129,68 @@ def connect():
 if __name__ == "__main__":
     connect()
 
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.WebSocket;
+import java.util.concurrent.CompletionStage;
+
+public class KtxUserWsExample {
+    static final String WS_URL = "wss://u-stream.ktx.com";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String sign = hmacSha256("/user/verify", SECRET_KEY);
+
+        WebSocket ws = HttpClient.newHttpClient().newWebSocketBuilder()
+                .buildAsync(URI.create(WS_URL), new WebSocket.Listener() {
+                    @Override
+                    public void onOpen(WebSocket webSocket) {
+                        System.out.println("connected");
+                        String login = String.format(
+                            "{\"method\":\"LOGIN\",\"auth\":{\"api-key\":\"%s\",\"api-sign\":\"%s\"}}",
+                            API_KEY, sign);
+                        webSocket.sendText(login, true);
+                        webSocket.request(1);
+                    }
+
+                    @Override
+                    public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
+                        System.out.println(data);
+                        webSocket.request(1);
+                        return null;
+                    }
+
+                    @Override
+                    public CompletionStage<?> onClose(WebSocket webSocket, int statusCode, String reason) {
+                        System.out.println("closed: " + reason);
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(WebSocket webSocket, Throwable error) {
+                        System.err.println("error: " + error.getMessage());
+                    }
+                }).join();
+
+        // 保持主线程运行
+        Thread.sleep(Long.MAX_VALUE);
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 使用 Websocket 推送服务可以及时获取账户的余额及委托变动信息。

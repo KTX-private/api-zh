@@ -68,13 +68,50 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-[
-  {
-    "asset":"USDT",  // 资产代码
-    "balance":"100",  // 总额
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/trade/accounts";
+        String queryStr = "asset=BTC";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
+> Response
     "locked":"0",  // 冻结额
     "free":"100",  // 可用
     "withdrawable":"100",// 可转出额
@@ -186,12 +223,50 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-[
-  {
-    "addr": "74VZm4a6eGGBW3VCq6umcPL8QPhs5fFnpcT9nyQGgHkw", // 地址
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/depositAddr";
+        String bodyStr = "{\"coin_symbol\":\"sUSDT\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
+> Response
     "coin_id": "100", // 币种ID
     "coin_symbol": "sUSDT",// 币种
     "chain_type":"Solana", // 网络
@@ -293,12 +368,50 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-[
-  {
-    "id": 624, // 提现ID
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/withdraw";
+        String bodyStr = "{\"coin_symbol\":\"BTC\",\"amount\":\"0.001\",\"addr\":\"bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
+> Response
     "to_address": "bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm", // 到账地址
     "amount_real": "9.00000000", // 到账数量
     "amount": "10.00000000",  // 提现数量
@@ -402,13 +515,50 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-[
-  {
-    "asset": "USDT", //资产代码
-    "balance": "100", // 总额
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/main/accounts";
+        String bodyStr = "{\"asset\":\"USDT\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
+> Response
     "locked": "0",// 冻结额
     "free": "100"// 可用
   }
@@ -506,6 +656,49 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/transfer";
+        String bodyStr = "{\"symbol\":\"USDT\",\"amount\":10,\"type\":\"WALLET_TRADE\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 > Response
@@ -616,6 +809,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/subaccount/transfer";
+        String bodyStr = "{\"symbol\":\"BTC\",\"amount\":\"0.001\",\"sub_user_id\":30000416,\"side\":\"in\",\"transfer_id\":\"userdefineid001\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -709,12 +945,50 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-[
-  {
-    "amount":"10000",   // 变化数量
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/ledgers";
+        String queryStr = "asset=BTC&end_time=1651895799668&limit=10";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
+> Response
     "balance":"10000",  // 余额
     "id":"1125899906842624029", // ID
     "time":"1733468814795", // 时间
@@ -946,17 +1220,50 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-{
-  "orderId": "4611767382287843330", // 订单ID
-  "clientOrderId": "",  // 自定义订单ID
-  "createTime": "1733390630904", // 创建时间
-  "product": "BTC_USDT_SWAP", // 交易对代码
-  "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
-  "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
-  "quantity": "0.01", // 委托数量
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/order";
+        String bodyStr = "{\"symbol\":\"BTC_USDT\",\"side\":\"buy\",\"quantity\":\"0.0001\",\"price\":\"90000\",\"type\":\"limit\",\"market\":\"spot\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
+> Response
   "stf": "disabled", // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
   "price": "10300",  // 委托价格
   "timeInForce": "gtc", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
@@ -1085,13 +1392,50 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-{
-  "orderId": "4611767382287843330", // 订单ID
-  "clientOrderId": "",  // 自定义订单ID
-  "createTime": "1733390630904", // 创建时间
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/order";
+        String queryStr = "id=14118828812271651";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
+> Response
   "product": "BTC_USDT_SWAP", // 交易对代码
   "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
   "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
@@ -1222,6 +1566,49 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/history/orders";
+        String queryStr = "limit=2&market=spot&symbol=BTC_USDT";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 > Response
@@ -1391,6 +1778,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/pending/orders";
+        String queryStr = "market=spot&symbol=BTC_USDT";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -1524,6 +1954,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/change/leverage";
+        String bodyStr = "{\"positionId\":\"1125899906842649789\",\"leverage\":20}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -1621,6 +2094,49 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/margin/transfer";
+        String bodyStr = "{\"positionId\":\"1125899906842649789\",\"amount\":12,\"type\":1}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 > Response
@@ -1721,6 +2237,49 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/order/delete";
+        String bodyStr = "{\"id\":\"14245272657638034\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
+```
+
 > Response
 
 ```json
@@ -1816,6 +2375,49 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/orders/delete";
+        String bodyStr = "{\"symbol\":\"BTC_USDT\"}";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + bodyStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .POST(HttpRequest.BodyPublishers.ofString(bodyStr))
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 > Response
@@ -2013,6 +2615,49 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/fills";
+        String queryStr = "limit=2&market=spot&symbol=BTC_USDT";
+        long expireTime = System.currentTimeMillis() + 5000;
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path + "?" + queryStr))
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 > Response

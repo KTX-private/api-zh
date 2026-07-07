@@ -115,6 +115,51 @@ if __name__ == "__main__":
 
 ```
 
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.WebSocket;
+import java.util.concurrent.CompletionStage;
+
+public class KtxMarketWsExample {
+    static final String WS_URL = "wss://m-stream.ktx.com";
+
+    public static void main(String[] args) throws Exception {
+        WebSocket ws = HttpClient.newHttpClient().newWebSocketBuilder()
+                .buildAsync(URI.create(WS_URL), new WebSocket.Listener() {
+                    @Override
+                    public void onOpen(WebSocket webSocket) {
+                        System.out.println("connected");
+                        String sub = "{\"method\":\"SUBSCRIBE\",\"params\":[\"spot.BTC_USDT.order_book.5\"]}";
+                        webSocket.sendText(sub, true);
+                        webSocket.request(1);
+                    }
+
+                    @Override
+                    public CompletionStage<?> onText(WebSocket webSocket, CharSequence data, boolean last) {
+                        System.out.println(data);
+                        webSocket.request(1);
+                        return null;
+                    }
+
+                    @Override
+                    public CompletionStage<?> onClose(WebSocket webSocket, int statusCode, String reason) {
+                        System.out.println("closed: " + reason);
+                        return null;
+                    }
+
+                    @Override
+                    public void onError(WebSocket webSocket, Throwable error) {
+                        System.err.println("error: " + error.getMessage());
+                    }
+                }).join();
+
+        // 保持主线程运行
+        Thread.sleep(Long.MAX_VALUE);
+    }
+}
+```
+
 **使用 Websocket 推送服务可以及时获取行情信息。**
 
 * 连接 Websocket 服务器

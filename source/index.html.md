@@ -4,6 +4,7 @@ title: Ktx API文档(v4)
 language_tabs:
 - javascript
 - python
+- java
 
 toc_footers:
 - <a href='https://www.ktx.com'>开始交易</a>
@@ -158,6 +159,51 @@ def do_request():
 
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/papi";
+    static final String API_KEY = "YOUR_API_KEY";
+    static final String SECRET_KEY = "YOUR_SECRET_KEY";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/trade/accounts";
+        String queryStr = "asset=BTC";
+        long expireTime = System.currentTimeMillis() + 5000;
+        // POST 请求请用 bodyStr 替换 queryStr
+        String sign = hmacSha256("" + expireTime + queryStr, SECRET_KEY);
+
+        URI uri = URI.create(ENDPOINT + path + "?" + queryStr);
+        HttpRequest request = HttpRequest.newBuilder(uri)
+                .header("Content-Type", "application/json")
+                .header("api-key", API_KEY)
+                .header("api-sign", sign)
+                .header("api-expire-time", String.valueOf(expireTime))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+
+    static String hmacSha256(String data, String secret) throws Exception {
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(), "HmacSHA256"));
+        byte[] hash = mac.doFinal(data.getBytes());
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) hex.append(String.format("%02x", b));
+        return hex.toString();
+    }
+}
 ```
 
 **身份验证**

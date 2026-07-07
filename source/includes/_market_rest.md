@@ -33,11 +33,29 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-{}
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/ping";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
+
+> Response
 
 
 
@@ -74,11 +92,29 @@ if __name__ == '__main__':
     do_request()
 ```
 
-> Response
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
-```json
-{"time":"1746777864508"}
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/time";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
+
+> Response
 
 ## 获取币种信息
 
@@ -111,6 +147,28 @@ def do_request():
   
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/coins";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
 
 > Response
@@ -198,6 +256,28 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/products?market=spot&symbol=BTC_USDT";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
+```
+
 > Response
 
 ```json
@@ -274,6 +354,28 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/pu/getPositionTierRules";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
+```
+
 > Response
 
 ```json
@@ -343,6 +445,28 @@ def do_request():
   
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/order_book?market=spot&symbol=BTC_USDT";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
 
 > Response
@@ -435,6 +559,28 @@ def do_request():
   
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/candles?market=spot&symbol=BTC_USDT&time_frame=1m";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
 
 > Response
@@ -530,6 +676,28 @@ if __name__ == '__main__':
     do_request()
 ```
 
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/trades?market=spot&symbol=BTC_USDT";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
+```
+
 > Response
 
 ```json
@@ -621,6 +789,28 @@ def do_request():
   
 if __name__ == '__main__':
     do_request()
+```
+
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/ticker?market=spot&symbol=BTC_USDT";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
 ```
 
 > Response
