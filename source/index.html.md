@@ -16,6 +16,7 @@ includes:
 - user_ws
 - prediction
 - errors
+- changelog
 
 search: true
 

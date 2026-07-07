@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 set -o errexit #abort if any command fails
 
+# Use Ruby 3.3 if available (Ruby 4.0 is incompatible with bundler 2.2.22)
+if [ -d "/opt/homebrew/opt/ruby@3.3/bin" ]; then
+  export PATH="/opt/homebrew/opt/ruby@3.3/bin:$HOME/.gem/ruby/3.3.0/bin:$PATH"
+fi
+
 me=$(basename "$0")
 
 help_message="\
