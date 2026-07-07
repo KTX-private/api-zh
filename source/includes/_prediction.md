@@ -11,7 +11,7 @@ const url = `${endPoint}/v1/forecast/events`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
           }
 
           console.log(body)
@@ -66,7 +66,7 @@ const url = `${endPoint}/v1/forecast/event/detail`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
           }
 
           console.log(body)
@@ -150,7 +150,7 @@ const url = `${endPoint}/v1/forecast/markets`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
           }
 
           console.log(body)
@@ -221,7 +221,7 @@ const url = `${endPoint}/v1/ticker/get_all?market=forecast&forecastSide=yes`
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
           }
 
           console.log(body)
@@ -293,7 +293,7 @@ const url = `${endPoint}/v1/order_book?market=forecast&symbol=2362124_FORECAST&f
 request.get(url,
         function optionalCallback(err, httpResponse, body) {
           if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
           }
 
           console.log(body)
@@ -406,8 +406,8 @@ const param = {
 
 
 let bodyStr = JSON.stringify(param);
-const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const expireTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ expireTime + bodyStr, secret).toString();
 const url = `${endpoints}/v1/order`;
 
 request.post({
@@ -418,13 +418,13 @@ request.post({
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  
+            'api-expire-time':expireTime  
         },
     },
 
     function optionalCallback(err, httpResponse, body) {
         if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
         }
         console.log(body) // 7.the result
 
@@ -559,8 +559,8 @@ const secret = "YOUR_SECRET_KEY";
 
 
 const queryStr = 'id=4611772879845982339';
-const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const expireTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ expireTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/order?${queryStr}`;
 
 request.get(url,{
@@ -568,13 +568,13 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  
+            'api-expire-time':expireTime  
         },
     },
 
     function optionalCallback(err, httpResponse, body) {
         if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
         }
         console.log(body) // 7.the result
 
@@ -603,7 +603,7 @@ def do_request():
         'api-sign': sign,
         'api-expire-time':expire_time 
     }
-    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    resp = requests.get(END_POINT + path, params=query_str, headers=headers)
     print(resp.text)
 
 
@@ -691,8 +691,8 @@ const secret = "YOUR_SECRET_KEY";
 
 
 const queryStr = 'limit=2&market=forecast&symbol=2434164_FORECAST';
-const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const expireTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ expireTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/history/orders?${queryStr}`;
 
 request.get(url,{
@@ -700,13 +700,13 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  
+            'api-expire-time':expireTime  
         },
     },
 
     function optionalCallback(err, httpResponse, body) {
         if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
         }
         console.log(body) // 7.the result
 
@@ -735,7 +735,7 @@ def do_request():
         'api-sign': sign,
         'api-expire-time':expire_time 
     }
-    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    resp = requests.get(END_POINT + path, params=query_str, headers=headers)
     print(resp.text)
 
 
@@ -834,8 +834,8 @@ const secret = "YOUR_SECRET_KEY";
 
 
 const queryStr = 'market=forecast&symbol=2434164_FORECAST';
-const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const expireTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ expireTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/pending/orders?${queryStr}`;
 
 request.get(url,{
@@ -843,13 +843,13 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime  
+            'api-expire-time':expireTime  
         },
     },
 
     function optionalCallback(err, httpResponse, body) {
         if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
         }
         console.log(body) // 7.the result
 
@@ -878,7 +878,7 @@ def do_request():
         'api-sign': sign,
         'api-expire-time':expire_time 
     }
-    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    resp = requests.get(END_POINT + path, params=query_str, headers=headers)
     print(resp.text)
 
 
@@ -950,8 +950,8 @@ const param = {
 }
 
 let bodyStr = JSON.stringify(param);
-const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const expireTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ expireTime + bodyStr, secret).toString();
 const url = `${endpoints}/v1/order/delete`;
 
 request.post({
@@ -968,7 +968,7 @@ request.post({
 
     function optionalCallback(err, httpResponse, body) {
         if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
         }
         console.log(body) // 7.the result
 
@@ -1042,8 +1042,8 @@ const secret = "YOUR_SECRET_KEY";
 
 
 const queryStr = 'market=forecast&symbol=2434164_FORECAST';
-const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const expireTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ expireTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/positions?${queryStr}`;
 
 request.get(url,{
@@ -1051,14 +1051,14 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime 
+            'api-expire-time':expireTime 
 
         },
     },
 
     function optionalCallback(err, httpResponse, body) {
         if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
         }
         console.log(body) // 7.the result
 
@@ -1089,7 +1089,7 @@ def do_request():
         'api-sign': sign,
         'api-expire-time':expire_time 
     }
-    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    resp = requests.get(END_POINT + path, params=query_str, headers=headers)
     print(resp.text)
 
 
@@ -1152,8 +1152,8 @@ const param = {
 }
 
 let bodyStr = JSON.stringify(param);
-const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + bodyStr, secret).toString();
+const expireTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ expireTime + bodyStr, secret).toString();
 const url = `${endpoints}/v1/splitMerge`;
 
 request.post({
@@ -1170,7 +1170,7 @@ request.post({
 
     function optionalCallback(err, httpResponse, body) {
         if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
         }
         console.log(body) // 7.the result
 
@@ -1246,8 +1246,8 @@ const secret = "YOUR_SECRET_KEY";
 
 
 const queryStr = 'limit=2&market=forecast&symbol=2434164_FORECAST';
-const exprieTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ exprieTime + queryStr, secret).toString();
+const expireTime = Date.now()+5000;
+const sign = CryptoJS.HmacSHA256(''+ expireTime + queryStr, secret).toString();
 const url = `${endpoints}/v1/fills?${queryStr}`;
 
 request.get(url,{
@@ -1255,14 +1255,14 @@ request.get(url,{
             'Content-Type': 'application/json',
             'api-key': apikey,
             'api-sign': sign,
-            'api-expire-time':exprieTime 
+            'api-expire-time':expireTime 
 
         },
     },
 
     function optionalCallback(err, httpResponse, body) {
         if (err) {
-            return console.error('upload failed:', err);
+            return console.error('request failed:', err);
         }
         console.log(body) // 7.the result
 
@@ -1293,7 +1293,7 @@ def do_request():
         'api-sign': sign,
         'api-expire-time':expire_time 
     }
-    resp = requests.get(END_POINT + path, query_str, headers=headers)
+    resp = requests.get(END_POINT + path, params=query_str, headers=headers)
     print(resp.text)
 
 
