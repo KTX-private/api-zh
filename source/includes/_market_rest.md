@@ -854,3 +854,98 @@ public class KtxApiExample {
 
 Cache
 
+## 获取合约汇总数据
+
+> Request
+
+```javascript
+let request = require("request");
+const endPoint = 'https://api.ktx.com/api';
+const url = `${endPoint}/v1/pu/contracts`
+request.get(url,
+        function optionalCallback(err, httpResponse, body) {
+          if (err) {
+            return console.error('request failed:', err);
+          }
+
+          console.log(body)
+
+        });
+```
+
+```python
+import requests
+
+END_POINT = 'https://api.ktx.com/api';
+
+def do_request():
+    path = '/v1/pu/contracts'
+    resp = requests.get(END_POINT + path)
+    print(resp.text)
+  
+if __name__ == '__main__':
+    do_request()
+```
+
+```java
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+
+public class KtxApiExample {
+    static final String ENDPOINT = "https://api.ktx.com/api";
+
+    public static void main(String[] args) throws Exception {
+        String path = "/v1/pu/contracts";
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(ENDPOINT + path))
+                .GET()
+                .build();
+        HttpResponse<String> response = HttpClient.newHttpClient()
+                .send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println(response.body());
+    }
+}
+```
+
+> Response
+
+```json
+{
+  "result": [
+    {
+      "ticker_id": "LAB_USDT_SWAP", // 交易对标识
+      "base_currency": "LAB", // 基础币种
+      "quote_currency": "USDT", // 报价币种
+      "last_price": "12.22982", // 最新成交价
+      "base_volume": "263289681", // 基础币种24h成交量
+      "quote_volume": "3682779280.73635", // 报价币种24h成交量
+      "bid": "12.22982", // 买一价
+      "ask": "12.22987", // 卖一价
+      "high": "17.44572", // 24h最高价
+      "low": "10.86188", // 24h最低价
+      "product_type": "Perpetual", // 产品类型
+      "open_interest": "2052", // 持仓量
+      "open_interest_usd": "25713.16056", // 持仓价值(USDT)
+      "index_price": "12.22733", // 指数价格
+      "funding_rate": "-0.015491", // 资金费率
+      "next_funding_rate_timestamp": "1783422000000" // 下次资金费率时间戳
+    },
+    ...
+  ]
+}
+```
+
+**获取合约的持仓量、资金费率、指数价格及买卖盘汇总数据**
+
+* 请求方式 GET
+* 请求路径 /v1/pu/contracts
+* 请求参数
+
+无
+
+* Data Source
+
+Cache
+
