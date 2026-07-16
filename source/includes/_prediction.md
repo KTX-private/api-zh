@@ -370,7 +370,7 @@ public class KtxApiExample {
 
 > 注：没有forecastSide参数时获取的ticker默认是以 Yes(long) 方向的价格展示
 
-## 获取订单簿
+## 获取预测市场订单簿
 
 > Request
 
@@ -873,7 +873,7 @@ public class KtxApiExample {
 | ---------- | ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | id       | string   | 是       | 委托ID<br/>委托ID可以是交易所分配的, <br/>也可以是用户自定义的 (在提交委托时使用client_order_id参数).<br/>当使用自定义ID时, 需要在id前添加 “c:” 前缀.<br/>例如: 提交委托时使用了自定义ID “123”, 在获取委托时, 需使用 “c:123”. |
 
-## 获取历史订单列表
+## 获取预测市场历史订单列表
 
 > Request
 
@@ -1059,7 +1059,7 @@ public class KtxApiExample {
 | after      | int64    | 否    | 委托更新ID<br/>限定返回委托的最小更新ID                                                                                                            |
 | limit      | long     | 否    | 指定最多返回多少个委托                                                                                                                         |
 
-## 获取未成交订单列表
+## 获取预测市场未成交订单列表
 
 > Request
 
@@ -1215,7 +1215,7 @@ public class KtxApiExample {
 | market | string   | 是    | 交易对市场 [forecast: 预测市场]                                                                                     |
 | symbol     | string   | 否    | 交易对代码,如 2434164_FORECAST 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数 |
 
-## 取消订单
+## 取消预测市场订单
 
 > Request
 
@@ -1353,7 +1353,7 @@ public class KtxApiExample {
 | id       | string   | 是       | 委托ID,支持多个id拼接<br>委托ID可以是交易所分配的,<br/>也可以是用户自定义的（在提交委托时使用client_order_id参数）。<br>当使用自定义ID时,需要在id前添加 “c:” 前缀。<br/>例如：提交委托时使用了自定义ID “123”, 在撤销委托时,需使用 “c:123”。 |
 
 
-## 获取仓位
+## 获取预测市场仓位
 
 > Request
 
@@ -1643,7 +1643,7 @@ public class KtxApiExample {
 | type | string   | 是       | split 或者 merge    |
 | quantity        | decimal  | 是       | split 或者 merge的数量 |
 
-## 获取成交明细
+## 获取预测市场成交明细
 
 > Request
 

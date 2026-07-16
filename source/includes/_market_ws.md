@@ -411,9 +411,9 @@ public class KtxMarketWsExample {
 }
 ```
 
-## 订阅K线
+## 订阅K-line
 
-**订阅K线**
+**订阅K-line**
 
 > 发送以下请求可订阅K线
 
@@ -484,9 +484,9 @@ public class KtxMarketWsExample {
 }
 ```
 
-## 订阅ticker
+## 订阅Ticker-Stream推送
 
-**订阅ticker**
+**订阅Ticker-Stream推送**
 
 > 发送以下请求可订阅Ticker
 
