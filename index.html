@@ -385,10 +385,10 @@
                     <a href="#c9c3db0959" class="toc-h2 toc-link" data-title="订阅交易列表">订阅交易列表</a>
                   </li>
                   <li>
-                    <a href="#k" class="toc-h2 toc-link" data-title="订阅K线">订阅K线</a>
+                    <a href="#k-line" class="toc-h2 toc-link" data-title="订阅K-line">订阅K-line</a>
                   </li>
                   <li>
-                    <a href="#ticker" class="toc-h2 toc-link" data-title="订阅ticker">订阅ticker</a>
+                    <a href="#ticker-stream" class="toc-h2 toc-link" data-title="订阅Ticker-Stream推送">订阅Ticker-Stream推送</a>
                   </li>
               </ul>
           </li>
@@ -449,7 +449,7 @@
             <a href="#user-data" class="toc-h1 toc-link" data-title="User Data 推送">User Data 推送</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
+                    <a href="#user-ws-overview" class="toc-h2 toc-link" data-title="用户推送 User WS Overview">用户推送 User WS Overview</a>
                   </li>
                   <li>
                     <a href="#account" class="toc-h2 toc-link" data-title="Account">Account</a>
@@ -478,7 +478,7 @@
                     <a href="#ticker" class="toc-h2 toc-link" data-title="获取 ticker">获取 ticker</a>
                   </li>
                   <li>
-                    <a href="#73bf22db68" class="toc-h2 toc-link" data-title="获取订单簿">获取订单簿</a>
+                    <a href="#2919421524" class="toc-h2 toc-link" data-title="获取预测市场订单簿">获取预测市场订单簿</a>
                   </li>
                   <li>
                     <a href="#2eb1aca97c" class="toc-h2 toc-link" data-title="创建预测市场订单">创建预测市场订单</a>
@@ -487,22 +487,22 @@
                     <a href="#f876a4e1f9" class="toc-h2 toc-link" data-title="获取订单详情">获取订单详情</a>
                   </li>
                   <li>
-                    <a href="#e8c2c8c42b" class="toc-h2 toc-link" data-title="获取历史订单列表">获取历史订单列表</a>
+                    <a href="#0c4362de5f" class="toc-h2 toc-link" data-title="获取预测市场历史订单列表">获取预测市场历史订单列表</a>
                   </li>
                   <li>
-                    <a href="#ef41056898" class="toc-h2 toc-link" data-title="获取未成交订单列表">获取未成交订单列表</a>
+                    <a href="#568e7205a4" class="toc-h2 toc-link" data-title="获取预测市场未成交订单列表">获取预测市场未成交订单列表</a>
                   </li>
                   <li>
-                    <a href="#3eedd32d80" class="toc-h2 toc-link" data-title="取消订单">取消订单</a>
+                    <a href="#814d8781c1" class="toc-h2 toc-link" data-title="取消预测市场订单">取消预测市场订单</a>
                   </li>
                   <li>
-                    <a href="#430d71f05a" class="toc-h2 toc-link" data-title="获取仓位">获取仓位</a>
+                    <a href="#df50b29664" class="toc-h2 toc-link" data-title="获取预测市场仓位">获取预测市场仓位</a>
                   </li>
                   <li>
                     <a href="#mergesplit" class="toc-h2 toc-link" data-title="MergeSplit">MergeSplit</a>
                   </li>
                   <li>
-                    <a href="#106a02279b" class="toc-h2 toc-link" data-title="获取成交明细">获取成交明细</a>
+                    <a href="#8d5eeab62e" class="toc-h2 toc-link" data-title="获取预测市场成交明细">获取预测市场成交明细</a>
                   </li>
                   <li>
                     <a href="#e9c9f474de" class="toc-h2 toc-link" data-title="关于推送">关于推送</a>
@@ -2229,8 +2229,8 @@ ticker: 最新成交信息</p>
     </span><span class="err">...</span><span class="w">
   </span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h2 id='k'>订阅K线</h2>
-<p><strong>订阅K线</strong></p>
+</span></code></pre></div><h2 id='k-line'>订阅K-line</h2>
+<p><strong>订阅K-line</strong></p>
 
 <blockquote>
 <p>发送以下请求可订阅K线</p>
@@ -2305,8 +2305,8 @@ ticker: 最新成交信息</p>
     </span><span class="p">]</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre></div><h2 id='ticker'>订阅ticker</h2>
-<p><strong>订阅ticker</strong></p>
+</span></code></pre></div><h2 id='ticker-stream'>订阅Ticker-Stream推送</h2>
+<p><strong>订阅Ticker-Stream推送</strong></p>
 
 <blockquote>
 <p>发送以下请求可订阅Ticker</p>
@@ -5351,7 +5351,7 @@ request.get(url,{
 <blockquote>
 <p>返回结果按成交记录id由小到大排序</p>
 </blockquote>
-<h1 id='user-data'>User Data 推送</h1><h2 id='overview'>Overview</h2>
+<h1 id='user-data'>User Data 推送</h1><h2 id='user-ws-overview'>用户推送 User WS Overview</h2>
 <blockquote>
 <p>例子</p>
 </blockquote>
@@ -6051,7 +6051,7 @@ request.get(url,{
 <blockquote>
 <p>注：没有forecastSide参数时获取的ticker默认是以 Yes(long) 方向的价格展示</p>
 </blockquote>
-<h2 id='73bf22db68'>获取订单簿</h2>
+<h2 id='2919421524'>获取预测市场订单簿</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -6620,7 +6620,7 @@ const param = {
 <td>委托ID<br/>委托ID可以是交易所分配的, <br/>也可以是用户自定义的 (在提交委托时使用client_order_id参数).<br/>当使用自定义ID时, 需要在id前添加 “c:” 前缀.<br/>例如: 提交委托时使用了自定义ID “123”, 在获取委托时, 需使用 “c:123”.</td>
 </tr>
 </tbody></table>
-<h2 id='e8c2c8c42b'>获取历史订单列表</h2>
+<h2 id='0c4362de5f'>获取预测市场历史订单列表</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -6839,7 +6839,7 @@ const param = {
 <td>指定最多返回多少个委托</td>
 </tr>
 </tbody></table>
-<h2 id='ef41056898'>获取未成交订单列表</h2>
+<h2 id='568e7205a4'>获取预测市场未成交订单列表</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -7003,7 +7003,7 @@ const param = {
 <td>交易对代码,如 2434164_FORECAST 等<br/>当 status=unsettled 时, 不指定 symbol 将返回全部交易对的未结算委托<br/>当 status=settled 时, 必须给定 symbol 参数</td>
 </tr>
 </tbody></table>
-<h2 id='3eedd32d80'>取消订单</h2>
+<h2 id='814d8781c1'>取消预测市场订单</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -7143,7 +7143,7 @@ const param = {
 <td>委托ID,支持多个id拼接<br>委托ID可以是交易所分配的,<br/>也可以是用户自定义的（在提交委托时使用client_order_id参数）。<br>当使用自定义ID时,需要在id前添加 “c:” 前缀。<br/>例如：提交委托时使用了自定义ID “123”, 在撤销委托时,需使用 “c:123”。</td>
 </tr>
 </tbody></table>
-<h2 id='430d71f05a'>获取仓位</h2>
+<h2 id='df50b29664'>获取预测市场仓位</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
@@ -7464,7 +7464,7 @@ const param = {
 <td>split 或者 merge的数量</td>
 </tr>
 </tbody></table>
-<h2 id='106a02279b'>获取成交明细</h2>
+<h2 id='8d5eeab62e'>获取预测市场成交明细</h2>
 <blockquote>
 <p>Request</p>
 </blockquote>
