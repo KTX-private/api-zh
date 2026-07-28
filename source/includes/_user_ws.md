@@ -31,9 +31,10 @@ wsClass.prototype._initWs = async function () {
         "api-key": apikey, "api-sign": sign,
       }
     }));
+    // 定时发送心跳，建议5-10秒一次
     setInterval(function () {
-      ws.ping(Date.now())
-    },30000)
+      ws.send(JSON.stringify({"ping": Date.now()}))
+    }, 5000)
   });
 
   ws.on('close', data => {
@@ -94,10 +95,10 @@ def on_close(ws, close_status_code, close_msg):
 
 def ping_loop(ws):
   while True:
-    time.sleep(3)
+    time.sleep(5)  # 建议5-10秒发送一次心跳
 
     data = {
-      "ping": datetime.now().timestamp() * 1000
+      "ping": int(datetime.now().timestamp() * 1000)
     }
     ws.send(json.dumps(data))
 
@@ -138,6 +139,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.WebSocket;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class KtxUserWsExample {
     static final String WS_URL = "wss://u-stream.ktx.com";
@@ -149,6 +153,9 @@ public class KtxUserWsExample {
 
         WebSocket ws = HttpClient.newHttpClient().newWebSocketBuilder()
                 .buildAsync(URI.create(WS_URL), new WebSocket.Listener() {
+
+                    private ScheduledExecutorService scheduler;
+
                     @Override
                     public void onOpen(WebSocket webSocket) {
                         System.out.println("connected");
@@ -157,6 +164,13 @@ public class KtxUserWsExample {
                             API_KEY, sign);
                         webSocket.sendText(login, true);
                         webSocket.request(1);
+
+                        // 定时发送心跳，建议5-10秒一次
+                        scheduler = Executors.newSingleThreadScheduledExecutor();
+                        scheduler.scheduleAtFixedRate(() -> {
+                            String ping = "{\"ping\":" + System.currentTimeMillis() + "}";
+                            webSocket.sendText(ping, true);
+                        }, 5, 5, TimeUnit.SECONDS);
                     }
 
                     @Override
@@ -169,6 +183,7 @@ public class KtxUserWsExample {
                     @Override
                     public CompletionStage<?> onClose(WebSocket webSocket, int statusCode, String reason) {
                         System.out.println("closed: " + reason);
+                        if (scheduler != null) scheduler.shutdown();
                         return null;
                     }
 
@@ -208,6 +223,44 @@ wss://u-stream.ktx.com
 * api-expire-time
 
 *具体方法请参考[Authentication](#authentication)章节*
+
+## 心跳机制 Heartbeat
+
+**中文：**
+
+客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 **30秒** 未收到客户端的心跳消息，将主动断开连接。
+
+建议每 **5-10秒** 发送一次心跳消息。
+
+> 心跳请求消息格式
+
+```json
+{"ping": 1785220808575}
+```
+
+> 服务端收到心跳消息后会响应
+
+```json
+{"pong": 1785220808575}
+```
+
+**English:**
+
+The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than **30 seconds**, it will actively disconnect.
+
+It is recommended to send a heartbeat message every **5-10 seconds**.
+
+> Heartbeat request format
+
+```json
+{"ping": 1785220808575}
+```
+
+> The server will respond with
+
+```json
+{"pong": 1785220808575}
+```
 
 > 数据流
 > 在成功建立连接后,客户端将收到ApiKey对应账户的余额变动信息及委托变动信息。格式如下:
