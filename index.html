@@ -376,6 +376,9 @@
                     <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
                   </li>
                   <li>
+                    <a href="#heartbeat" class="toc-h2 toc-link" data-title="心跳机制 Heartbeat">心跳机制 Heartbeat</a>
+                  </li>
+                  <li>
                     <a href="#af7bfdc5fa" class="toc-h2 toc-link" data-title="请求类型及参数">请求类型及参数</a>
                   </li>
                   <li>
@@ -450,6 +453,9 @@
               <ul class="toc-list-h2">
                   <li>
                     <a href="#user-ws-overview" class="toc-h2 toc-link" data-title="用户推送 User WS Overview">用户推送 User WS Overview</a>
+                  </li>
+                  <li>
+                    <a href="#heartbeat" class="toc-h2 toc-link" data-title="心跳机制 Heartbeat">心跳机制 Heartbeat</a>
                   </li>
                   <li>
                     <a href="#account" class="toc-h2 toc-link" data-title="Account">Account</a>
@@ -1833,9 +1839,10 @@
     <span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="nx">open</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">new</span> <span class="nb">Date</span><span class="p">(),</span> <span class="dl">'</span><span class="s1">open</span><span class="dl">'</span><span class="p">)</span>
         <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="dl">"</span><span class="s2">method</span><span class="dl">"</span><span class="p">:</span><span class="dl">"</span><span class="s2">SUBSCRIBE</span><span class="dl">"</span><span class="p">,</span><span class="dl">"</span><span class="s2">params</span><span class="dl">"</span><span class="p">:[</span><span class="dl">"</span><span class="s2">spot.BTC_USDT.order_book.5</span><span class="dl">"</span><span class="p">]}));</span>
+        <span class="c1">// 定时发送心跳，建议5-10秒一次</span>
         <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-          <span class="nx">ws</span><span class="p">.</span><span class="nx">ping</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span>
-        <span class="p">},</span><span class="mi">30000</span><span class="p">)</span>
+          <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="dl">"</span><span class="s2">ping</span><span class="dl">"</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()}))</span>
+        <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span>
     <span class="p">});</span>
 
     <span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">close</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -1898,10 +1905,10 @@
 
 <span class="k">def</span> <span class="nf">ping_loop</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
   <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span>
-
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 建议5-10秒发送一次心跳
+</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s">"ping"</span><span class="p">:</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+      <span class="s">"ping"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
@@ -1927,6 +1934,9 @@
 <span class="kn">import</span> <span class="nn">java.net.http.HttpClient</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.net.http.WebSocket</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.concurrent.CompletionStage</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ScheduledExecutorService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">KtxMarketWsExample</span> <span class="o">{</span>
     <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">WS_URL</span> <span class="o">=</span> <span class="s">"wss://m-stream.ktx.com"</span><span class="o">;</span>
@@ -1940,6 +1950,13 @@
                         <span class="nc">String</span> <span class="n">sub</span> <span class="o">=</span> <span class="s">"{\"method\":\"SUBSCRIBE\",\"params\":[\"spot.BTC_USDT.order_book.5\"]}"</span><span class="o">;</span>
                         <span class="n">webSocket</span><span class="o">.</span><span class="na">sendText</span><span class="o">(</span><span class="n">sub</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
                         <span class="n">webSocket</span><span class="o">.</span><span class="na">request</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+
+                        <span class="c1">// 定时发送心跳，建议5-10秒一次</span>
+                        <span class="nc">ScheduledExecutorService</span> <span class="n">scheduler</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newSingleThreadScheduledExecutor</span><span class="o">();</span>
+                        <span class="n">scheduler</span><span class="o">.</span><span class="na">scheduleAtFixedRate</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                            <span class="nc">String</span> <span class="n">ping</span> <span class="o">=</span> <span class="s">"{\"ping\":"</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">+</span> <span class="s">"}"</span><span class="o">;</span>
+                            <span class="n">webSocket</span><span class="o">.</span><span class="na">sendText</span><span class="o">(</span><span class="n">ping</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                        <span class="o">},</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
                     <span class="o">}</span>
 
                     <span class="nd">@Override</span>
@@ -2026,7 +2043,41 @@ wss://m-stream.ktx.com</li>
 </span></code></pre></div>
 <blockquote>
 <p>在连接后,请首先发送该请求给服务器,随后,服务器会在行情变化时发送相应的数据流给客户端。</p>
+</blockquote>
+<h2 id='heartbeat'>心跳机制 Heartbeat</h2>
+<p><strong>中文：</strong></p>
 
+<p>客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 <strong>30秒</strong> 未收到客户端的心跳消息，将主动断开连接。</p>
+
+<p>建议每 <strong>5-10秒</strong> 发送一次心跳消息。</p>
+
+<blockquote>
+<p>心跳请求消息格式</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>服务端收到心跳消息后会响应</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>English:</strong></p>
+
+<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
+
+<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
+
+<blockquote>
+<p>Heartbeat request format</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>The server will respond with</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
 <p>&quot;data stream name&quot; 是数据流名称,数据流名称是以下格式的字符串。
 market.symbol.data_type.param1.param2...</p>
 
@@ -5381,9 +5432,10 @@ request.get(url,{
         <span class="dl">"</span><span class="s2">api-key</span><span class="dl">"</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span> <span class="dl">"</span><span class="s2">api-sign</span><span class="dl">"</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
       <span class="p">}</span>
     <span class="p">}));</span>
+    <span class="c1">// 定时发送心跳，建议5-10秒一次</span>
     <span class="nx">setInterval</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-      <span class="nx">ws</span><span class="p">.</span><span class="nx">ping</span><span class="p">(</span><span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">())</span>
-    <span class="p">},</span><span class="mi">30000</span><span class="p">)</span>
+      <span class="nx">ws</span><span class="p">.</span><span class="nx">send</span><span class="p">(</span><span class="nx">JSON</span><span class="p">.</span><span class="nx">stringify</span><span class="p">({</span><span class="dl">"</span><span class="s2">ping</span><span class="dl">"</span><span class="p">:</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()}))</span>
+    <span class="p">},</span> <span class="mi">5000</span><span class="p">)</span>
   <span class="p">});</span>
 
   <span class="nx">ws</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="dl">'</span><span class="s1">close</span><span class="dl">'</span><span class="p">,</span> <span class="nx">data</span> <span class="o">=&gt;</span> <span class="p">{</span>
@@ -5441,10 +5493,10 @@ request.get(url,{
 
 <span class="k">def</span> <span class="nf">ping_loop</span><span class="p">(</span><span class="n">ws</span><span class="p">):</span>
   <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
-    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
-
+    <span class="n">time</span><span class="p">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>  <span class="c1"># 建议5-10秒发送一次心跳
+</span>
     <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s">"ping"</span><span class="p">:</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span>
+      <span class="s">"ping"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">().</span><span class="n">timestamp</span><span class="p">()</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">)</span>
     <span class="p">}</span>
     <span class="n">ws</span><span class="p">.</span><span class="n">send</span><span class="p">(</span><span class="n">json</span><span class="p">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
@@ -5482,6 +5534,9 @@ request.get(url,{
 <span class="kn">import</span> <span class="nn">java.net.http.HttpClient</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.net.http.WebSocket</span><span class="o">;</span>
 <span class="kn">import</span> <span class="nn">java.util.concurrent.CompletionStage</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.Executors</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.ScheduledExecutorService</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.concurrent.TimeUnit</span><span class="o">;</span>
 
 <span class="kd">public</span> <span class="kd">class</span> <span class="nc">KtxUserWsExample</span> <span class="o">{</span>
     <span class="kd">static</span> <span class="kd">final</span> <span class="nc">String</span> <span class="no">WS_URL</span> <span class="o">=</span> <span class="s">"wss://u-stream.ktx.com"</span><span class="o">;</span>
@@ -5493,6 +5548,9 @@ request.get(url,{
 
         <span class="nc">WebSocket</span> <span class="n">ws</span> <span class="o">=</span> <span class="nc">HttpClient</span><span class="o">.</span><span class="na">newHttpClient</span><span class="o">().</span><span class="na">newWebSocketBuilder</span><span class="o">()</span>
                 <span class="o">.</span><span class="na">buildAsync</span><span class="o">(</span><span class="no">URI</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="no">WS_URL</span><span class="o">),</span> <span class="k">new</span> <span class="nc">WebSocket</span><span class="o">.</span><span class="na">Listener</span><span class="o">()</span> <span class="o">{</span>
+
+                    <span class="kd">private</span> <span class="nc">ScheduledExecutorService</span> <span class="n">scheduler</span><span class="o">;</span>
+
                     <span class="nd">@Override</span>
                     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onOpen</span><span class="o">(</span><span class="nc">WebSocket</span> <span class="n">webSocket</span><span class="o">)</span> <span class="o">{</span>
                         <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"connected"</span><span class="o">);</span>
@@ -5501,6 +5559,13 @@ request.get(url,{
                             <span class="no">API_KEY</span><span class="o">,</span> <span class="n">sign</span><span class="o">);</span>
                         <span class="n">webSocket</span><span class="o">.</span><span class="na">sendText</span><span class="o">(</span><span class="n">login</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
                         <span class="n">webSocket</span><span class="o">.</span><span class="na">request</span><span class="o">(</span><span class="mi">1</span><span class="o">);</span>
+
+                        <span class="c1">// 定时发送心跳，建议5-10秒一次</span>
+                        <span class="n">scheduler</span> <span class="o">=</span> <span class="nc">Executors</span><span class="o">.</span><span class="na">newSingleThreadScheduledExecutor</span><span class="o">();</span>
+                        <span class="n">scheduler</span><span class="o">.</span><span class="na">scheduleAtFixedRate</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="o">{</span>
+                            <span class="nc">String</span> <span class="n">ping</span> <span class="o">=</span> <span class="s">"{\"ping\":"</span> <span class="o">+</span> <span class="nc">System</span><span class="o">.</span><span class="na">currentTimeMillis</span><span class="o">()</span> <span class="o">+</span> <span class="s">"}"</span><span class="o">;</span>
+                            <span class="n">webSocket</span><span class="o">.</span><span class="na">sendText</span><span class="o">(</span><span class="n">ping</span><span class="o">,</span> <span class="kc">true</span><span class="o">);</span>
+                        <span class="o">},</span> <span class="mi">5</span><span class="o">,</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">TimeUnit</span><span class="o">.</span><span class="na">SECONDS</span><span class="o">);</span>
                     <span class="o">}</span>
 
                     <span class="nd">@Override</span>
@@ -5513,6 +5578,7 @@ request.get(url,{
                     <span class="nd">@Override</span>
                     <span class="kd">public</span> <span class="nc">CompletionStage</span><span class="o">&lt;?&gt;</span> <span class="n">onClose</span><span class="o">(</span><span class="nc">WebSocket</span> <span class="n">webSocket</span><span class="o">,</span> <span class="kt">int</span> <span class="n">statusCode</span><span class="o">,</span> <span class="nc">String</span> <span class="n">reason</span><span class="o">)</span> <span class="o">{</span>
                         <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"closed: "</span> <span class="o">+</span> <span class="n">reason</span><span class="o">);</span>
+                        <span class="k">if</span> <span class="o">(</span><span class="n">scheduler</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="n">scheduler</span><span class="o">.</span><span class="na">shutdown</span><span class="o">();</span>
                         <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
                     <span class="o">}</span>
 
@@ -5553,7 +5619,39 @@ request.get(url,{
 </ul>
 
 <p><em>具体方法请参考<a href="#authentication">Authentication</a>章节</em></p>
+<h2 id='heartbeat'>心跳机制 Heartbeat</h2>
+<p><strong>中文：</strong></p>
 
+<p>客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 <strong>30秒</strong> 未收到客户端的心跳消息，将主动断开连接。</p>
+
+<p>建议每 <strong>5-10秒</strong> 发送一次心跳消息。</p>
+
+<blockquote>
+<p>心跳请求消息格式</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>服务端收到心跳消息后会响应</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<p><strong>English:</strong></p>
+
+<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
+
+<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
+
+<blockquote>
+<p>Heartbeat request format</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>The server will respond with</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
 <blockquote>
 <p>数据流
 在成功建立连接后,客户端将收到ApiKey对应账户的余额变动信息及委托变动信息。格式如下:</p>
