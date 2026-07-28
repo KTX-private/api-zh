@@ -376,7 +376,7 @@
                     <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
                   </li>
                   <li>
-                    <a href="#heartbeat" class="toc-h2 toc-link" data-title="心跳机制 Heartbeat">心跳机制 Heartbeat</a>
+                    <a href="#market-data-heartbeat" class="toc-h2 toc-link" data-title="Market Data 心跳机制 Heartbeat">Market Data 心跳机制 Heartbeat</a>
                   </li>
                   <li>
                     <a href="#af7bfdc5fa" class="toc-h2 toc-link" data-title="请求类型及参数">请求类型及参数</a>
@@ -455,7 +455,7 @@
                     <a href="#user-ws-overview" class="toc-h2 toc-link" data-title="用户推送 User WS Overview">用户推送 User WS Overview</a>
                   </li>
                   <li>
-                    <a href="#heartbeat" class="toc-h2 toc-link" data-title="心跳机制 Heartbeat">心跳机制 Heartbeat</a>
+                    <a href="#user-data-heartbeat" class="toc-h2 toc-link" data-title="User Data 心跳机制 Heartbeat">User Data 心跳机制 Heartbeat</a>
                   </li>
                   <li>
                     <a href="#account" class="toc-h2 toc-link" data-title="Account">Account</a>
@@ -2044,7 +2044,7 @@ wss://m-stream.ktx.com</li>
 <blockquote>
 <p>在连接后,请首先发送该请求给服务器,随后,服务器会在行情变化时发送相应的数据流给客户端。</p>
 </blockquote>
-<h2 id='heartbeat'>心跳机制 Heartbeat</h2>
+<h2 id='market-data-heartbeat'>Market Data 心跳机制 Heartbeat</h2>
 <p><strong>中文：</strong></p>
 
 <p>客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 <strong>30秒</strong> 未收到客户端的心跳消息，将主动断开连接。</p>
@@ -5619,7 +5619,7 @@ request.get(url,{
 </ul>
 
 <p><em>具体方法请参考<a href="#authentication">Authentication</a>章节</em></p>
-<h2 id='heartbeat'>心跳机制 Heartbeat</h2>
+<h2 id='user-data-heartbeat'>User Data 心跳机制 Heartbeat</h2>
 <p><strong>中文：</strong></p>
 
 <p>客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 <strong>30秒</strong> 未收到客户端的心跳消息，将主动断开连接。</p>
