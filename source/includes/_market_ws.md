@@ -234,44 +234,6 @@ public class KtxMarketWsExample {
 
 > 在连接后,请首先发送该请求给服务器,随后,服务器会在行情变化时发送相应的数据流给客户端。
 
-## 心跳机制 Heartbeat
-
-**中文：**
-
-客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 **30秒** 未收到客户端的心跳消息，将主动断开连接。
-
-建议每 **5-10秒** 发送一次心跳消息。
-
-> 心跳请求消息格式
-
-```json
-{"ping": 1785220808575}
-```
-
-> 服务端收到心跳消息后会响应
-
-```json
-{"pong": 1785220808575}
-```
-
-**English:**
-
-The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than **30 seconds**, it will actively disconnect.
-
-It is recommended to send a heartbeat message every **5-10 seconds**.
-
-> Heartbeat request format
-
-```json
-{"ping": 1785220808575}
-```
-
-> The server will respond with
-
-```json
-{"pong": 1785220808575}
-```
-
 > "data stream name" 是数据流名称,数据流名称是以下格式的字符串。
 > market.symbol.data_type.param1.param2...
 
@@ -582,6 +544,24 @@ It is recommended to send a heartbeat message every **5-10 seconds**.
     "open": "98000" // 开盘价格
   }
 }
+```
+
+## MarketData心跳机制
+
+客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 **30秒** 未收到客户端的心跳消息，将主动断开连接。
+
+建议每 **5-10秒** 发送一次心跳消息。
+
+> 心跳请求消息格式
+
+```json
+{"ping": 1785220808575}
+```
+
+> 服务端收到心跳消息后会响应
+
+```json
+{"pong": 1785220808575}
 ```
 
 ---
