@@ -376,9 +376,6 @@
                     <a href="#overview" class="toc-h2 toc-link" data-title="Overview">Overview</a>
                   </li>
                   <li>
-                    <a href="#market-data-heartbeat" class="toc-h2 toc-link" data-title="Market Data 心跳机制 Heartbeat">Market Data 心跳机制 Heartbeat</a>
-                  </li>
-                  <li>
                     <a href="#af7bfdc5fa" class="toc-h2 toc-link" data-title="请求类型及参数">请求类型及参数</a>
                   </li>
                   <li>
@@ -392,6 +389,9 @@
                   </li>
                   <li>
                     <a href="#ticker-stream" class="toc-h2 toc-link" data-title="订阅Ticker-Stream推送">订阅Ticker-Stream推送</a>
+                  </li>
+                  <li>
+                    <a href="#marketdata" class="toc-h2 toc-link" data-title="MarketData心跳机制">MarketData心跳机制</a>
                   </li>
               </ul>
           </li>
@@ -455,9 +455,6 @@
                     <a href="#user-ws-overview" class="toc-h2 toc-link" data-title="用户推送 User WS Overview">用户推送 User WS Overview</a>
                   </li>
                   <li>
-                    <a href="#user-data-heartbeat" class="toc-h2 toc-link" data-title="User Data 心跳机制 Heartbeat">User Data 心跳机制 Heartbeat</a>
-                  </li>
-                  <li>
                     <a href="#account" class="toc-h2 toc-link" data-title="Account">Account</a>
                   </li>
                   <li>
@@ -465,6 +462,9 @@
                   </li>
                   <li>
                     <a href="#order" class="toc-h2 toc-link" data-title="Order">Order</a>
+                  </li>
+                  <li>
+                    <a href="#userdata" class="toc-h2 toc-link" data-title="UserData心跳机制">UserData心跳机制</a>
                   </li>
               </ul>
           </li>
@@ -2043,41 +2043,7 @@ wss://m-stream.ktx.com</li>
 </span></code></pre></div>
 <blockquote>
 <p>在连接后,请首先发送该请求给服务器,随后,服务器会在行情变化时发送相应的数据流给客户端。</p>
-</blockquote>
-<h2 id='market-data-heartbeat'>Market Data 心跳机制 Heartbeat</h2>
-<p><strong>中文：</strong></p>
 
-<p>客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 <strong>30秒</strong> 未收到客户端的心跳消息，将主动断开连接。</p>
-
-<p>建议每 <strong>5-10秒</strong> 发送一次心跳消息。</p>
-
-<blockquote>
-<p>心跳请求消息格式</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
-<p>服务端收到心跳消息后会响应</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p><strong>English:</strong></p>
-
-<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
-
-<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
-
-<blockquote>
-<p>Heartbeat request format</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
-<p>The server will respond with</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
 <p>&quot;data stream name&quot; 是数据流名称,数据流名称是以下格式的字符串。
 market.symbol.data_type.param1.param2...</p>
 
@@ -2410,6 +2376,20 @@ ticker: 最新成交信息</p>
     </span><span class="nl">"open"</span><span class="p">:</span><span class="w"> </span><span class="s2">"98000"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">开盘价格</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='marketdata'>MarketData心跳机制</h2>
+<p>客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 <strong>30秒</strong> 未收到客户端的心跳消息，将主动断开连接。</p>
+
+<p>建议每 <strong>5-10秒</strong> 发送一次心跳消息。</p>
+
+<blockquote>
+<p>心跳请求消息格式</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>服务端收到心跳消息后会响应</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
 </span></code></pre></div>
 <hr>
 <h1 id='user-data-endpoints'>User Data Endpoints</h1><h2 id='85dc7f40ef'>获取交易账户资产</h2>
@@ -5619,39 +5599,7 @@ request.get(url,{
 </ul>
 
 <p><em>具体方法请参考<a href="#authentication">Authentication</a>章节</em></p>
-<h2 id='user-data-heartbeat'>User Data 心跳机制 Heartbeat</h2>
-<p><strong>中文：</strong></p>
 
-<p>客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 <strong>30秒</strong> 未收到客户端的心跳消息，将主动断开连接。</p>
-
-<p>建议每 <strong>5-10秒</strong> 发送一次心跳消息。</p>
-
-<blockquote>
-<p>心跳请求消息格式</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
-<p>服务端收到心跳消息后会响应</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<p><strong>English:</strong></p>
-
-<p>The client needs to send heartbeat messages periodically to maintain the connection. If the server does not receive a heartbeat message from the client for more than <strong>30 seconds</strong>, it will actively disconnect.</p>
-
-<p>It is recommended to send a heartbeat message every <strong>5-10 seconds</strong>.</p>
-
-<blockquote>
-<p>Heartbeat request format</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
-<blockquote>
-<p>The server will respond with</p>
-</blockquote>
-<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
-</span></code></pre></div>
 <blockquote>
 <p>数据流
 在成功建立连接后,客户端将收到ApiKey对应账户的余额变动信息及委托变动信息。格式如下:</p>
@@ -5766,6 +5714,20 @@ request.get(url,{
       </span><span class="nl">"updateTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390650379"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">更新时间</span><span class="w">
   </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
+</span></code></pre></div><h2 id='userdata'>UserData心跳机制</h2>
+<p>客户端需要定时向服务端发送心跳消息以维持连接。如果服务端超过 <strong>30秒</strong> 未收到客户端的心跳消息，将主动断开连接。</p>
+
+<p>建议每 <strong>5-10秒</strong> 发送一次心跳消息。</p>
+
+<blockquote>
+<p>心跳请求消息格式</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"ping"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
+</span></code></pre></div>
+<blockquote>
+<p>服务端收到心跳消息后会响应</p>
+</blockquote>
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="nl">"pong"</span><span class="p">:</span><span class="w"> </span><span class="mi">1785220808575</span><span class="p">}</span><span class="w">
 </span></code></pre></div><h1 id='11e43e4f97'>预测市场</h1><h2 id='event'>获取 Event</h2>
 <blockquote>
 <p>Request</p>
