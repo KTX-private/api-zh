@@ -271,6 +271,7 @@ public class KtxApiExample {
     "coin_symbol": "sUSDT",// 币种
     "chain_type":"Solana", // 网络
     "general_name": "USDT" ,// 资产名称
+    "memo":"", // memo
     "mx_uid": "de4a8cdc-6be5-3253-9f34-d2c61a89286f"
   }
 ]
