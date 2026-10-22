@@ -1288,7 +1288,8 @@ public class KtxApiExample {
 ```
 
 > Response
-> ```json
+
+```json
 {
   "orderId": "4611767382287843330", // 订单ID
   "clientOrderId": "",  // 自定义订单ID
