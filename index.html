@@ -423,6 +423,9 @@
                     <a href="#5ac84906d9" class="toc-h2 toc-link" data-title="创建订单">创建订单</a>
                   </li>
                   <li>
+                    <a href="#f876a4e1f9" class="toc-h2 toc-link" data-title="获取订单详情">获取订单详情</a>
+                  </li>
+                  <li>
                     <a href="#e8c2c8c42b" class="toc-h2 toc-link" data-title="获取历史订单列表">获取历史订单列表</a>
                   </li>
                   <li>
@@ -3787,111 +3790,219 @@ const param = {
 <span class="o">}</span>
 </code></pre></div>
 <blockquote>
-<p>Response
-```json
-{
-  &quot;orderId&quot;: &quot;4611767382287843330&quot;, // 订单ID
-  &quot;clientOrderId&quot;: &quot;&quot;,  // 自定义订单ID
-  &quot;createTime&quot;: &quot;1733390630904&quot;, // 创建时间
-  &quot;product&quot;: &quot;BTC_USDT_SWAP&quot;, // 交易对代码
-  &quot;type&quot;: &quot;limit&quot;, // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
-  &quot;side&quot;: &quot;buy&quot;, // 交易方向 [buy: 买入 | sell: 卖出]
-  &quot;quantity&quot;: &quot;0.01&quot;, // 委托数量
-  &quot;stf&quot;: &quot;disabled&quot;, // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
-  &quot;price&quot;: &quot;10300&quot;,  // 委托价格
-  &quot;timeInForce&quot;: &quot;gtc&quot;, // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
-  &quot;mini&quot;:&quot;false&quot;, // 是否mini合约 [true: 是 | false: 否]
-  &quot;cancelAfter&quot;: 0, // N秒后自动撤销 [大于0: N秒后撤销 | 0: 永不自动撤销]
-  &quot;postOnly&quot;: false, // 只做maker [true: 是 | false: 否]
-  &quot;positionMerge&quot;: &quot;long&quot;, // 仓位合并模式 [long: 合并多仓 | short: 合并空仓 | none: 分仓]
-  &quot;positionId&quot;: 0,  // 提交的仓位ID
-  &quot;marginMethod&quot;: &quot;cross&quot;, // 保证金模式 [isolate: 逐仓 | cross: 全仓]
-  &quot;close&quot;: false,   // 是否平仓单 [true: 平仓 | false: 开仓]
-  &quot;leverage&quot;: 0,    // 杠杆倍数
-  &quot;action&quot;: &quot;unknown&quot;, // 仓位行为 [unknown: 未知 | increase_long: 开多 | reduce_long: 平多 | increase_short: 开空 | reduce_short: 平空]
-  &quot;status&quot;: &quot;accepted&quot;, // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
-  &quot;executedQty&quot;: &quot;0&quot;, // 已成交数量
-  &quot;profit&quot;: &quot;0&quot;,    // 收益
-  &quot;origin&quot;:0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]<br>
-  &quot;brokerId&quot;:0, // 渠道ID
-  &quot;update_id&quot;:&#39;1125899907137993336&#39;, // 更新ID
-  &quot;executedCost&quot;: &quot;0&quot;, // 已成交价值
-  &quot;fillCount&quot;: 0, // 成交次数
-  &quot;fills&quot;: [],
-  &quot;fees&quot;: [],
-  &quot;updateTime&quot;: &quot;1733390650379&quot; // 更新时间
-}</p>
+<p>Response</p>
 </blockquote>
-<div class="highlight"><pre class="highlight plaintext"><code>
-**提交委托**
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"orderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4611767382287843330"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单ID</span><span class="w">
+  </span><span class="nl">"clientOrderId"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">自定义订单ID</span><span class="w">
+  </span><span class="nl">"createTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390630904"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">创建时间</span><span class="w">
+  </span><span class="nl">"product"</span><span class="p">:</span><span class="w"> </span><span class="s2">"BTC_USDT_SWAP"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易对代码</span><span class="w">
+  </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"limit"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单类型</span><span class="w"> </span><span class="p">[</span><span class="err">limit:</span><span class="w"> </span><span class="err">限价</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">market:</span><span class="w"> </span><span class="err">市价</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">take-profit:</span><span class="w"> </span><span class="err">市价止盈</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">stop:</span><span class="w"> </span><span class="err">市价止损</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">take-profit-limit:</span><span class="w"> </span><span class="err">限价止盈</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">stop-limit:</span><span class="w"> </span><span class="err">限价止损</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"side"</span><span class="p">:</span><span class="w"> </span><span class="s2">"buy"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">交易方向</span><span class="w"> </span><span class="p">[</span><span class="err">buy:</span><span class="w"> </span><span class="err">买入</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">sell:</span><span class="w"> </span><span class="err">卖出</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"quantity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0.01"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">委托数量</span><span class="w">
+  </span><span class="nl">"stf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"disabled"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单成交转换方式</span><span class="w"> </span><span class="p">[</span><span class="mi">0</span><span class="err">:</span><span class="w"> </span><span class="err">disabled</span><span class="w"> </span><span class="err">禁用自成交保护</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="mi">1</span><span class="err">:</span><span class="w"> </span><span class="err">dc</span><span class="w"> </span><span class="err">减少并取消</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="mi">2</span><span class="err">:</span><span class="w"> </span><span class="err">co</span><span class="w"> </span><span class="err">取消老订单</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="mi">3</span><span class="err">:</span><span class="w"> </span><span class="err">cn</span><span class="w"> </span><span class="err">取消新订单</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="mi">4</span><span class="err">:</span><span class="w"> </span><span class="err">cb</span><span class="w"> </span><span class="err">双向取消</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"price"</span><span class="p">:</span><span class="w"> </span><span class="s2">"10300"</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">委托价格</span><span class="w">
+  </span><span class="nl">"timeInForce"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gtc"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">委托时效性</span><span class="w"> </span><span class="p">[</span><span class="err">gtc:</span><span class="w"> </span><span class="err">成交前有效</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">ioc:</span><span class="w"> </span><span class="err">即时剩余取消</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">fok:</span><span class="w"> </span><span class="err">全数成交否则取消</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"mini"</span><span class="p">:</span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">是否mini合约</span><span class="w"> </span><span class="p">[</span><span class="kc">true</span><span class="err">:</span><span class="w"> </span><span class="err">是</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="kc">false</span><span class="err">:</span><span class="w"> </span><span class="err">否</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"cancelAfter"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">N秒后自动撤销</span><span class="w"> </span><span class="p">[</span><span class="err">大于</span><span class="mi">0</span><span class="err">:</span><span class="w"> </span><span class="err">N秒后撤销</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="mi">0</span><span class="err">:</span><span class="w"> </span><span class="err">永不自动撤销</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"postOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">只做maker</span><span class="w"> </span><span class="p">[</span><span class="kc">true</span><span class="err">:</span><span class="w"> </span><span class="err">是</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="kc">false</span><span class="err">:</span><span class="w"> </span><span class="err">否</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"positionMerge"</span><span class="p">:</span><span class="w"> </span><span class="s2">"long"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位合并模式</span><span class="w"> </span><span class="p">[</span><span class="err">long:</span><span class="w"> </span><span class="err">合并多仓</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">short:</span><span class="w"> </span><span class="err">合并空仓</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">none:</span><span class="w"> </span><span class="err">分仓</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"positionId"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">  </span><span class="err">//</span><span class="w"> </span><span class="err">提交的仓位ID</span><span class="w">
+  </span><span class="nl">"marginMethod"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cross"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">保证金模式</span><span class="w"> </span><span class="p">[</span><span class="err">isolate:</span><span class="w"> </span><span class="err">逐仓</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">cross:</span><span class="w"> </span><span class="err">全仓</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"close"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">   </span><span class="err">//</span><span class="w"> </span><span class="err">是否平仓单</span><span class="w"> </span><span class="p">[</span><span class="kc">true</span><span class="err">:</span><span class="w"> </span><span class="err">平仓</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="kc">false</span><span class="err">:</span><span class="w"> </span><span class="err">开仓</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"leverage"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w">    </span><span class="err">//</span><span class="w"> </span><span class="err">杠杆倍数</span><span class="w">
+  </span><span class="nl">"action"</span><span class="p">:</span><span class="w"> </span><span class="s2">"unknown"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">仓位行为</span><span class="w"> </span><span class="p">[</span><span class="err">unknown:</span><span class="w"> </span><span class="err">未知</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">increase_long:</span><span class="w"> </span><span class="err">开多</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">reduce_long:</span><span class="w"> </span><span class="err">平多</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">increase_short:</span><span class="w"> </span><span class="err">开空</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">reduce_short:</span><span class="w"> </span><span class="err">平空</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"accepted"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">订单状态</span><span class="w"> </span><span class="p">[</span><span class="err">accepted:</span><span class="w"> </span><span class="err">已接收</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">partial-filled:</span><span class="w"> </span><span class="err">部分成交挂单中</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">filled:</span><span class="w"> </span><span class="err">已成交</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">cancelled:</span><span class="w"> </span><span class="err">已撤销</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">rejected:</span><span class="w"> </span><span class="err">已拒绝</span><span class="w"> </span><span class="err">|</span><span class="w"> </span><span class="err">partially-cancelled:</span><span class="w"> </span><span class="err">部分成交已取消</span><span class="p">]</span><span class="w">
+  </span><span class="nl">"executedQty"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">已成交数量</span><span class="w">
+  </span><span class="nl">"profit"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w">    </span><span class="err">//</span><span class="w"> </span><span class="err">收益</span><span class="w">
+  </span><span class="nl">"origin"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">强平价格标识</span><span class="w"> </span><span class="p">[</span><span class="err">当origin=</span><span class="mi">-1</span><span class="w"> </span><span class="err">时代表该笔订单为强平委托</span><span class="p">]</span><span class="w">          
+  </span><span class="nl">"brokerId"</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">渠道ID</span><span class="w">
+  </span><span class="nl">"update_id"</span><span class="p">:</span><span class="err">'</span><span class="mi">1125899907137993336</span><span class="err">'</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">更新ID</span><span class="w">
+  </span><span class="nl">"executedCost"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">已成交价值</span><span class="w">
+  </span><span class="nl">"fillCount"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">成交次数</span><span class="w">
+  </span><span class="nl">"fills"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"fees"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+  </span><span class="nl">"updateTime"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1733390650379"</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">更新时间</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
-* 请求方式 POST
-* 请求路径 /v1/order
-* 权限: Trade
-* 请求参数
+</span></code></pre></div>
+<p><strong>提交委托</strong></p>
+
+<ul>
+<li>请求方式 POST</li>
+<li>请求路径 /v1/order</li>
+<li>权限: Trade</li>
+<li>请求参数</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>参数名称</th>
+<th>参数类型</th>
+<th>是否必传</th>
+<th>说明</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>symbol</td>
+<td>string</td>
+<td>是</td>
+<td>交易对代码，如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等</td>
+</tr>
+<tr>
+<td>side</td>
+<td>string</td>
+<td>是</td>
+<td>交易方向 [buy: 买入；sell: 卖出]</td>
+</tr>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>是</td>
+<td>委托类型 [limit: 限价；market: 市价；take-profit: 市价止盈；stop: 市价止损；take-profit-limit: 限价止盈；stop-limit: 限价止损]</td>
+</tr>
+<tr>
+<td>quantity</td>
+<td>decimal</td>
+<td>是</td>
+<td>委托量</td>
+</tr>
+<tr>
+<td>market</td>
+<td>string</td>
+<td>是</td>
+<td>市场类型 [spot: 现货；lpc: U本位永续]</td>
+</tr>
+<tr>
+<td>client_order_id</td>
+<td>string</td>
+<td>否</td>
+<td>委托ID，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳</td>
+</tr>
+<tr>
+<td>price</td>
+<td>decimal</td>
+<td>否</td>
+<td>委托限价</td>
+</tr>
+<tr>
+<td>positionMerge</td>
+<td>string</td>
+<td>否</td>
+<td>仓位合并模式 [long: 合并多仓；short: 合并空仓；none: 分仓]</td>
+</tr>
+<tr>
+<td>marginMethod</td>
+<td>string</td>
+<td>否</td>
+<td>保证金模式 [isolate: 逐仓；cross: 全仓]</td>
+</tr>
+<tr>
+<td>mini</td>
+<td>bool</td>
+<td>否</td>
+<td>是否mini合约 [true: 是；false: 否]，当为true时必须满足 positionMerge=none &amp;&amp; marginMethod=isolate &amp;&amp; type=limit</td>
+</tr>
+<tr>
+<td>leverage</td>
+<td>int</td>
+<td>否</td>
+<td>杠杆倍数</td>
+</tr>
+<tr>
+<td>close</td>
+<td>bool</td>
+<td>否</td>
+<td>是否平仓单 [true: 平仓；false: 开仓]</td>
+</tr>
+<tr>
+<td>post_only</td>
+<td>bool</td>
+<td>否</td>
+<td>只做maker [true: 是；false: 否]</td>
+</tr>
+<tr>
+<td>time_in_force</td>
+<td>string</td>
+<td>否</td>
+<td>委托时效性 [gtc: 成交前有效；ioc: 即时剩余取消；fok: 全数成交否则取消]，默认值: gtc</td>
+</tr>
+<tr>
+<td>positionId</td>
+<td>string</td>
+<td>否</td>
+<td>仓位ID</td>
+</tr>
+<tr>
+<td>trigger_price</td>
+<td>decimal</td>
+<td>否</td>
+<td>触发价格，止盈止损订单使用</td>
+</tr>
+<tr>
+<td>tpo_trigger</td>
+<td>int</td>
+<td>否</td>
+<td>开仓止盈，需配合 tpo_trigger_value 字段使用，0: 不启用，1: 启用</td>
+</tr>
+<tr>
+<td>slo_trigger</td>
+<td>int</td>
+<td>否</td>
+<td>开仓止损，需配合 slo_trigger_value 字段使用，0: 不启用，1: 启用</td>
+</tr>
+<tr>
+<td>tpo_trigger_value</td>
+<td>decimal</td>
+<td>否</td>
+<td>开仓止盈触发价格</td>
+</tr>
+<tr>
+<td>slo_trigger_value</td>
+<td>decimal</td>
+<td>否</td>
+<td>开仓止损触发价格</td>
+</tr>
+</tbody></table>
+
+<blockquote>
+<p>委托对象
+最多包含该委托的20笔成交
+如果委托有多于20笔成交,那么该对象仅包含最后20笔,其他成交请通过 fills 接口获取</p>
+</blockquote>
+<h2 id='f876a4e1f9'>获取订单详情</h2>
+<blockquote>
+<p>Request</p>
+</blockquote>
+<div class="highlight"><pre class="highlight javascript tab-javascript"><code><span class="kd">let</span> <span class="nx">CryptoJS</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">crypto-js</span><span class="dl">"</span><span class="p">);</span>
+<span class="kd">let</span> <span class="nx">request</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">request</span><span class="dl">"</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">endpoints</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">https://api.ktx.com/papi</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">YOUR_API_KEY</span><span class="dl">"</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">YOUR_SECRET_KEY</span><span class="dl">"</span><span class="p">;</span>
 
 
-| 参数名称          | 参数类型 | 是否必传 | 说明                                                         |
-|-----------------|---------|------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| symbol            | string   | 是       | 交易对代码，如 BTC_USDT, ETH_USDT, BTC_USDT_SWAP 等          |
-| side              | string   | 是       | 交易方向 [buy: 买入；sell: 卖出]                             |
-| type              | string   | 是       | 委托类型 [limit: 限价；market: 市价；take-profit: 市价止盈；stop: 市价止损；take-profit-limit: 限价止盈；stop-limit: 限价止损] |
-| quantity          | decimal  | 是       | 委托量                                                       |
-| market            | string   | 是       | 市场类型 [spot: 现货；lpc: U本位永续]                        |
-| client_order_id   | string   | 否       | 委托ID，有效值为int64整数的字符串，建议使用提交委托时的Unix时间戳 |
-| price             | decimal  | 否       | 委托限价                                                     |
-| positionMerge     | string   | 否       | 仓位合并模式 [long: 合并多仓；short: 合并空仓；none: 分仓]   |
-| marginMethod      | string   | 否       | 保证金模式 [isolate: 逐仓；cross: 全仓]                      |
-| mini              | bool     | 否       | 是否mini合约 [true: 是；false: 否]，当为true时必须满足 positionMerge=none &amp;&amp; marginMethod=isolate &amp;&amp; type=limit |
-| leverage          | int      | 否       | 杠杆倍数                                                     |
-| close             | bool     | 否       | 是否平仓单 [true: 平仓；false: 开仓]                         |
-| post_only         | bool     | 否       | 只做maker [true: 是；false: 否]                              |
-| time_in_force     | string   | 否       | 委托时效性 [gtc: 成交前有效；ioc: 即时剩余取消；fok: 全数成交否则取消]，默认值: gtc |
-| positionId        | string   | 否       | 仓位ID                                                       |
-| trigger_price     | decimal  | 否       | 触发价格，止盈止损订单使用                                   |
-| tpo_trigger       | int      | 否       | 开仓止盈，需配合 tpo_trigger_value 字段使用，0: 不启用，1: 启用 |
-| slo_trigger       | int      | 否       | 开仓止损，需配合 slo_trigger_value 字段使用，0: 不启用，1: 启用 |
-| tpo_trigger_value | decimal  | 否       | 开仓止盈触发价格                                             |
-| slo_trigger_value | decimal  | 否       | 开仓止损触发价格                                             |
+<span class="kd">const</span> <span class="nx">queryStr</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">id=4611772879845982339</span><span class="dl">'</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">expireTime</span> <span class="o">=</span> <span class="nb">Date</span><span class="p">.</span><span class="nx">now</span><span class="p">()</span><span class="o">+</span><span class="mi">5000</span><span class="p">;</span>
+<span class="kd">const</span> <span class="nx">sign</span> <span class="o">=</span> <span class="nx">CryptoJS</span><span class="p">.</span><span class="nx">HmacSHA256</span><span class="p">(</span><span class="dl">''</span><span class="o">+</span> <span class="nx">expireTime</span> <span class="o">+</span> <span class="nx">queryStr</span><span class="p">,</span> <span class="nx">secret</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`</span><span class="p">${</span><span class="nx">endpoints</span><span class="p">}</span><span class="s2">/v1/order?</span><span class="p">${</span><span class="nx">queryStr</span><span class="p">}</span><span class="s2">`</span><span class="p">;</span>
 
-&gt; 委托对象
-&gt; 最多包含该委托的20笔成交
-&gt; 如果委托有多于20笔成交,那么该对象仅包含最后20笔,其他成交请通过 fills 接口获取
+<span class="nx">request</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="nx">url</span><span class="p">,{</span>
+        <span class="na">headers</span><span class="p">:</span> <span class="p">{</span>
+            <span class="dl">'</span><span class="s1">Content-Type</span><span class="dl">'</span><span class="p">:</span> <span class="dl">'</span><span class="s1">application/json</span><span class="dl">'</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">api-key</span><span class="dl">'</span><span class="p">:</span> <span class="nx">apikey</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">api-sign</span><span class="dl">'</span><span class="p">:</span> <span class="nx">sign</span><span class="p">,</span>
+            <span class="dl">'</span><span class="s1">api-expire-time</span><span class="dl">'</span><span class="p">:</span><span class="nx">expireTime</span>  
+        <span class="p">},</span>
+    <span class="p">},</span>
 
-## 获取订单详情
+    <span class="kd">function</span> <span class="nx">optionalCallback</span><span class="p">(</span><span class="nx">err</span><span class="p">,</span> <span class="nx">httpResponse</span><span class="p">,</span> <span class="nx">body</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="nx">console</span><span class="p">.</span><span class="nx">error</span><span class="p">(</span><span class="dl">'</span><span class="s1">request failed:</span><span class="dl">'</span><span class="p">,</span> <span class="nx">err</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">body</span><span class="p">)</span> <span class="c1">// 7.the result</span>
 
-&gt; Request
-
-```javascript
-let CryptoJS = require("crypto-js");
-let request = require("request");
-
-const endpoints = 'https://api.ktx.com/papi'
-const apikey = "YOUR_API_KEY";
-const secret = "YOUR_SECRET_KEY";
-
-
-const queryStr = 'id=4611772879845982339';
-const expireTime = Date.now()+5000;
-const sign = CryptoJS.HmacSHA256(''+ expireTime + queryStr, secret).toString();
-const url = `${endpoints}/v1/order?${queryStr}`;
-
-request.get(url,{
-        headers: {
-            'Content-Type': 'application/json',
-            'api-key': apikey,
-            'api-sign': sign,
-            'api-expire-time':expireTime  
-        },
-    },
-
-    function optionalCallback(err, httpResponse, body) {
-        if (err) {
-            return console.error('request failed:', err);
-        }
-        console.log(body) // 7.the result
-
-    });
+    <span class="p">});</span>
 </code></pre></div><div class="highlight"><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">hashlib</span>
 <span class="kn">import</span> <span class="nn">hmac</span>
 <span class="kn">import</span> <span class="nn">requests</span>
