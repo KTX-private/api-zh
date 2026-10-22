@@ -2495,6 +2495,11 @@ ticker: 最新成交信息</p>
 </code></pre></div>
 <blockquote>
 <p>Response
+<code>json
+[
+  {
+    &quot;asset&quot;:&quot;USDT&quot;,  // 资产代码
+    &quot;balance&quot;:&quot;100&quot;,  // 总额
     &quot;locked&quot;:&quot;0&quot;,  // 冻结额
     &quot;free&quot;:&quot;100&quot;,  // 可用
     &quot;withdrawable&quot;:&quot;100&quot;,// 可转出额
@@ -2512,7 +2517,7 @@ ticker: 最新成交信息</p>
   },
   ...
 ]
-```</p>
+</code></p>
 </blockquote>
 
 <p><strong>获取 API Key 对应账户中各种资产的余额, 冻结等信息</strong></p>
@@ -2657,18 +2662,19 @@ ticker: 最新成交信息</p>
 <span class="o">}</span>
 </code></pre></div>
 <blockquote>
-<p>Response
-    &quot;coin_id&quot;: &quot;100&quot;, // 币种ID
-    &quot;coin_symbol&quot;: &quot;sUSDT&quot;,// 币种
-    &quot;chain_type&quot;:&quot;Solana&quot;, // 网络
-    &quot;general_name&quot;: &quot;USDT&quot; ,// 资产名称
-    &quot;memo&quot;:&quot;&quot;, // memo
-    &quot;mx_uid&quot;: &quot;de4a8cdc-6be5-3253-9f34-d2c61a89286f&quot;
-  }
-]
-```</p>
+<p>Response</p>
 </blockquote>
-
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"addr"</span><span class="p">:</span><span class="w"> </span><span class="s2">"74VZm4a6eGGBW3VCq6umcPL8QPhs5fFnpcT9nyQGgHkw"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">地址</span><span class="w">
+    </span><span class="nl">"coin_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">币种ID</span><span class="w">
+    </span><span class="nl">"coin_symbol"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sUSDT"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">币种</span><span class="w">
+    </span><span class="nl">"chain_type"</span><span class="p">:</span><span class="s2">"Solana"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">网络</span><span class="w">
+    </span><span class="nl">"general_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="w"> </span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">资产名称</span><span class="w">
+    </span><span class="nl">"mx_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"de4a8cdc-6be5-3253-9f34-d2c61a89286f"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
 <p><strong>获取充值地址</strong></p>
 
 <ul>
@@ -2810,6 +2816,10 @@ ticker: 最新成交信息</p>
 </code></pre></div>
 <blockquote>
 <p>Response
+<code>json
+[
+  {
+    &quot;id&quot;: 624, // 提现ID
     &quot;to_address&quot;: &quot;bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm&quot;, // 到账地址
     &quot;amount_real&quot;: &quot;9.00000000&quot;, // 到账数量
     &quot;amount&quot;: &quot;10.00000000&quot;,  // 提现数量
@@ -2818,7 +2828,7 @@ ticker: 最新成交信息</p>
     &quot;coin_symbol&quot;: &#39;BTC&#39; // 币种
   }
 ]
-```</p>
+</code></p>
 </blockquote>
 
 <p><strong>提现</strong></p>
@@ -2981,14 +2991,17 @@ ticker: 最新成交信息</p>
 <span class="o">}</span>
 </code></pre></div>
 <blockquote>
-<p>Response
-    &quot;locked&quot;: &quot;0&quot;,// 冻结额
-    &quot;free&quot;: &quot;100&quot;// 可用
-  }
-]
-```</p>
+<p>Response</p>
 </blockquote>
-
+<div class="highlight"><pre class="highlight json tab-json"><code><span class="p">[</span><span class="w">
+  </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"asset"</span><span class="p">:</span><span class="w"> </span><span class="s2">"USDT"</span><span class="p">,</span><span class="w"> </span><span class="err">//资产代码</span><span class="w">
+    </span><span class="nl">"balance"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">总额</span><span class="w">
+    </span><span class="nl">"locked"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0"</span><span class="p">,</span><span class="err">//</span><span class="w"> </span><span class="err">冻结额</span><span class="w">
+    </span><span class="nl">"free"</span><span class="p">:</span><span class="w"> </span><span class="s2">"100"</span><span class="err">//</span><span class="w"> </span><span class="err">可用</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div>
 <p><strong>获取钱包账户资产</strong></p>
 
 <ul>
@@ -3458,6 +3471,10 @@ ticker: 最新成交信息</p>
 </code></pre></div>
 <blockquote>
 <p>Response
+<code>json
+[
+  {
+    &quot;amount&quot;:&quot;10000&quot;,   // 变化数量
     &quot;balance&quot;:&quot;10000&quot;,  // 余额
     &quot;id&quot;:&quot;1125899906842624029&quot;, // ID
     &quot;time&quot;:&quot;1733468814795&quot;, // 时间
@@ -3466,7 +3483,7 @@ ticker: 最新成交信息</p>
   }
   ...
 ]
-```</p>
+</code></p>
 </blockquote>
 
 <p><strong>获取 API Key 对应账户的账单,包含一切改变账户余额的记录,如资金划转、交易、手续费收取等</strong></p>
@@ -3771,6 +3788,15 @@ const param = {
 </code></pre></div>
 <blockquote>
 <p>Response
+```json
+{
+  &quot;orderId&quot;: &quot;4611767382287843330&quot;, // 订单ID
+  &quot;clientOrderId&quot;: &quot;&quot;,  // 自定义订单ID
+  &quot;createTime&quot;: &quot;1733390630904&quot;, // 创建时间
+  &quot;product&quot;: &quot;BTC_USDT_SWAP&quot;, // 交易对代码
+  &quot;type&quot;: &quot;limit&quot;, // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
+  &quot;side&quot;: &quot;buy&quot;, // 交易方向 [buy: 买入 | sell: 卖出]
+  &quot;quantity&quot;: &quot;0.01&quot;, // 委托数量
   &quot;stf&quot;: &quot;disabled&quot;, // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
   &quot;price&quot;: &quot;10300&quot;,  // 委托价格
   &quot;timeInForce&quot;: &quot;gtc&quot;, // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
@@ -3936,6 +3962,11 @@ request.get(url,{
 </code></pre></div>
 <blockquote>
 <p>Response
+<code>json
+{
+  &quot;orderId&quot;: &quot;4611767382287843330&quot;, // 订单ID
+  &quot;clientOrderId&quot;: &quot;&quot;,  // 自定义订单ID
+  &quot;createTime&quot;: &quot;1733390630904&quot;, // 创建时间
   &quot;product&quot;: &quot;BTC_USDT_SWAP&quot;, // 交易对代码
   &quot;type&quot;: &quot;limit&quot;, // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
   &quot;side&quot;: &quot;buy&quot;, // 交易方向 [buy: 买入 | sell: 卖出]
@@ -3955,7 +3986,7 @@ request.get(url,{
   &quot;status&quot;: &quot;filled&quot;, // 订单状态 [accepted: 已接收 | partial-filled: 部分成交挂单中 | filled: 已成交 | cancelled: 已撤销 | rejected: 已拒绝 | partially-cancelled: 部分成交已取消]
   &quot;executedQty&quot;: &quot;0.01&quot;, // 已成交数量
   &quot;profit&quot;: &quot;0&quot;,    // 收益
-  &quot;origin&quot;:0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]<br>
+  &quot;origin&quot;:0, // 强平价格标识 [当origin=-1 时代表该笔订单为强平委托]       
   &quot;markPrice&quot;: &quot;10000&quot;, // 当origin=-1 代表发生强平时的标记价格
   &quot;brokerId&quot;:0, // 渠道ID
   &quot;update_id&quot;:&#39;1125899907137993336&#39;, // 更新ID
@@ -3988,7 +4019,7 @@ request.get(url,{
   ],
   &quot;updateTime&quot;: &quot;1733390650379&quot; // 更新时间
 }
-```</p>
+</code></p>
 </blockquote>
 
 <p><strong>获取指定 id 的委托</strong></p>
