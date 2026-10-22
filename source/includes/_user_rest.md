@@ -112,6 +112,11 @@ public class KtxApiExample {
 ```
 
 > Response
+```json
+[
+  {
+    "asset":"USDT",  // 资产代码
+    "balance":"100",  // 总额
     "locked":"0",  // 冻结额
     "free":"100",  // 可用
     "withdrawable":"100",// 可转出额
@@ -267,11 +272,15 @@ public class KtxApiExample {
 ```
 
 > Response
+
+```json
+[
+  {
+    "addr": "74VZm4a6eGGBW3VCq6umcPL8QPhs5fFnpcT9nyQGgHkw", // 地址
     "coin_id": "100", // 币种ID
     "coin_symbol": "sUSDT",// 币种
     "chain_type":"Solana", // 网络
     "general_name": "USDT" ,// 资产名称
-    "memo":"", // memo
     "mx_uid": "de4a8cdc-6be5-3253-9f34-d2c61a89286f"
   }
 ]
@@ -413,6 +422,10 @@ public class KtxApiExample {
 ```
 
 > Response
+```json
+[
+  {
+    "id": 624, // 提现ID
     "to_address": "bc1qksfjx5ezznnngk6grt04h8lwnta2mxtmjl0etm", // 到账地址
     "amount_real": "9.00000000", // 到账数量
     "amount": "10.00000000",  // 提现数量
@@ -560,6 +573,12 @@ public class KtxApiExample {
 ```
 
 > Response
+
+```json
+[
+  {
+    "asset": "USDT", //资产代码
+    "balance": "100", // 总额
     "locked": "0",// 冻结额
     "free": "100"// 可用
   }
@@ -990,6 +1009,10 @@ public class KtxApiExample {
 ```
 
 > Response
+```json
+[
+  {
+    "amount":"10000",   // 变化数量
     "balance":"10000",  // 余额
     "id":"1125899906842624029", // ID
     "time":"1733468814795", // 时间
@@ -1265,6 +1288,15 @@ public class KtxApiExample {
 ```
 
 > Response
+> ```json
+{
+  "orderId": "4611767382287843330", // 订单ID
+  "clientOrderId": "",  // 自定义订单ID
+  "createTime": "1733390630904", // 创建时间
+  "product": "BTC_USDT_SWAP", // 交易对代码
+  "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
+  "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
+  "quantity": "0.01", // 委托数量
   "stf": "disabled", // 订单成交转换方式 [0: disabled 禁用自成交保护 | 1: dc 减少并取消 | 2: co 取消老订单 | 3: cn 取消新订单 | 4: cb 双向取消]
   "price": "10300",  // 委托价格
   "timeInForce": "gtc", // 委托时效性 [gtc: 成交前有效 | ioc: 即时剩余取消 | fok: 全数成交否则取消]
@@ -1437,6 +1469,11 @@ public class KtxApiExample {
 ```
 
 > Response
+```json
+{
+  "orderId": "4611767382287843330", // 订单ID
+  "clientOrderId": "",  // 自定义订单ID
+  "createTime": "1733390630904", // 创建时间
   "product": "BTC_USDT_SWAP", // 交易对代码
   "type": "limit", // 订单类型 [limit: 限价 | market: 市价 | take-profit: 市价止盈 | stop: 市价止损 | take-profit-limit: 限价止盈 | stop-limit: 限价止损]
   "side": "buy", // 交易方向 [buy: 买入 | sell: 卖出]
